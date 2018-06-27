@@ -1,0 +1,16 @@
+.button_box {
+    width: 145px;
+    height: 145px;
+    overflow: hidden;
+    margin: 0 5px 5px 0;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+}
+.button_box .fa{
+    display: block;
+    line-height: inherit
+}
+.panel-body{
+    text-align: center;
+}

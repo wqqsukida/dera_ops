@@ -1,0 +1,96 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+    <head>
+
+        <meta charset="utf-8">
+        <title>Fullscreen Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- CSS -->
+        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
+        <link rel="stylesheet" href="{% static "css/login_css/reset.css" %}">
+        <link rel="stylesheet" href="{% static "css/login_css/supersized.css" %}">
+        <link rel="stylesheet" href="{% static "css/login_css/style.css" %}">
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body>
+
+        <div class="page-container">
+            <h1>Login</h1>
+            <form class="form-horizontal" method="post">{% csrf_token %}
+                {{ form.username }}
+                {{ form.password }}
+{#                <input type="text" name="username" class="username" placeholder="Username">#}
+{#                <input type="password" name="password" class="password" placeholder="Password">#}
+                <button  id="login_btn" type="button">Sign me in</button>
+                <a href="#">
+                    <button type="button">Register</button>
+                </a>
+
+{#                <div class="error"><span>+</span></div>#}
+            </form>
+            <div class="connect">
+                <p>Or connect with:</p>
+                <p>
+                    <a class="facebook" href=""></a>
+                    <a class="twitter" href=""></a>
+                </p>
+            </div>
+        </div>
+        <!--
+        <div align="center">Collect from <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a></div>
+        -->
+
+        <!-- Javascript -->
+        <script src="{% static "js/login_js/jquery-1.8.2.min.js" %}"></script>
+        <script src="{% static "js/jquery.cookie.js" %}"></script>
+        <script src="{% static "js/login_js/supersized.3.2.7.min.js" %}"></script>
+        <script src="{% static "js/login_js/supersized-init.js" %}"></script>
+        <script src="{% static "js/login_js/scripts.js" %}"></script>
+        <script>
+            $("#login_btn").click(function () {
+                $('.form-horizontal .error').remove();
+                $.ajax({
+                    url:"/login/",
+                    type:"POST",
+                    data:$(".form-horizontal").serialize(),
+                    dataType:'JSON',
+                    headers: {"X-CSRFToken": $.cookie('csrftoken')},
+                    success:function (arg) {
+                        if(arg.status){
+                            location.href = "/index/"
+                        }else{
+                            console.log(arg.msg);
+                            $.each(arg.msg,function (k,v) {
+                                var tag = document.createElement('span');
+                                tag.innerHTML = v[0];
+                                tag.className = "error";
+                                tag.style = "color:red;font-weight:800;left:20px";
+                                console.log(tag.innerHTML);
+                                // <span class='error'>v[0]</span>
+                                //$('#login_btn').before(tag);
+                                $('.form-horizontal input[name="'+k+'"]').after(tag);
+                            })
+                        }
+                    }
+                })
+            });
+
+        </script>
+
+
+    </body>
+
+</html>
+
