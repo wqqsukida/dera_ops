@@ -47,8 +47,9 @@ class RbacMiddleware(MiddlewareMixin):
                 flag = True
                 break
 
-        if not flag:
-            return redirect('/403/')
+        # if not flag:
+        #     return redirect('/403/')
+
         # flag = False
         # for group_id,code_url in permission_dict.items():
         #     for db_url in code_url['urls']:

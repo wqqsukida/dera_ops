@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_data_tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:01 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 数据表格</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="../static/favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+    <!-- Data Tables -->
+{#    <link href="/static/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">#}
+    <link href="/static/css/plugins/footable/footable.core.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="/static/css/gstyle.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <!--通知消息处-->
+    {% if result  %}
+        {% if result.code == 0 %}
+            <div class="alert alert-success" style="text-align: center">执行成功:<strong>{{ result.message }}</strong></div>
+        {% else %}
+            <div class="alert alert-danger" style="text-align: center">执行失败:<strong>{{ result.message }}</strong></div>
+        {% endif %}
+    {% endif %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <ol class="breadcrumb">
+                            <h5><a href="/index_v3/">首页</a><B style="color:#ccc">/</B> Asset列表 </h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a onclick="window.location.reload()">
+                                    <i class="fa fa-refresh"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </ol>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="col-sm-12 m-b-xs" style="padding-bottom: 10px;">
+                            <form method="get">
+                                <div class="col-sm-1"> <!--添加-->
+                                    <a class="btn btn-info" href="#">+ 添加</a>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <a id="shownv"  type="button" class="btn btn-warning">显示更多</a>
+                                </div>
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-5 ">
+                                    <input type="text" name="q" value="{{ cl.q_value }}" class="form-control"  placeholder="请输入主机名关键字进行搜索或导出" />
+                                </div>
+                                <div class="col-sm-1">
+                                    <button type="submit" value="搜索" class="btn btn-primary" />
+                                        <i class="fa fa-search"></i>&nbsp;&nbsp;搜索
+                                    </button>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <button id="export" type="submit" class="btn btn-success" name="export" value="xlsx"><i class="fa fa-download"></i>&nbsp;&nbsp;导出</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+                             <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="20" data-filter=#filter>
+                                 <thead>
+                                    <tr>
+
+                                        <th>主机名</th>
+                                        <th>SN</th>
+                                        <th>管理IP</th>
+                                        <th>操作系统</th>
+                                        <th>CPU个数</th>
+                                        <th>IDC</th>
+                                        <th>业务线</th>
+                                        <th>TAGS</th>
+                                        <th>状态</th>
+
+                                        <th data-hide="all">制造商</th>
+                                        <th data-hide="all">型号</th>
+                                        <th data-hide="all">系统版本</th>
+                                        <th data-hide="all">CPU物理个数</th>
+                                        <th data-hide="all">CPU型号</th>
+                                        <th data-hide="all">创建日期</th>
+                                        <th data-hide="all">修改日期</th>
+                                        <th data-hide="all">机柜号</th>
+
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    {% for asset in queryset %}
+                                        <tr>
+                                            <td>{{ asset.hostname }}</td>
+                                            <td>{{ asset.sn }}</td>
+                                            <td>{{ asset.manage_ip }}</td>
+                                            <td>{{ asset.os_platform }}</td>
+                                            <td>{{ asset.cpu_count }}</td>
+                                            <td>{{ asset.idc.name }}</td>
+                                            <td>
+                                                {% for b in asset.business_unit.values  %}
+                                                    {{ b.name }}
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% for t in asset.tags.values %}
+                                                    {{ t.name }}
+                                                {% endfor %}
+                                            </td>
+                                            <td>{{ asset.get_server_status_id_display }}</td>
+
+
+                                            <td>{{ asset.manufacturer }}</td>
+                                            <td>{{ asset.model }}</td>
+                                            <td>{{ asset.os_version }}</td>
+                                            <td>{{ asset.cpu_physical_count }}</td>
+                                            <td>{{ asset.cpu_model }}</td>
+                                            <td>{{ asset.create_at }}</td>
+                                            <td>{{ asset.latest_date }}</td>
+                                            <td>{{ asset.cabinet_num }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                 </tbody>
+                                 <tfoot>
+                                    <tr>
+                                        <td colspan="9">
+                                            <ul class="pagination pull-right"></ul>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                             </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/plugins/jeditable/jquery.jeditable.js"></script>
+{#    <script src="/static/js/plugins/dataTables/jquery.dataTables.js"></script>#}
+{#    <script src="/static/js/plugins/dataTables/dataTables.bootstrap.js"></script>#}
+
+{#    <script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>#}
+{#    <script src="/static/js/plugins/layer/layer.min.js"></script>#}
+    <script src="/static/js/plugins/footable/footable.all.min.js"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script>
+        $(document).ready(function() {
+
+            $('.footable').footable();
+            $('.footable2').footable();
+
+        });
+
+    </script>
+
+    <script>
+        {% if result %}
+        swal("{{ result }}");
+        {% endif %}
+
+        </script>
+
+    <script>
+        $(document).ready(function(){$(".dataTables-example").dataTable( {
+              //跟数组下标一样，第一列从0开始，这里表格初始化时，第四列默认降序
+                "order": [[ 1, "desc" ]]
+              });var oTable=$("#editable").dataTable();oTable.$("td").editable("http://www.zi-han.net/theme/example_ajax.php",{"callback":function(sValue,y){var aPos=oTable.fnGetPosition(this);oTable.fnUpdate(sValue,aPos[0],aPos[1])},"submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})});function fnClickAddRow(){$("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
+    </script>
+
+    <script>
+        function refresh(){
+            window.location.reload();
+        }
+    </script>
+
+    <script>
+        $(' .del_confirm').click(function(){
+            return confirm("确认要执行删除操作吗？");
+        });
+        $(' .js_confirm').click(function(){
+            return confirm("确认执行操作吗？");
+        });
+    </script>
+
+    <script>
+        $(' .domain_confirm').click(function(){
+            return confirm("确认要对" + $(this).attr("id") + "执行删除或停止操作吗？");
+        });
+    </script>
+
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_data_tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+</html>

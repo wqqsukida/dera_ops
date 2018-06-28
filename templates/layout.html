@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 数据表格</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="../static/favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Data Tables -->
+{#    <link href="/static/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">#}
+    <link href="/static/css/plugins/footable/footable.core.css" rel="stylesheet">
+
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="/static/css/plugins/chosen/chosen.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+                {% block content %}
+                {% endblock %}
+        </div>
+    </div>
+
+    <div class="modal-backdrop fade in" style="display: none"></div>
+
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/plugins/jeditable/jquery.jeditable.js"></script>
+{#    <script src="/static/js/plugins/dataTables/jquery.dataTables.js"></script>#}
+{#    <script src="/static/js/plugins/dataTables/dataTables.bootstrap.js"></script>#}
+    <script src="/static/js/plugins/footable/footable.all.min.js"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+{#    <script src="/static/js/plugins/layer/layer.min.js"></script>#}
+    <script src="/static/js/plugins/chosen/chosen.jquery.js"></script>
+    <script src="/static/js/plugins/loading/loading.js"></script>
+{#    <script>#}
+{#    {% if result %}#}
+{#    swal("{{ result }}");#}
+{#    {% endif %}#}
+{##}
+{#    </script>#}
+
+    <script>
+        $(document).ready(function(){$(".dataTables-example").dataTable( {
+              //跟数组下标一样，第一列从0开始，这里表格初始化时，第四列默认降序
+                "order": [[ 1, "desc" ]]
+              });var oTable=$("#editable").dataTable();oTable.$("td").editable("http://www.zi-han.net/theme/example_ajax.php",{"callback":function(sValue,y){var aPos=oTable.fnGetPosition(this);oTable.fnUpdate(sValue,aPos[0],aPos[1])},"submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})});function fnClickAddRow(){$("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
+    </script>
+    <script>
+        $('.js_confirm').click(function(){
+            return confirm("确认要操作吗？");
+        });
+    </script>
+{#    <script>#}
+{#        function refresh(){#}
+{#            window.location.reload();#}
+{#        }#}
+{#    </script>#}
+{#    <script>#}
+{#           $(".detail").click(function(){#}
+{#               var id = $(this).val();#}
+{#               var url = 'http://ops.gmfcloud.com/soft_detail?id='+id;#}
+{#                layer.open({#}
+{#                  type: 2,#}
+{#                  title: '详情页',#}
+{#                  shadeClose: true,#}
+{#                  shade: false,#}
+{#                  maxmin: true, //开启最大化最小化按钮#}
+{#                  area: ['450px', '450px'],#}
+{#                  content: url#}
+{#                });#}
+{#             });#}
+{#    </script>#}
+    <script>
+        $('table').on('click','.get_cert_detail',function () {
+            //获取域名变量
+            var $domain = $(this).text();
+            console.log($domain);
+            //清空模态框
+            $('.cret-table').empty();
+            //显示遮罩层
+            $('.modal-backdrop').css('display', 'block');
+            //显示加载中...
+            $.bootstrapLoading.start({ loadingTips: "正在处理数据，请稍候..." });
+            //发起异步请求
+            $.ajax({
+                url:"/get_cert_detail/",
+                type:"POST",
+                data:{domain:$domain},
+                dataType:'JSON',
+                success:function (arg) {
+                    //console.log(arg);
+                    if(arg['val']){
+                        console.log(arg);
+                        $.each(arg['val'],function(k,v){
+                            $('.cret-table').append(v)
+                        });
+
+{#                        $('dl dd').each(function (k) {#}
+{#                            var $domain_detail = [arg.CN,domain,arg.end_time];#}
+{#                            $(this).text($domain_detail[k]);   //在前端页面上显示更改的数据#}
+{#                        });#}
+                    }else{
+                        console.log('failed!!!');
+                        $('.cret-table').append("<h3 style='color:red'>没有获取到任何信息！</h3>")
+                    }
+                },
+                complete:function () {
+                    $.bootstrapLoading.end();
+                    //显示模态框
+                    $('#detail_modal').addClass('in');
+                    $('#detail_modal').css({display: 'block', overflow: 'auto'});
+                }
+            });
+        });
+
+        $('.close_detail_modal').click(function () {
+		    $("#detail_modal").css('display','none');
+		    $("#detail_modal").removeClass('in');
+		    $('.modal-backdrop').css('display','none');
+
+        });
+    </script>
+
+</body>
+</html>

@@ -130,9 +130,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-# ########################### 权限管理相关 ###########################3
-PERMISSION_MENU_KEY = "asdkjalsdf9uajsdf"
-PERMISSION_URL_DICT_KEY = "iujmsufnsdflsdkf"
+############################ 权限管理相关 ###########################
+PERMISSION_MENU_KEY = "%&^%hdgddadsa&^ddadasd"
+PERMISSION_URL_DICT_KEY = "lgdjfsjsgvsctewtg"
 
 VALID_URL= [
     '^/login/',
@@ -140,4 +140,13 @@ VALID_URL= [
     '^/index_v3/',
     '^/403/',
     '^/logout/',
+    '^/api/server/',
+    # '^/cmdb/asset_list/',
 ]
+
+####################### 采集插件 #######################################
+PLUGIN_ITEMS = {
+    "nic": "api.plugins.nic.Nic",
+    "disk": "api.plugins.disk.Disk",
+    "memory": "api.plugins.memory.Memory",
+}

@@ -18,6 +18,6 @@ from django.contrib import admin
 from . import views
 urlpatterns = [
 
-    # url(r'^test.html$', views.test),
+    url(r'^asset_list/', views.asset_list),
     # url(r'^tran.html$', views.tran),
 ]

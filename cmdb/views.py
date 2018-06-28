@@ -89,3 +89,14 @@ def index(request):
 
 def index_v3(request):
     return render(request,'index_v3.html')
+
+def asset_list(request):
+    if request.method == "GET":
+        search_q = request.GET.get('q','')
+        user_dict = request.session.get('is_login', None)
+        if user_dict['user']=='admin':
+            queryset = Server.objects.filter(hostname__contains=search_q)
+        else:
+            queryset = Server.objects.filter(hostname__contains=search_q,
+                                             business_unit__roles__userprofile__admininfo__username=user_dict['user'])
+        return render(request,'asset.html',locals())
