@@ -16,12 +16,13 @@ class PluginManger(object):
         :param server_dict:
         :return: 1,执行完全成功； 2, 局部失败；3，执行失败;4. 服务器不存在
         """
-        ret = {'code': 1,'msg':None}
+        ret = {'code': 1,'msg':'执行完全成功'}
 
         hostname = server_dict[self.basic_key]['data']['hostname']
         server_obj = models.Server.objects.filter(hostname=hostname).first()
         if not  server_obj:
             ret['code'] = 4
+            ret['msg'] = '服务器不存在'
             return ret
 
         obj = Server(server_obj,server_dict[self.basic_key],server_dict[self.board_key])
@@ -38,6 +39,6 @@ class PluginManger(object):
                 obj.process()
             except Exception as e:
                 ret['code'] = 2
-
+                ret['msg'] = e
         return ret
 

@@ -60,7 +60,7 @@
                         <div class="col-sm-12 m-b-xs" style="padding-bottom: 10px;">
                             <form method="get">
                                 <div class="col-sm-1"> <!--添加-->
-                                    <a class="btn btn-info" href="#">+ 添加</a>
+                                    <a class="btn btn-info" href="#" data-toggle="modal" data-target="#AddModal">+ 添加</a>
                                 </div>
 
                                 <div class="col-sm-1">
@@ -106,13 +106,13 @@
                                         <th data-hide="all">创建日期</th>
                                         <th data-hide="all">修改日期</th>
                                         <th data-hide="all">机柜号</th>
-
+                                        <th>操作(更新/删除)</th>
                                     </tr>
                                  </thead>
                                  <tbody>
                                     {% for asset in queryset %}
                                         <tr>
-                                            <td>{{ asset.hostname }}</td>
+                                            <td><a title="主机详情" class="btn-white btn-sm" href="/cmdb/asset_detail?id={{ asset.id }}">{{ asset.hostname }}</a></td>
                                             <td>{{ asset.sn }}</td>
                                             <td>{{ asset.manage_ip }}</td>
                                             <td>{{ asset.os_platform }}</td>
@@ -120,12 +120,12 @@
                                             <td>{{ asset.idc.name }}</td>
                                             <td>
                                                 {% for b in asset.business_unit.values  %}
-                                                    {{ b.name }}
+                                                    <a class="btn btn-success btn-outline btn-xs">{{ b.name }}</a>
                                                 {% endfor %}
                                             </td>
                                             <td>
                                                 {% for t in asset.tags.values %}
-                                                    {{ t.name }}
+                                                    <a class="btn-sm btn-primary">{{ t.name }}</a>
                                                 {% endfor %}
                                             </td>
                                             <td>{{ asset.get_server_status_id_display }}</td>
@@ -139,12 +139,19 @@
                                             <td>{{ asset.create_at }}</td>
                                             <td>{{ asset.latest_date }}</td>
                                             <td>{{ asset.cabinet_num }}</td>
+                                            <td style="font-size: 20px">
+                                                <a class="mod-asset-btn" title="更新主机" sid="{{ asset.id }}" data-toggle="modal" data-target="#UpdateModal">
+                                                    <i class="fa fa-cog"></i>
+                                                </a>
+                                                <a href="/cmdb/asset_del?server_id={{ asset.id }}" title="删除主机" class="del_confirm" style="margin-right: 15px"><i class="fa fa-trash"></i></a>
+
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                  </tbody>
                                  <tfoot>
                                     <tr>
-                                        <td colspan="9">
+                                        <td colspan="10">
                                             <ul class="pagination pull-right"></ul>
                                         </td>
                                     </tr>
@@ -155,6 +162,221 @@
             </div>
         </div>
     </div>
+    <div class="modal inmodal" id="AddModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">添加主机</h4>
+                </div>
+                <div class="panel-body">
+                    <form action="/cmdb/asset_add/" role="form" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-3">  <h5 style="float:right;">主机名<font style="color:red;"> *</font></h5></div>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text"  name="hostname" id="get_hostname"
+                                       placeholder="主机名,必选">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-3">  <h5 style="float:right;">SN<font style="color:red;"> *</font></h5></div>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text"  name="sn" id="get_sn"
+                                       placeholder="SN号，必选">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-12">
+                            <div class="col-sm-3">  <h5 style="float:right;">主机状态<font style="color:red;"> *</font></h5></div>
+                            <div class="col-sm-8">
+                                <select class="form-control"  name="server_status_id" id="get_server_status_id">
+                                    <option value="1">上架</option>
+                                    <option value="2">在线</option>
+                                    <option value="3">下架</option>
+                                    <option value="4">离线</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr width="100%" />
+                        <div class="col-sm-12">
+                            <div class="col-sm-5"> </div>
+                            <button type="submit" class="btn btn-primary js_confirm">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal inmodal" id="UpdateModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close close_mod_modal" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">更新主机资产</h4>
+                </div>
+                <div class="panel-body">
+                    <form action="/cmdb/asset_update/" role="form" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">基本设置</a>
+                                </li>
+                                <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false">其它设置</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">主机ID<font style="color:red;"> *</font></h5></div>
+                                            <div class="col-sm-9">
+                                                <input class="form-control"  name="id" id="mod_id">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">主机名<font style="color:red;"> *</font></h5></div>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"  name="hostname" id="mod_hostname"
+                                                       placeholder="主机名，比如 www.c1.com,必选">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">SN<font style="color:red;"> *</font></h5></div>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"  name="sn" id="mod_sn"
+                                                       placeholder="SN号,必选">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">制造商<font style="color:red;"> </font></h5></div>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"  name="manufacturer" id="mod_manufacturer"
+                                                       placeholder="制造商">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">型号<font style="color:red;"> </font></h5></div>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"  name="model" id="mod_model"
+                                                       placeholder="型号">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">管理IP<font style="color:red;"> </font></h5></div>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"  name="manage_ip" id="mod_manage_ip"
+                                                       placeholder="管理IP地址">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">操作系统<font style="color:red;"> </font></h5></div>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"  name="os_platform" id="mod_os_platform"
+                                                       placeholder="操作系统">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">系统版本<font style="color:red;"> </font></h5></div>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text"  name="os_version" id="mod_os_version"
+                                                       placeholder="系统版本">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">主机状态<font style="color:red;"> *</font></h5></div>
+                                            <div class="col-sm-10">
+                                                <select class="form-control"  name="server_status_id" id="mod_server_status_id">
+                                                    <option value="1">上架</option>
+                                                    <option value="2">在线</option>
+                                                    <option value="3">离线</option>
+                                                    <option value="4">下架</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">标签<font style="color:red;"> </font></h5></div>
+                                            <div class="col-sm-10">
+                                                <select class="form-control"  name="tags" id="mod_tags" multiple>
+                                                    {% for tag in tag_list %}
+                                                        <option value="{{ tag.id }}">{{ tag.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">主机组<font style="color:red;"> </font></h5></div>
+                                            <div class="col-sm-10">
+                                                <select class="form-control"  name="business_unit" id="mod_business_unit" multiple>
+                                                    {% for bussiness in business_list %}
+                                                        <option value="{{ bussiness.id }}">{{ bussiness.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">IDC机房<font style="color:red;"> </font></h5></div>
+                                            <div class="col-sm-10">
+                                                <select class="form-control"  name="idc" id="mod_idc">
+                                                    {% for idc in idc_list %}
+                                                        <option value="{{ idc.id }}">{{ idc.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">机柜号<font style="color:red;"> </font></h5></div>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text"  name="cabinet_num" id="mod_cabinet_num"
+                                                       placeholder="机柜号">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-sm-12">
+                                            <div class="col-sm-2">  <h5 style="float:right;">机柜中序号<font style="color:red;"> </font></h5></div>
+                                            <div class="col-sm-10">
+                                                <input class="form-control" type="text"  name="cabinet_order" id="mod_cabinet_order"
+                                                       placeholder="机柜中序号">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" style="padding-top: 15px;">
+                            <div class="col-sm-5"> </div>
+                            <button type="submit" class="btn btn-primary js_confirm">提交修改</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="/static/js/jquery.min.js?v=2.1.4"></script>
     <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
     <script src="/static/js/plugins/jeditable/jquery.jeditable.js"></script>
@@ -208,6 +430,83 @@
         $(' .domain_confirm').click(function(){
             return confirm("确认要对" + $(this).attr("id") + "执行删除或停止操作吗？");
         });
+    </script>
+
+    <script>
+    // 如果通知元素存在,则5秒后淡出
+        if ($(".alert")){
+            $(".alert").fadeOut(5000);
+        }
+    </script>
+
+
+    <script>
+        $("table").on("click",".mod-asset-btn",function () {
+            server_id = $(this).attr('sid');
+            $("#mod_id").val("");
+            $("#mod_hostname").val("");
+            $("#mod_sn").val("");
+            $("#mod_manufacturer").val("");
+            $("#mod_model").val("");
+            $("#mod_manage_ip").val("");
+            $("#mod_os_platform").val("");
+            $("#mod_os_version").val("");
+
+            $("#mod_server_status_id option").attr("selected",false);
+            $("#mod_tags option").prop("selected",false);
+            $("#mod_business_unit option").prop("selected",false);
+            $("#mod_idc option").attr("selected",false);
+            $("#mod_cabinet_num").val("");
+            $("#mod_cabinet_order").val("");
+
+            $.ajax({
+                url: "/cmdb/asset_update/",
+                type: "GET",
+                data: {server_id: server_id},
+                dataType: 'JSON',
+                success: function (arg) {
+                    if (arg) {
+                        console.log(arg);
+                        $("#mod_id").val(arg.id);
+                        $("#mod_hostname").val(arg.hostname);
+                        $("#mod_sn").val(arg.sn);
+                        $("#mod_manufacturer").val(arg.manufacturer);
+                        $("#mod_model").val(arg.model);
+                        $("#mod_manage_ip").val(arg.manage_ip);
+                        $("#mod_os_platform").val(arg.os_platform);
+                        $("#mod_os_version").val(arg.os_version);
+
+                        $("#mod_server_status_id [value=" + arg.server_status_id + "]").attr('selected',true);
+                        $("#mod_idc [value=" + arg.idc_id + "]").attr('selected',true);
+                        $.each(arg.tags,function (k,v) {
+                            $("#mod_tags [value=" + v + "]").prop("selected",true);
+                        });
+                        $.each(arg.business_unit,function (k,v) {
+                            $("#mod_business_unit [value=" + v + "]").prop("selected",true);
+                        });
+
+                        //$("#mod_tags [value in " + arg.tags + "]").prop("selected",true);
+                        /*$("#mod_tags option").each(function () {
+                            if($(this).attr("value") in arg.tags){$(this).prop("selected",true);}
+                        });*/
+                        //$("#mod_business_unit [value in " + arg.business_unit + "]").prop("selected",true);
+                        /*$("#mod_business_unit option").each(function () {
+                            if($(this).attr("value") in arg.business_unit){$(this).prop("selected",true);}
+                        });*/
+
+                        /* $.each(arg,function (k,v) {
+                                $("#UpdateModal [name="+ k + "]").attr('value',v)
+                            })
+
+                        }
+                        else{
+
+                        } */
+
+                    }
+                }
+            })
+        })
     </script>
 
 </body>

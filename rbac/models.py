@@ -10,6 +10,7 @@ class UserProfile(models.Model):
     phone = models.CharField('座机', max_length=32)
     mobile = models.CharField('手机', max_length=32)
     roles = models.ManyToManyField(verbose_name='具有的所有角色', to="Role", blank=True)
+    is_admin = models.BooleanField(default=False)
     class Meta:
         verbose_name_plural = "用户表"
 

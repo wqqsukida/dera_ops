@@ -113,13 +113,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -137,7 +137,7 @@ PERMISSION_URL_DICT_KEY = "lgdjfsjsgvsctewtg"
 VALID_URL= [
     '^/login/',
     # '^/index/',
-    '^/index_v3/',
+    # '^/index_v3/',
     '^/403/',
     '^/logout/',
     '^/api/server/',
@@ -149,4 +149,5 @@ PLUGIN_ITEMS = {
     "nic": "api.plugins.nic.Nic",
     "disk": "api.plugins.disk.Disk",
     "memory": "api.plugins.memory.Memory",
+    "nvme_ssd": "api.plugins.nvme_ssd.Nvme_ssd",
 }

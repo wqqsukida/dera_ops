@@ -7,6 +7,7 @@ class Server(object):
         self.server_obj = server_obj
         self.basic_dict = basic_dict
         self.board_dict = board_dict
+        self.user_obj = None
 
     def process(self,):
         # 更新server表
@@ -33,7 +34,8 @@ class Server(object):
                 self.server_obj.latest_date = datetime.datetime.now()
                 self.server_obj.save()
                 if record_list:
-                    models.ServerRecord.objects.create(server_obj=self.server_obj, content=';'.join(record_list))
+                    models.ServerRecord.objects.create(server_obj=self.server_obj,creator=self.user_obj,
+                                                       content=';\n'.join(record_list))
         except Exception as e:
             print(e)
 

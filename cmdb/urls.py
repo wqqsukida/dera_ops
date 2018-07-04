@@ -19,5 +19,10 @@ from . import views
 urlpatterns = [
 
     url(r'^asset_list/', views.asset_list),
+    url(r'^asset_detail/', views.asset_detail),
+    url(r'^asset_add/', views.asset_add),
+    url(r'^asset_del/', views.asset_del),
+    url(r'^asset_update/', views.asset_update),
+    url(r'^asset_change_log/', views.asset_change_log),
     # url(r'^tran.html$', views.tran),
 ]

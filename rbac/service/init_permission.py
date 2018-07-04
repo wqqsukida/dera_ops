@@ -13,7 +13,7 @@ def init_permission(user_obj,request):
                                         'permissions__url',
                                         ).distinct()
 
-    menu_permission_list = []
+    menu_permission_list = ['/index_v3/','/index/']
     for item in permission_list:
         # tpl = {
         #     'id':item['permissions__id'],

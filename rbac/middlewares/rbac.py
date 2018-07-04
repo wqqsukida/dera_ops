@@ -2,6 +2,7 @@ import re
 
 from django.shortcuts import redirect,HttpResponse
 from django.conf import settings
+from rbac.models import *
 
 class MiddlewareMixin(object):
     def __init__(self, get_response=None):
@@ -32,11 +33,19 @@ class RbacMiddleware(MiddlewareMixin):
         for url in settings.VALID_URL:
             if re.match(url,current_url):
                 return None
-
-
-        permission_list = request.session.get(settings.PERMISSION_MENU_KEY)
-        if not permission_list:
+        # 用户是否登陆
+        user_session = request.session.get("is_login")
+        if not user_session:
             return redirect('/login/')
+        # 用户是否是管理员
+        is_superuser = UserProfile.objects.get(name=user_session['user']).is_admin
+        if is_superuser:
+            return None
+
+        # 检索用户url权限
+        permission_list = request.session.get(settings.PERMISSION_MENU_KEY)
+        # if not permission_list:
+        #     return redirect('/login/')
 
         flag = False
         for db_url in permission_list:
@@ -47,8 +56,8 @@ class RbacMiddleware(MiddlewareMixin):
                 flag = True
                 break
 
-        # if not flag:
-        #     return redirect('/403/')
+        if not flag:
+            return redirect('/403/')
 
         # flag = False
         # for group_id,code_url in permission_dict.items():
