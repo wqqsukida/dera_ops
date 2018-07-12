@@ -4,6 +4,7 @@ from rbac.models import *
 from rbac.service.init_permission import init_permission
 import json
 import paramiko
+import datetime
 from utils.md5 import encrypt
 from django.forms import Form,fields,widgets
 from .models import *
@@ -243,3 +244,38 @@ def asset_change_log(request):
                 res.append(res_dic)
 
         return HttpResponse(json.dumps(res))
+
+def ssd_list(request):
+    if request.method == "GET":
+        status = request.GET.get("status", "")
+        message = request.GET.get("message", "")
+        if status.isdigit():
+            result = {"code":int(status),"message":message}
+
+        search_q = request.GET.get('q','')
+        user_dict = request.session.get('is_login', None)
+        if UserProfile.objects.get(name=user_dict['user']).is_admin :
+            queryset = Nvme_ssd.objects.filter(node__contains=search_q)
+        else:
+            queryset = Nvme_ssd.objects.filter(node__contains=search_q,
+                        server_business_unit__roles__userprofile__admininfo__username=user_dict['user'])
+
+        return render(request,'ssd.html',locals())
+
+def ssd_smartlog(request):
+    if request.method == "GET":
+        step_time = request.GET.get("step_time","1800")  # 默认取30分钟内的smart_log
+        if step_time.isdigit():
+            step_time = int(step_time)
+        ssd_id = request.GET.get("ssd_id",None)
+        ssd_obj = Nvme_ssd.objects.get(id=ssd_id)
+
+        limit_time = datetime.datetime.now() - datetime.timedelta(seconds=step_time)
+        print(limit_time)
+        query = Smart_log.objects.filter(ssd_obj=ssd_obj,log_date__gt=limit_time)
+        if not query:
+            result = {"code": 1, "message": "获取信息失败！"}
+        else:
+            result = {"code": 0, "message": "获取信息成功！"}
+
+        return render(request,"ssd_smartlog.html",locals())

@@ -26,6 +26,10 @@ class Server(object):
             with transaction.atomic():
                 for k, new_val in tmp.items():
                     old_val = getattr(self.server_obj, k)
+
+                    if type(old_val) == float or type(old_val) == int :
+                        old_val = str(old_val)
+
                     if old_val != new_val:
                         record = "[%s]的[%s]由[%s]变更为[%s]" % (self.server_obj.hostname, k, old_val, new_val)
                         record_list.append(record)

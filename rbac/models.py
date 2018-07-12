@@ -22,7 +22,7 @@ class AdminInfo(models.Model):
     用户登录： 10
     """
     user = models.OneToOneField("UserProfile")
-    username = models.CharField('用户名', max_length=32)
+    username = models.CharField('用户名', max_length=32,unique=True)
     password = models.CharField('密码', max_length=32)
 
 class Role(models.Model):

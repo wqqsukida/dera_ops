@@ -21,12 +21,14 @@ class PluginManger(object):
         hostname = server_dict[self.basic_key]['data']['hostname']
         server_obj = models.Server.objects.filter(hostname=hostname).first()
         if not  server_obj:
-            ret['code'] = 4
-            ret['msg'] = '服务器不存在'
-            return ret
-
-        obj = Server(server_obj,server_dict[self.basic_key],server_dict[self.board_key])
-        obj.process()
+            # 不存在则添加主机
+            tmp = {}
+            tmp.update(server_dict[self.basic_key]['data'])
+            tmp.update(server_dict[self.board_key]['data'])
+            server_obj = models.Server.objects.create(**tmp)
+        else:
+            obj = Server(server_obj, server_dict[self.basic_key], server_dict[self.board_key])
+            obj.process()
 
         # 对比更新[硬盘，网卡，内存，可插拔的插件]
         for k,v in self.plugin_items.items():
@@ -39,6 +41,6 @@ class PluginManger(object):
                 obj.process()
             except Exception as e:
                 ret['code'] = 2
-                ret['msg'] = e
+                ret['msg'] = str(e)
         return ret
 

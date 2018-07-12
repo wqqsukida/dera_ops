@@ -1,5 +1,7 @@
 from cmdb import models
 from django.db import transaction
+import datetime
+from django.conf import settings
 
 class Nvme_ssd(object):
     def __init__(self,server_obj,info,u_obj=None):
@@ -61,16 +63,35 @@ class Nvme_ssd(object):
         #         if old_val != new_val:
         #             setattr(obj, k, new_val)
         #     obj.save()
+    def add_smart_log(self,smart_log,ssd_obj):
+        smart_log['ssd_obj'] = ssd_obj
+        # 删除数据库中此SSD 7天前的smart_log
+        limit_time = datetime.datetime.now() - datetime.timedelta(days=settings.SMART_LOG_LIMIT_TIME)
+        models.Smart_log.objects.filter(ssd_obj=ssd_obj,log_date__lt=limit_time).delete()
+        '''
+        添加本次提交的smart_log至数据库，因为smart_log上报时字段不固定，
+        要去掉数据库中没有的字段，这里list(smart_log.keys)是因为字典类型
+        在迭代时做del或者pop等操作会报错，转换为list则不会
+        '''
+        for k in list(smart_log.keys()):
+            if not getattr(models.Smart_log,k,None):
+                smart_log.pop(k)
+        models.Smart_log.objects.create(**smart_log)
 
     def add_disk(self,val_dict):
         try:
             with transaction.atomic():
                 record = "添加SSD:{0}至{1}".format(val_dict['node'],self.server_obj.hostname)
                 val_dict['server_obj'] = self.server_obj
-                models.Nvme_ssd.objects.create(**val_dict)
+                smart_log = val_dict.pop('smart_log')
+                ssd_obj = models.Nvme_ssd.objects.create(**val_dict)
                 models.ServerRecord.objects.create(server_obj=self.server_obj,
                                                    content=record,
                                                    creator=self.u_obj)
+                # 添加一条smart_log
+                if smart_log:
+                    self.add_smart_log(smart_log, ssd_obj)
+
         except Exception as e:
             print(e)
 
@@ -91,12 +112,17 @@ class Nvme_ssd(object):
         # {'slot': '0', 'pd_type': 'SAS', 'capacity': '279.396', 'model': 'SEAGATE ST300MM0006     LS08S0K2B5NV'}
         obj = models.Nvme_ssd.objects.filter(server_obj=self.server_obj,
                                          node=val_dict['node']).first()
+        smart_log = val_dict.pop('smart_log')
+        # 添加smart_log
+        if smart_log:
+            self.add_smart_log(smart_log, obj)
+
         record_list = []
         try:
             with transaction.atomic():
                 for k, new_val in val_dict.items():
                     old_val = getattr(obj, k)
-                    if type(old_val) != str :
+                    if type(old_val) == float or type(old_val) == int :
                         old_val = str(old_val)
 
                     if old_val != new_val:

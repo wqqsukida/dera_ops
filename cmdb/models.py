@@ -132,6 +132,46 @@ class Nvme_ssd(models.Model):
     def __str__(self):
         return self.node
 
+class Smart_log(models.Model):
+    """
+    ssd smart_log
+    """
+    critical_warning = models.CharField(max_length=128, null=True)
+    temperature = models.CharField(max_length=128, null=True)
+    available_spare = models.CharField(max_length=128, null=True)
+    available_spare_threshold = models.CharField(max_length=128, null=True)
+    percentage_used = models.CharField(max_length=128, null=True)
+    data_units_read = models.CharField(max_length=128, null=True)
+    data_units_written = models.CharField(max_length=128, null=True)
+    host_read_commands = models.CharField(max_length=128, null=True)
+    host_write_commands = models.CharField(max_length=128, null=True)
+    controller_busy_time = models.CharField(max_length=128, null=True)
+    power_cycles = models.CharField(max_length=128, null=True)
+    power_on_hours = models.CharField(max_length=128, null=True)
+    unsafe_shutdowns = models.CharField(max_length=128, null=True)
+    media_errors = models.CharField(max_length=128, null=True)
+    num_err_log_entries = models.CharField(max_length=128, null=True)
+
+    warning_temperature_time = models.CharField(max_length=128, null=True)
+    critical_composite_temperature_time = models.CharField(max_length=128, null=True)
+
+    temperature_sensor_1 = models.CharField(max_length=128, null=True)
+    temperature_sensor_2 = models.CharField(max_length=128, null=True)
+    temperature_sensor_3 = models.CharField(max_length=128, null=True)
+    temperature_sensor_4 = models.CharField(max_length=128, null=True)
+
+    thermal_management_t1_trans_count = models.CharField(max_length=128, null=True)
+    thermal_management_t2_trans_count = models.CharField(max_length=128, null=True)
+
+    thermal_management_t1_total_time = models.CharField(max_length=128, null=True)
+    thermal_management_t2_total_time = models.CharField(max_length=128, null=True)
+
+    ssd_obj = models.ForeignKey(to='Nvme_ssd',related_name='smart_log')
+    log_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "SmartLog表"
+
 
 class NIC(models.Model):
     """

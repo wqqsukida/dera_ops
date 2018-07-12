@@ -248,40 +248,40 @@
                         </div>
                 </div>
 
-            </div>
-        </div>
-    </div>
-
-
-    <div class="modal inmodal" id="LogModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">变更记录</h4>
-                </div>
-                <div class="panel-body" style="overflow: auto;height: 380px;">
-
-                    <ul class="sortable-list connectList agile-list" id="get_change_log">
-                        <li class="warning-element">
-                            加强过程管理，及时统计教育经费使用情况，做到底码清楚，
-                            <div class="agile-detail">
-                                <a href="#" class="pull-right btn btn-xs btn-white">标签</a>
-                                <i class="fa fa-clock-o"></i> 2015.09.01
-                            </div>
-                        </li>
-                        <li class="success-element">
-                            支持财会人员的继续培训工作。
-                            <div class="agile-detail">
-                                <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
-                                <i class="fa fa-clock-o"></i> 2015.05.12
-                            </div>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
-    </div>
+
+
+        <div class="modal inmodal" id="LogModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">变更记录</h4>
+                    </div>
+                    <div class="panel-body" style="overflow: auto;height: 380px;">
+
+                        <ul class="sortable-list connectList agile-list" id="get_change_log">
+                            <li class="warning-element">
+                                加强过程管理，及时统计教育经费使用情况，做到底码清楚，
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标签</a>
+                                    <i class="fa fa-clock-o"></i> 2015.09.01
+                                </div>
+                            </li>
+                            <li class="success-element">
+                                支持财会人员的继续培训工作。
+                                <div class="agile-detail">
+                                    <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
+                                    <i class="fa fa-clock-o"></i> 2015.05.12
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="/static/js/jquery.min.js?v=2.1.4"></script>
@@ -374,7 +374,7 @@
 			$("#get_change_log").empty();
 			server_id = $(this).attr('server_id');
 			$.ajax({
-                url:"/cmdb/asset_change_log/",
+                url:"/cmdb/asset_change_log",
                 type:"GET",
                 data:{server_id:server_id},
                 dataType:'JSON',
@@ -382,9 +382,9 @@
                     if(arg){
                         console.log(arg);
                         $.each(arg,function (k,v) {
-                            if(v['content'].includes('内存')){li_class='warning'}
-                            else if(v['content'].includes('网卡')){li_class='info'}
-                            else if(v['content'].includes('SSD')){li_class='success'}
+                            if(v['content'].indexOf('内存') > 0){li_class='warning'}
+                            else if(v['content'].indexOf('网卡') > 0){li_class='info'}
+                            else if(v['content'].indexOf('SSD') > 0){li_class='success'}
                             else{li_class='info'}
 
                             $("#get_change_log").append(

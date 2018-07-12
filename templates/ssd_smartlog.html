@@ -1,0 +1,716 @@
+{% load mytags %}
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_data_tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:01 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 数据表格</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="../static/favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+    <!-- Data Tables -->
+{#    <link href="/static/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">#}
+    <link href="/static/css/plugins/footable/footable.core.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="/static/css/gstyle.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <!--通知消息处-->
+    {% if result  %}
+        {% if result.code == 0 %}
+            <div class="alert alert-success" style="text-align: center">执行成功:<strong>{{ result.message }}</strong></div>
+        {% else %}
+            <div class="alert alert-danger" style="text-align: center">执行失败:<strong>{{ result.message }}</strong></div>
+        {% endif %}
+    {% endif %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <ol class="breadcrumb">
+                              <li><a href="/index_v3"><span class="g_nav_font">首页</span></a></li>
+                              <li><a href="/cmdb/ssd_list/"><span class="g_nav_font">SSD列表</span></a></li>
+                              <li class="active">{{ ssd_obj.server_obj.hostname }}-{{ ssd_obj.node }}</li>
+                            <div class="ibox-tools">
+                                <a onclick="refresh()">
+                                    <i class="fa fa-refresh"></i>
+                                </a>
+                            </div>
+                        </ol>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="text-navy" style="text-align: center; margin-bottom: 30px;">
+                            <h2>【{{ ssd_obj.server_obj.hostname }}-{{ ssd_obj.node }}】<b>Smart-Log</b></h2>
+                        </div>
+                        <div class="row">
+                            <div class="pull-left" style="font-weight: 400;color: red">
+                                最后更新时间 : {{ query.last.log_date|date:'Y-m-d H:i:s' }}
+                            </div>
+                            <div class="btn-group pull-right">
+                                <a href="/cmdb/ssd_smartlog?ssd_id={{ ssd_id }}&step_time=1800" class="btn btn-white {% if step_time == 1800 %} active {% endif %}" type="button">半小时</a>
+                                <a href="/cmdb/ssd_smartlog?ssd_id={{ ssd_id }}&step_time=3600" class="btn btn-white {% if step_time == 3600 %} active {% endif %}" type="button">1小时</a>
+                                <a href="/cmdb/ssd_smartlog?ssd_id={{ ssd_id }}&step_time=10800" class="btn btn-white {% if step_time == 10800 %} active {% endif %}" type="button">3小时</a>
+                                <a href="/cmdb/ssd_smartlog?ssd_id={{ ssd_id }}&step_time=21600" class="btn btn-white {% if step_time == 21600 %} active {% endif %}" type="button">6小时</a>
+                                <a href="/cmdb/ssd_smartlog?ssd_id={{ ssd_id }}&step_time=43200" class="btn btn-white {% if step_time == 43200 %} active {% endif %}" type="button">12小时</a>
+                                <a href="/cmdb/ssd_smartlog?ssd_id={{ ssd_id }}&step_time=86400" class="btn btn-white {% if step_time == 86400 %} active {% endif %}" type="button">24小时</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% if query %}
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>SSD_Status</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                                <tr>
+                                    <th>选项</th>
+                                    <th>值</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>temperature</td>
+                                    <td>{{ query.last.temperature }}</td>
+                                </tr>
+                                <tr>
+                                    <td>available_spare</td>
+                                    <td>{{ query.last.available_spare }}</td>
+                                </tr>
+                                <tr>
+                                    <td>available_spare_threshold</td>
+                                    <td>{{ query.last.available_spare_threshold }}</td>
+                                </tr>
+                                <tr>
+                                    <td>percentage_used</td>
+                                    <td>{{ query.last.percentage_used }}</td>
+                                </tr>
+                                <tr>
+                                    <td>controller_busy_time</td>
+                                    <td>{{ query.last.controller_busy_time }}</td>
+                                </tr>
+                                <tr>
+                                    <td>power_cycles</td>
+                                    <td>{{ query.last.power_cycles }}</td>
+                                </tr>
+                                <tr>
+                                    <td>power_on_hours</td>
+                                    <td>{{ query.last.power_on_hours }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>SSD_Error</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                                <tr>
+                                    <th>选项</th>
+                                    <th>值</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>critical_warning</td>
+                                    <td>{{ query.last.critical_warning }}</td>
+                                </tr>
+                                <tr>
+                                    <td>unsafe_shutdowns</td>
+                                    <td>{{ query.last.unsafe_shutdowns }}</td>
+                                </tr>
+                                <tr>
+                                    <td>media_errors</td>
+                                    <td>{{ query.last.media_errors }}</td>
+                                </tr>
+                                <tr>
+                                    <td>num_err_log_entries</td>
+                                    <td>{{ query.last.num_err_log_entries }}</td>
+                                </tr>
+                                <tr>
+                                    <td>warning_temperature_time</td>
+                                    <td>{{ query.last.warning_temperature_time }}</td>
+                                </tr>
+                                <tr>
+                                    <td>critical_composite_temperature_time</td>
+                                    <td>{{ query.last.critical_composite_temperature_time }}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Others_Status</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                                <tr>
+                                    <th>选项</th>
+                                    <th>值</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>temperature_sensor_1</td>
+                                    <td>{{ query.last.temperature_sensor_1 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>temperature_sensor_2</td>
+                                    <td>{{ query.last.temperature_sensor_2 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>temperature_sensor_3</td>
+                                    <td>{{ query.last.temperature_sensor_3 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>temperature_sensor_4</td>
+                                    <td>{{ query.last.temperature_sensor_4 }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Others_Status</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                                <tr>
+                                    <th>选项</th>
+                                    <th>值</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>thermal_management_t1_trans_count</td>
+                                    <td>{{ query.last.thermal_management_t1_trans_count }}</td>
+                                </tr>
+                                <tr>
+                                    <td>thermal_management_t2_trans_count</td>
+                                    <td>{{ query.last.thermal_management_t2_trans_count }}</td>
+                                </tr>
+                                <tr>
+                                    <td>thermal_management_t1_total_time</td>
+                                    <td>{{ query.last.thermal_management_t1_total_time }}</td>
+                                </tr>
+                                <tr>
+                                    <td>thermal_management_t2_total_time</td>
+                                    <td>{{ query.last.thermal_management_t2_total_time }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Temperature of {{ ssd_obj.node }}</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="graph_flot.html#">选项1</a>
+                                </li>
+                                <li><a href="graph_flot.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="smart_log_temperature"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>I/O status of {{ ssd_obj.node }}</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="graph_flot.html#">选项1</a>
+                                </li>
+                                <li><a href="graph_flot.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="smart_log_io"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="modal inmodal" id="LogModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">变更记录</h4>
+                </div>
+                <div class="panel-body" style="overflow: auto;height: 380px;">
+
+                    <ul class="sortable-list connectList agile-list" id="get_change_log">
+                        <li class="warning-element">
+                            加强过程管理，及时统计教育经费使用情况，做到底码清楚，
+                            <div class="agile-detail">
+                                <a href="#" class="pull-right btn btn-xs btn-white">标签</a>
+                                <i class="fa fa-clock-o"></i> 2015.09.01
+                            </div>
+                        </li>
+                        <li class="success-element">
+                            支持财会人员的继续培训工作。
+                            <div class="agile-detail">
+                                <a href="#" class="pull-right btn btn-xs btn-white">标记</a>
+                                <i class="fa fa-clock-o"></i> 2015.05.12
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/plugins/jeditable/jquery.jeditable.js"></script>
+{#    <script src="/static/js/plugins/dataTables/jquery.dataTables.js"></script>#}
+{#    <script src="/static/js/plugins/dataTables/dataTables.bootstrap.js"></script>#}
+
+{#    <script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>#}
+{#    <script src="/static/js/plugins/layer/layer.min.js"></script>#}
+    <!-- ECharts -->
+    <script src="/static/js/plugins/echarts/echarts-all.js"></script>
+    <script src="/static/js/plugins/echarts/echarts.js"></script>
+
+    <script src="/static/js/plugins/footable/footable.all.min.js"></script>
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/loading/loading.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+
+            $('.footable').footable();
+            $('.footable2').footable();
+
+        });
+
+    </script>
+
+
+    <script>
+        {% if result %}
+        swal("{{ result }}");
+        {% endif %}
+
+    </script>
+
+    <script>
+        function refresh(){
+            window.location.reload();
+        }
+    </script>
+
+    <script>
+        $(' .del_confirm').click(function(){
+            return confirm("确认要执行删除操作吗？");
+        });
+        $(' .js_confirm').click(function(){
+            return confirm("确认执行操作吗？");
+        });
+    </script>
+
+    <script>
+        $(' .domain_confirm').click(function(){
+            return confirm("确认要对" + $(this).attr("id") + "执行删除或停止操作吗？");
+        });
+    </script>
+
+    <script>
+        // 如果通知元素存在,则5秒后淡出
+            if ($(".alert")){
+                $(".alert").fadeOut(3000);
+            }
+    </script>
+    <script>
+        // 字符串格式化函数
+        String.format = function() {
+            if (arguments.length == 0)
+                return null;
+            var str = arguments[0];
+            for ( var i = 1; i < arguments.length; i++) {
+                var re = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
+                str = str.replace(re, arguments[i]);
+            }
+            return str;
+        };
+    </script>
+
+    <script>
+        li_tag = '                   <li class="{0}-element">\n' +
+            '                            {1}\n' +
+            '                            <div class="agile-detail">\n' +
+            '                                <a href="#" class="pull-right btn btn-xs btn-white">{3}</a>\n' +
+            '                                <i class="fa fa-clock-o"></i> {2}\n' +
+            '                            </div>\n' +
+            '                        </li>';
+        li_class = '';
+        $("body").on('click','#get-log',function () {
+			$("#get_change_log").empty();
+			server_id = $(this).attr('server_id');
+			$.ajax({
+                url:"/cmdb/asset_change_log",
+                type:"GET",
+                data:{server_id:server_id},
+                dataType:'JSON',
+                success:function (arg){
+                    if(arg){
+                        console.log(arg);
+                        $.each(arg,function (k,v) {
+                            if(v['content'].indexOf('内存') > 0){li_class='warning'}
+                            else if(v['content'].indexOf('网卡') > 0){li_class='info'}
+                            else if(v['content'].indexOf('SSD') > 0){li_class='success'}
+                            else{li_class='info'}
+
+                            $("#get_change_log").append(
+                                String.format(li_tag,li_class,v['content'],v['create_at'],v['creator'])
+
+                            )
+                        });
+                    }else{
+                        $("#get_change_log").text(arg);
+                    }
+                }
+            })
+        });
+
+
+
+    </script>
+
+    <script>
+        $(function () {
+            var temperature=echarts.init(document.getElementById("smart_log_temperature"));
+            var io_status=echarts.init(document.getElementById("smart_log_io"));
+            var temperature_option={
+                    title:{text:""},
+                    toolbox: {
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    tooltip:{trigger:"axis"},
+                    legend:{
+                        data:[
+                            "temperature",
+                            "temperature_sensor_1",
+                            "temperature_sensor_2",
+                            "temperature_sensor_3",
+                            "temperature_sensor_4",
+                        ]},
+                    grid:{x:40,x2:40,y2:24},
+                    calculable:!0,
+                    xAxis:[{
+                        type:"category",
+                        boundaryGap:!1,
+                        data:[
+                            {% for item in query %}
+                                '{{ item.log_date | date:'m-d H:i' }}',
+                            {% endfor %}
+                        ]
+                    }],
+                    yAxis:[{
+                        type:"value",
+                        axisLabel:{formatter:"{value}"}
+                    }],
+                    series:[
+                        {
+                            name:"temperature_sensor_1",
+                            type:"line",
+                            data:[
+                                {% for item in query %}
+                                    '{{ item.temperature_sensor_1 | cut:' C'  }}',
+                                {% endfor %}
+                            ],
+                            markPoint:{
+                                data:[
+                                    {type:"max",name:"最大值"},
+                                    ]},
+                        },
+                        {
+                            name:"temperature_sensor_2",
+                            type:"line",
+                            data:[
+                                {% for item in query %}
+                                    "{{ item.temperature_sensor_2 | cut:' C' }}",
+                                {% endfor %}
+                            ],
+                            markPoint:{
+                                data:[
+                                    {type:"max",name:"最大值"},
+                                    ]},
+                                },
+                        {
+                            name:"temperature_sensor_3",
+                            type:"line",
+                            data:[
+                                {% for item in query %}
+                                    '{{ item.temperature_sensor_3 | cut:' C'  }}',
+                                {% endfor %}
+                            ],
+                            markPoint:{
+                                data:[
+                                    {type:"max",name:"最大值"},
+                                    ]},
+                        },
+                        {
+                            name:"temperature_sensor_4",
+                            type:"line",
+                            data:[
+                                {% for item in query %}
+                                    '{{ item.temperature_sensor_4 | cut:' C'  }}',
+                                {% endfor %}
+                            ],
+                            markPoint:{
+                                data:[
+                                    {type:"max",name:"最大值"},
+                                    ]},
+                        },
+
+                        {
+                            name:"temperature",
+                            type:"line",
+                            smooth:true,
+                            symbol: 'none',
+                            sampling: 'average',
+                            itemStyle: {
+                                normal: {
+                                    color: 'rgb(255, 70, 131)'
+                                }
+                            },
+                            areaStyle: {
+                                normal: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                        offset: 0,
+                                        color: 'rgb(255, 158, 68)'
+                                    }, {
+                                        offset: 1,
+                                        color: 'rgb(255, 70, 131)'
+                                    }])
+                                }
+                            },
+                            data:[
+                                {% for item in query %}
+                                    '{{ item.temperature | cut:' C'  }}',
+                                {% endfor %}
+                            ],
+                            markPoint:{
+                                data:[
+                                    {type:"max",name:"最大值"},
+                                    ]},
+                        },
+                        ]
+            };
+            var io_status_option={
+                    title:{text:""},
+                    toolbox: {
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    tooltip:{trigger:"axis"},
+                    legend:{
+                        data:[
+                            "data_units_read",
+                            "data_units_written",
+                            "host_read_commands",
+                            "host_write_commands",
+                        ]},
+                    grid:{x:40,x2:40,y2:24},
+                    calculable:!0,
+                    xAxis:[{
+                        type:"category",
+                        boundaryGap:!1,
+                        data:[
+                            {% for item in query %}
+                                '{{ item.log_date | date:'m-d H:i' }}',
+                            {% endfor %}
+                        ]
+                    }],
+                    yAxis:[{
+                        type:"value",
+                        axisLabel:{formatter:"{value}"}
+                    }],
+                    series:[
+                        {
+                            name:"data_units_read",
+                            type:"line",
+                            data:[
+                                {% for item in query %}
+                                    '{{ item.data_units_read | get_int  }}',
+                                {% endfor %}
+                            ],
+                            markPoint:{
+                                data:[
+                                    {type:"max",name:"最大值"},
+                                    ]},
+                        },
+                        {
+                            name:"data_units_written",
+                            type:"line",
+                            data:[
+                                {% for item in query %}
+                                    "{{ item.data_units_written | get_int }}",
+                                {% endfor %}
+                            ],
+                            markPoint:{
+                                data:[
+                                    {type:"max",name:"最大值"},
+                                    ]},
+                                },
+                        {
+                            name:"host_read_commands",
+                            type:"line",
+                            data:[
+                                {% for item in query %}
+                                    '{{ item.host_read_commands | get_int}}',
+                                {% endfor %}
+                            ],
+                            markPoint:{
+                                data:[
+                                    {type:"max",name:"最大值"},
+                                    ]},
+                        },
+
+                        {
+                            name:"host_write_commands",
+                            type:"line",
+                            smooth:true,
+                            symbol: 'none',
+                            sampling: 'average',
+                            itemStyle: {
+                                normal: {
+                                    color: 'rgb(255, 70, 131)'
+                                }
+                            },
+
+                            data:[
+                                {% for item in query %}
+                                    '{{ item.host_write_commands | get_int   }}',
+                                {% endfor %}
+                            ],
+                            markPoint:{
+                                data:[
+                                    {type:"max",name:"最大值"},
+                                    ]},
+                        },
+                        ]
+            };
+            temperature.setOption(temperature_option);
+            io_status.setOption(io_status_option);
+            //$(window).resize(e.resize);
+        })
+    </script>
+
+</body>
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_data_tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+</html>

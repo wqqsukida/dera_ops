@@ -84,7 +84,7 @@
                         </div>
 
 
-                             <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="20" data-filter=#filter>
+                             <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10" data-filter=#filter>
                                  <thead>
                                     <tr>
 
@@ -170,7 +170,7 @@
                     <h4 class="modal-title" id="myModalLabel">添加主机</h4>
                 </div>
                 <div class="panel-body">
-                    <form action="/cmdb/asset_add/" role="form" method="post" enctype="multipart/form-data">
+                    <form action="/cmdb/asset_add" role="form" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="form-group col-sm-12">
                             <div class="col-sm-3">  <h5 style="float:right;">主机名<font style="color:red;"> *</font></h5></div>
@@ -219,7 +219,7 @@
                     <h4 class="modal-title" id="myModalLabel">更新主机资产</h4>
                 </div>
                 <div class="panel-body">
-                    <form action="/cmdb/asset_update/" role="form" method="post" enctype="multipart/form-data">
+                    <form action="/cmdb/asset_update" role="form" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
@@ -460,7 +460,7 @@
             $("#mod_cabinet_order").val("");
 
             $.ajax({
-                url: "/cmdb/asset_update/",
+                url: "/cmdb/asset_update",
                 type: "GET",
                 data: {server_id: server_id},
                 dataType: 'JSON',

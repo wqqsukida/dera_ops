@@ -102,8 +102,8 @@ class Memory(object):
             with transaction.atomic():
                 for k, new_val in val_dict.items():
                     old_val = getattr(obj, k)
-                    if type(old_val) != str:
-                        old_val = str(old_val)
+                    # if type(old_val) == float or type(old_val) == int :
+                    #     old_val = str(old_val)
 
                     if old_val != new_val:
                         record = "[%s]:[%s]的[%s]由[%s]变更为[%s]" % (self.server_obj.hostname,

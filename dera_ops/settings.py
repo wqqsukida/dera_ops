@@ -25,7 +25,7 @@ SECRET_KEY = 'c*+acat$wx-zsn&v(@u5uv2zt*)$r=5v8o_%6^-jf)bz_y41!9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api',
-    'cmdb',
-    'rbac',
+    'api.apps.ApiConfig',
+    'cmdb.apps.CmdbConfig',
+    'rbac.apps.RbacConfig',
 ]
 
 MIDDLEWARE = [
@@ -126,10 +126,10 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 ############################ 权限管理相关 ###########################
 PERMISSION_MENU_KEY = "%&^%hdgddadsa&^ddadasd"
 PERMISSION_URL_DICT_KEY = "lgdjfsjsgvsctewtg"
@@ -151,3 +151,8 @@ PLUGIN_ITEMS = {
     "memory": "api.plugins.memory.Memory",
     "nvme_ssd": "api.plugins.nvme_ssd.Nvme_ssd",
 }
+
+
+##################### Nvme Settings ###################################
+
+SMART_LOG_LIMIT_TIME = 1

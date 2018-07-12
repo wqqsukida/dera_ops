@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include("api.urls")),
     url(r'^cmdb/', include("cmdb.urls")),
+    url(r'^rbac/', include("rbac.urls")),
     url(r'^login/', views.login),
     url(r'^logout/', views.logout),
     url(r'^index/', views.index),
