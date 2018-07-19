@@ -243,3 +243,21 @@ class ErrorLog(models.Model):
 
     def __str__(self):
         return self.title
+
+class Task(models.Model):
+    '''
+    任务表
+    '''
+    ssd_obj = models.ForeignKey(to='Nvme_ssd',related_name='task')
+    content = models.TextField('任务内容')
+    task_status_choices = (
+        (1, '新建任务'),
+        (2, '执行完成'),
+        (3, '执行错误'),
+        (4, '已删除'),
+        (5, '推送执行中')
+    )
+    status = models.IntegerField('任务状态',choices=task_status_choices,default='1')
+    create_date = models.DateTimeField('任务创建时间',auto_now_add=True)
+    finished_date = models.DateTimeField('任务完成时间',null=True,blank=True)
+    task_res = models.TextField('任务结果',null=True,blank=True)

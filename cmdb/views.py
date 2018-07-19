@@ -279,3 +279,39 @@ def ssd_smartlog(request):
             result = {"code": 0, "message": "获取信息成功！"}
 
         return render(request,"ssd_smartlog.html",locals())
+
+def ssd_push_task(request):
+    if request.method == "POST":
+        ssd_id = request.POST.get("ssd_id",None)
+        task = request.POST.get("task",None)
+        try:
+            Task.objects.create(ssd_obj_id=ssd_id,content=task)
+            result = {"code": 0, "message": "创建任务成功！"}
+        except Exception as e :
+            print(e)
+            result = {"code": 1, "message": "创建任务失败！"}
+
+
+        return HttpResponseRedirect('/cmdb/ssd_list?status={0}&message={1}'.
+                            format(result.get("code", ""),
+                                   result.get("message", "")))
+
+def ssd_task_list(request):
+    if request.method == "GET":
+        ssd_id = request.GET.get("ssd_id")
+        ssd_obj = Nvme_ssd.objects.get(id=ssd_id)
+        task_list = Task.objects.filter(ssd_obj=ssd_obj).order_by('-create_date')
+
+        return render(request,'ssd_task.html',locals())
+    elif request.method == "POST":
+        task_id = request.POST.get("task_id")
+        task_obj = Task.objects.get(id=task_id)
+        t_res = task_obj.task_res
+        res = {'res':'task running......'}
+        if t_res:
+            import ast
+            res = ast.literal_eval(t_res)
+
+
+        return HttpResponse(json.dumps(res))
+

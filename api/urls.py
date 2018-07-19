@@ -18,6 +18,7 @@ from django.contrib import admin
 from . import views
 urlpatterns = [
     url(r'^server/$', views.server),
+    url(r'^task/$', views.task),
     # url(r'^test.html$', views.test),
     # url(r'^tran.html$', views.tran),
 ]

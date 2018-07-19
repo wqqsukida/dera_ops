@@ -4,43 +4,18 @@
     <bookmark url="file://$PROJECT_DIR$/templates/asset_detail.html" line="194" mnemonic="5" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47e6c2be-8a09-4c2a-9ff7-3aa60dbb48bd" name="Default" comment="1.解决一些方法从数据库中取值比对问题，统一转换为str&#10;2.添加Smart_log表以及获取更新smart_log方法&#10;3.添加ssd_list方法，获取所有主机监控的ssd信息&#10;4.使用nginx处理静态文件请求，和django之间采用guncron">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmdb/templatetags/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmdb/templatetags/mytags.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rbac/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/login_img/backgrounds/pic-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/login_img/backgrounds/pic-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/login_img/backgrounds/pic-3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/login_img/backgrounds/pic-4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/logo/dera_logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/logo/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/ssd.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/ssd_smartlog.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/users.html" afterDir="false" />
+    <list default="true" id="47e6c2be-8a09-4c2a-9ff7-3aa60dbb48bd" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/templates/ssd_task.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/2e211d7a-8ef4-435d-ab5a-e1bb6757142e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2e211d7a-8ef4-435d-ab5a-e1bb6757142e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/plugins/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/plugins/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/plugins/disk.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/plugins/disk.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/plugins/memory.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/plugins/memory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/plugins/nic.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/plugins/nic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/plugins/nvme_ssd.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/plugins/nvme_ssd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/plugins/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/plugins/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmdb/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cmdb/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmdb/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cmdb/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmdb/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cmdb/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dera_ops/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dera_ops/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dera_ops/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dera_ops/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rbac/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/rbac/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rbac/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rbac/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/img/login_img/backgrounds/1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/img/login_img/backgrounds/2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/login_js/supersized-init.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/login_js/supersized-init.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset_detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ssd.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ssd.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -87,67 +62,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="nvme_ssd.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/plugins/nvme_ssd.py">
+      <file leaf-file-name="ssd_task.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/ssd_task.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="71" column="8" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="8" />
+            <state relative-caret-position="348">
+              <caret line="162" lean-forward="true" selection-start-line="162" selection-end-line="162" />
               <folding>
-                <element signature="e#0#23#0" expanded="true" />
+                <element signature="e#3766#3772#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor>
-                <caret column="11" selection-start-column="5" selection-end-column="13" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/plugins/__init__.py">
+      <file leaf-file-name="ssd.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/ssd.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="41" selection-start-line="41" selection-end-line="44" selection-end-column="18" />
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="disk.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/plugins/disk.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1254">
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dasd.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dasd.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="220">
+              <caret line="156" column="57" selection-start-line="156" selection-start-column="57" selection-end-line="156" selection-end-column="57" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-18">
+              <caret line="53" column="18" lean-forward="true" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cmdb/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="274" column="81" selection-start-line="274" selection-start-column="81" selection-end-line="274" selection-end-column="81" />
+            <state relative-caret-position="130">
+              <caret line="309" column="42" lean-forward="true" selection-start-line="309" selection-start-column="42" selection-end-line="309" selection-end-column="42" />
               <folding>
                 <element signature="e#0#65#0" expanded="true" />
               </folding>
@@ -155,56 +107,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dera_ops/settings.py">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rbac/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2173">
-              <caret line="41" column="25" selection-start-line="41" selection-start-column="25" selection-end-line="41" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="asset.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/asset.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="86" column="110" selection-start-line="86" selection-start-column="110" selection-end-line="86" selection-end-column="110" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ssd_smartlog.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/ssd_smartlog.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="76" column="18" lean-forward="true" selection-start-line="76" selection-start-column="18" selection-end-line="76" selection-end-column="18" />
+            <state relative-caret-position="198">
+              <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#1;n#div#0;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#1;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#2;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#0;n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#1;n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#script#13;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#script#14;n#body#0;n#html#0;n#!!top" />
-                <element signature="e#11354#16318#0#HTML" />
-                <element signature="e#12447#13002#0#HTML" />
-                <element signature="e#13028#13590#0#HTML" />
-                <element signature="e#13616#14171#0#HTML" />
-                <element signature="e#14197#14752#0#HTML" />
+                <element signature="e#0#78#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cmdb_smart_log" pinned="false" current-in-tab="false">
-        <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_smart_log">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmdb/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="253" column="20" lean-forward="true" selection-start-line="253" selection-start-column="20" selection-end-line="253" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -245,6 +164,11 @@
       <find>smart_log_temperature</find>
       <find>ungettext</find>
       <find>avoid_wrapping</find>
+      <find>id</find>
+      <find>date</find>
+      <find>ssd_id</find>
+      <find>task_id</find>
+      <find>get-res</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -253,32 +177,24 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/api/urls.py" />
         <option value="$PROJECT_DIR$/templates/layout.html" />
         <option value="$PROJECT_DIR$/rbac/service/init_permission.py" />
         <option value="$PROJECT_DIR$/rbac/middlewares/rbac.py" />
         <option value="$PROJECT_DIR$/api/plugins/nic.py" />
         <option value="$PROJECT_DIR$/api/plugins/disk.py" />
         <option value="$PROJECT_DIR$/api/plugins/memory.py" />
-        <option value="$PROJECT_DIR$/api/views.py" />
         <option value="$PROJECT_DIR$/static/js/login_js/supersized-init.js" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/dera_ops/urls.py" />
         <option value="$PROJECT_DIR$/rbac/urls.py" />
         <option value="$PROJECT_DIR$/rbac/views.py" />
-        <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/rbac/models.py" />
         <option value="$PROJECT_DIR$/templates/users.html" />
-        <option value="$PROJECT_DIR$/cmdb/models.py" />
         <option value="$PROJECT_DIR$/static/css/style.min.css" />
-        <option value="$PROJECT_DIR$/templates/ssd.html" />
         <option value="$PROJECT_DIR$/templates/asset_detail.html" />
-        <option value="$PROJECT_DIR$/cmdb/urls.py" />
         <option value="$PROJECT_DIR$/templates/echarts.html" />
         <option value="$PROJECT_DIR$/templates/echarts_k.html" />
-        <option value="$PROJECT_DIR$/dera_ops/settings.py" />
         <option value="$PROJECT_DIR$/cmdb/templatetags/mytags.py" />
-        <option value="$PROJECT_DIR$/cmdb/views.py" />
         <option value="$PROJECT_DIR$/templates/ssd_smartlog.html" />
         <option value="$PROJECT_DIR$/api/plugins/server.py" />
         <option value="$PROJECT_DIR$/README.md" />
@@ -286,6 +202,15 @@
         <option value="$PROJECT_DIR$/dasd.py" />
         <option value="$PROJECT_DIR$/api/plugins/__init__.py" />
         <option value="$PROJECT_DIR$/api/plugins/nvme_ssd.py" />
+        <option value="$PROJECT_DIR$/templates/index.html" />
+        <option value="$PROJECT_DIR$/api/urls.py" />
+        <option value="$PROJECT_DIR$/dera_ops/settings.py" />
+        <option value="$PROJECT_DIR$/cmdb/urls.py" />
+        <option value="$PROJECT_DIR$/templates/ssd.html" />
+        <option value="$PROJECT_DIR$/cmdb/models.py" />
+        <option value="$PROJECT_DIR$/api/views.py" />
+        <option value="$PROJECT_DIR$/templates/ssd_task.html" />
+        <option value="$PROJECT_DIR$/cmdb/views.py" />
       </list>
     </option>
   </component>
@@ -299,10 +224,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="x" value="306" />
+    <option name="y" value="116" />
+    <option name="width" value="1374" />
+    <option name="height" value="754" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -337,6 +262,11 @@
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="cmdb" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -364,12 +294,13 @@
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -383,7 +314,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL&#10;MariaDB" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/pro01/wcrm" />
+    <property name="last_opened_file_path" value="$USER_HOME$/code/gome/gome_ops" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -496,7 +427,14 @@
       <option name="project" value="LOCAL" />
       <updated>1530693100994</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="1.解决一些方法从数据库中取值比对问题，统一转换为str&#10;2.添加Smart_log表以及获取更新smart_log方法和页面&#10;3.添加ssd_list方法和页面，获取所有主机监控的ssd信息&#10;4.使用nginx处理静态文件请求，和django之间采用gunicorn,更改settings中一些设置适用此模式&#10;5.添加rbac中用户的增删改查方法和页面">
+      <created>1531364873506</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1531364873506</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -504,13 +442,12 @@
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.5005348" side_tool="true" weight="0.3234245" />
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32936978" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32699168" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.4019025" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.3234245" />
-      <window_info anchor="bottom" id="Database Console" order="7" weight="0.32936978" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49946523" visible="true" weight="0.39357907" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14705883" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" visible="true" weight="0.14278075" />
@@ -524,6 +461,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Database Console" order="7" weight="0.32936978" />
       <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
@@ -563,80 +501,15 @@
     <MESSAGE value="1.添加api获取client段数据并增量更新至数据库(仅实现disk)&#10;2.添加主机视图asset_list" />
     <MESSAGE value="改写plugins/disk.py更新数据库方式，增加事务处理" />
     <MESSAGE value="1.改写plugins下其它模块更新数据库方式，增加事务处理&#10;2.添加主机管理相应方法：增删该查&#10;3.添加查看主机详情页面：查看主机下具体设备信息，以及设备变更记录&#10;4.改写验证逻辑：is_superuser, init_permission中默认加入/index/,/index_v3/页面" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.改写plugins下其它模块更新数据库方式，增加事务处理&#10;2.添加主机管理相应方法：增删该查&#10;3.添加查看主机详情页面：查看主机下具体设备信息，以及设备变更记录&#10;4.改写验证逻辑：is_superuser, init_permission中默认加入/index/,/index_v3/页面" />
+    <MESSAGE value="1.解决一些方法从数据库中取值比对问题，统一转换为str&#10;2.添加Smart_log表以及获取更新smart_log方法和页面&#10;3.添加ssd_list方法和页面，获取所有主机监控的ssd信息&#10;4.使用nginx处理静态文件请求，和django之间采用gunicorn,更改settings中一些设置适用此模式&#10;5.添加rbac中用户的增删改查方法和页面" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.解决一些方法从数据库中取值比对问题，统一转换为str&#10;2.添加Smart_log表以及获取更新smart_log方法和页面&#10;3.添加ssd_list方法和页面，获取所有主机监控的ssd信息&#10;4.使用nginx处理静态文件请求，和django之间采用gunicorn,更改settings中一些设置适用此模式&#10;5.添加rbac中用户的增删改查方法和页面" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="django-line">
-          <url>file://$PROJECT_DIR$/templates/ssd_smartlog.html</url>
-          <line>104</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="7" />
+      <option name="time" value="9" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/api/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/migrations/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/importlib/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="107" column="4" selection-start-line="107" selection-start-column="4" selection-end-line="107" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_serverrecord">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rbac/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1516">
-          <caret line="116" lean-forward="true" selection-start-line="116" selection-end-line="116" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rbac/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="31" column="29" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rbac/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="638">
-          <caret line="29" column="7" lean-forward="true" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/favicon.ico">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/bootstrap.min14ed.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-28486" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/font-awesome.min93e3.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="14" lean-forward="true" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/animate.min.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3366" />
@@ -699,42 +572,10 @@
     <entry file="file://$PROJECT_DIR$/static/js/contabs.min.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/users.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="309" column="14" lean-forward="true" selection-start-line="309" selection-start-column="14" selection-end-line="309" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2134">
-          <caret line="190" column="52" lean-forward="true" selection-start-line="190" selection-start-column="52" selection-end-line="190" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/rbac_role_permissions">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/ssd.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="109" column="81" selection-start-line="109" selection-start-column="81" selection-end-line="109" selection-end-column="81" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#B#0;n#h5#0;n#ol#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#3748#3754#0#HTML" expanded="true" />
-            <element signature="e#3754#3760#0#HTML" expanded="true" />
-            <element signature="n#style#0;n#td#8;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#3;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#4;n#body#0;n#html#0;n#!!top" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -750,13 +591,6 @@
           <folding>
             <element signature="n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="25" column="54" lean-forward="true" selection-start-line="25" selection-start-column="54" selection-end-line="25" selection-end-column="54" />
         </state>
       </provider>
     </entry>
@@ -838,112 +672,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-22">
-          <caret line="14" column="42" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="160" column="18" lean-forward="true" selection-start-line="160" selection-start-column="4" selection-end-line="160" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_smart_log">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/ssd_smartlog.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="76" column="18" lean-forward="true" selection-start-line="76" selection-start-column="18" selection-end-line="76" selection-end-column="18" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#1;n#div#0;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#1;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#1;n#div#2;n#div#2;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#script#13;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#script#14;n#body#0;n#html#0;n#!!top" />
-            <element signature="e#11354#16318#0#HTML" />
-            <element signature="e#12447#13002#0#HTML" />
-            <element signature="e#13028#13590#0#HTML" />
-            <element signature="e#13616#14171#0#HTML" />
-            <element signature="e#14197#14752#0#HTML" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/asset.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="86" column="110" selection-start-line="86" selection-start-column="110" selection-end-line="86" selection-end-column="110" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dera_ops/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2173">
-          <caret line="41" column="25" selection-start-line="41" selection-start-column="25" selection-end-line="41" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="274" column="81" selection-start-line="274" selection-start-column="81" selection-end-line="274" selection-end-column="81" />
-          <folding>
-            <element signature="e#0#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dasd.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="41" selection-start-line="41" selection-end-line="44" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/disk.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1254">
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/nvme_ssd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="71" column="8" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -954,6 +686,202 @@
             <caret column="11" selection-start-column="5" selection-end-column="13" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/plugins/disk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1452">
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_server">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_smart_log">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="100" column="33" lean-forward="true" selection-start-line="100" selection-start-column="33" selection-end-line="100" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/index_v3.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_nvme_ssd">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/plugins/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rbac/middlewares/rbac.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-528">
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dera_ops/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="143" column="16" selection-start-line="143" selection-start-column="16" selection-end-line="143" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/plugins/nvme_ssd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="44" column="40" selection-start-line="44" selection-start-column="40" selection-end-line="44" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/plugins/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="37" column="46" lean-forward="true" selection-start-line="37" selection-start-column="46" selection-end-line="37" selection-end-column="69" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_serverrecord">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/font-awesome.min93e3.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="3" column="26472" lean-forward="true" selection-start-line="3" selection-start-column="26472" selection-end-line="3" selection-end-column="26472" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ssd_smartlog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="633" column="66" selection-start-line="633" selection-start-column="52" selection-end-line="633" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/users.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3637">
+          <caret line="210" column="23" lean-forward="true" selection-start-line="210" selection-end-line="215" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/asset.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6719">
+          <caret line="130" column="77" lean-forward="true" selection-start-line="130" selection-start-column="57" selection-end-line="130" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="467">
+          <caret line="29" column="46" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ssd.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="156" column="57" selection-start-line="156" selection-start-column="57" selection-end-line="156" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_task">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="253" column="20" lean-forward="true" selection-start-line="253" selection-start-column="20" selection-end-line="253" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ssd_task.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="162" lean-forward="true" selection-start-line="162" selection-end-line="162" />
+          <folding>
+            <element signature="e#3766#3772#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-18">
+          <caret line="53" column="18" lean-forward="true" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rbac/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="309" column="42" lean-forward="true" selection-start-line="309" selection-start-column="42" selection-end-line="309" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#65#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

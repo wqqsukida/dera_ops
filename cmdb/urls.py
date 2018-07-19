@@ -26,5 +26,7 @@ urlpatterns = [
     url(r'^asset_change_log', views.asset_change_log),
     url(r'^ssd_list', views.ssd_list),
     url(r'^ssd_smartlog', views.ssd_smartlog),
+    url(r'^ssd_push_task', views.ssd_push_task),
+    url(r'^ssd_task_list', views.ssd_task_list),
     # url(r'^tran.html$', views.tran),
 ]
