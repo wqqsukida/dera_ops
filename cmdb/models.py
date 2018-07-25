@@ -6,13 +6,13 @@ from rbac import models  as rbac_model
 
 class BusinessUnit(models.Model):
     """
-    业务线(部门)
+    主机组(部门)
     """
-    name = models.CharField(verbose_name='业务线', max_length=64, unique=True) # 销售，1,2
-    roles = models.ManyToManyField(verbose_name="管理角色",to=rbac_model.Role,blank=True) # 运维管理人员：2
+    name = models.CharField(verbose_name='主机组名称', max_length=64, unique=True) # 销售，1,2
+    roles = models.ManyToManyField(verbose_name="对应用户组",to=rbac_model.Role,blank=True) # 运维管理人员：2
 
     class Meta:
-        verbose_name_plural = "业务线表"
+        verbose_name_plural = "主机组表"
 
     def __str__(self):
         return self.name

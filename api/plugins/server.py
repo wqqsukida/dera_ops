@@ -34,8 +34,9 @@ class Server(object):
                         record = "[%s]的[%s]由[%s]变更为[%s]" % (self.server_obj.hostname, k, old_val, new_val)
                         record_list.append(record)
                         setattr(self.server_obj, k, new_val)
-
-                self.server_obj.latest_date = datetime.datetime.now()
+                    if not self.user_obj:   #如果不是用户主动修改,则更新主机状态和日期
+                        self.server_obj.server_status_id = 2
+                        self.server_obj.latest_date = datetime.datetime.now()
                 self.server_obj.save()
                 if record_list:
                     models.ServerRecord.objects.create(server_obj=self.server_obj,creator=self.user_obj,

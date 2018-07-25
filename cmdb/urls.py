@@ -19,14 +19,13 @@ from . import views
 urlpatterns = [
 
     url(r'^asset_list', views.asset_list),
-    url(r'^asset_detail', views.asset_detail),
+    url(r'^asset_detail', views.asset_detail), #主机详情
     url(r'^asset_add', views.asset_add),
     url(r'^asset_del', views.asset_del),
     url(r'^asset_update', views.asset_update),
-    url(r'^asset_change_log', views.asset_change_log),
-    url(r'^ssd_list', views.ssd_list),
-    url(r'^ssd_smartlog', views.ssd_smartlog),
-    url(r'^ssd_push_task', views.ssd_push_task),
-    url(r'^ssd_task_list', views.ssd_task_list),
-    # url(r'^tran.html$', views.tran),
+    url(r'^asset_change_log', views.asset_change_log), #主机变更记录
+    url(r'^ssd_list', views.ssd_list), #SSD列表
+    url(r'^ssd_smartlog', views.ssd_smartlog), #SSD查看smart_log
+    url(r'^ssd_push_task', views.ssd_push_task), #SSD创建任务
+    url(r'^ssd_task_list', views.ssd_task_list), #SSD任务列表
 ]

@@ -27,4 +27,6 @@ urlpatterns = [
     url(r'^index/', views.index),
     url(r'^index_v3/', views.index_v3),
     url(r'^403/', views.forbidden),
+    url(r'^$', views.index),
+
 ]

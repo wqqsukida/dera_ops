@@ -146,6 +146,8 @@ VALID_URL= [
 ]
 
 ####################### 采集插件 #######################################
+API_TOKEN = "7d6766a6s5f76safas657889hj78kf90"
+
 PLUGIN_ITEMS = {
     "nic": "api.plugins.nic.Nic",
     "disk": "api.plugins.disk.Disk",

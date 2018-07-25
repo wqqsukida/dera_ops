@@ -42,7 +42,7 @@
                 <div class="ibox">
                     <div class="ibox-title">
                         <ol class="breadcrumb">
-                            <h5><a href="/index_v3/">首页</a><B style="color:#ccc">/</B> 用户列表 </h5>
+                            <h5><a href="/index_v3/">首页</a><B style="color:#ccc">/</B> 主机组列表 </h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-5 ">
-                                    <input type="text" name="q"  class="form-control"  placeholder="请输入用户名进行搜索" />
+                                    <input type="text" name="q"  class="form-control"  placeholder="" />
                                 </div>
                                 <div class="col-sm-1">
                                     <button type="submit" value="搜索" class="btn btn-primary" />
@@ -84,37 +84,25 @@
                                  <thead>
                                     <tr>
 
-                                        <th>用户名</th>
-                                        <th>昵称</th>
-                                        <th>邮箱</th>
-                                        <th>座机</th>
-                                        <th>手机</th>
-                                        <th>所属用户组</th>
+                                        <th>主机组名称</th>
+                                        <th>对应用户组</th>
                                         <th>操作(更新/删除)</th>
                                     </tr>
                                  </thead>
                                  <tbody>
-                                    {% for user in query %}
+                                    {% for b in query %}
                                         <tr>
-                                            <td>{{ user.admininfo.username}}</td>
-                                            <td>{{ user.name}}</td>
-                                            <td>{{ user.email}}</td>
-                                            <td>{{ user.phone}}</td>
-                                            <td>{{ user.mobile}}</td>
-
+                                            <td>{{ b.name }}</td>
                                             <td>
-                                                {% for r in user.roles.values %}
+                                                {% for r in b.roles.values %}
                                                     <a class="btn-sm btn-primary">{{ r.title }}</a>
                                                 {% endfor %}
                                             </td>
                                             <td style="font-size: 20px">
-                                                <a class="mod-user-btn" title="修改用户信息" uid="{{ user.id }}" data-toggle="modal" data-target="#UpdateModal">
+                                                <a class="mod-business-btn" title="修改主机组" bid="{{ b.id }}" data-toggle="modal" data-target="#UpdateModal">
                                                     <i class="fa fa-cog"></i>
                                                 </a>
-                                                <a href="/rbac/users_del?user_id={{ user.id }}" title="删除用户" class="del_confirm" style="margin-left: 15px"><i class="fa fa-trash"></i></a>
-                                                <a class="mod-pwd-btn" title="重置用户密码" uid="{{ user.id }}" style="margin-left: 15px" data-toggle="modal" data-target="#PwdModal">
-                                                    <i class="fa fa-lock"></i>
-                                                </a>
+                                                <a href="/rbac/business_del?b_id={{ b.id }}" title="删除主机组" class="del_confirm" style="margin-left: 15px"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -132,60 +120,44 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">添加用户</h4>
+                    <h4 class="modal-title" id="myModalLabel">添加主机组</h4>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal m-t" id="signupForm" action="/rbac/users_add" role="form" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal m-t" id="signupForm" action="/rbac/business_add" role="form" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">登陆名：</label>
-                            <div class="col-sm-8">
-                                <input id="username" name="username" class="form-control" type="text">
-                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 填写登陆所使用的账户名</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">昵称：</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-2 control-label">组名：</label>
+                            <div class="col-sm-9">
                                 <input id="name" name="name" class="form-control" type="text">
+                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 填写主机组名称</span>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">密码：</label>
-                            <div class="col-sm-8">
-                                <input id="password" name="password" class="form-control" type="password">
+                            <label class="col-sm-2 control-label">对应用户组：</label>
+                            <div class="col-sm-4">
+                                <h4 style="color:red">源菜单:</h4>
+                                <select class="form-control"   id="from" multiple size="10">
+                                    {% for r in role_list %}
+                                        <option value="{{ r.id }}">{{ r.title }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">确认密码：</label>
-                            <div class="col-sm-8">
-                                <input id="confirm_password" name="confirm_password" class="form-control" type="password">
-                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请再次输入您的密码</span>
+                            <div class="col-sm-1">
+                                <div class="btn-group" style="margin-top: 50px;">
+                                    <button type="button" class="btn btn-white" onclick="move('from', 'to')"><i class="fa fa-chevron-right"></i></button>
+                                    <br/>
+                                    <button type="button" class="btn btn-white" onclick="move('to', 'from')"><i class="fa fa-chevron-left"></i> </button>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h4 style="color:red">目标菜单:</h4>
+                                <select id="to" class="form-control"  name="roles" size="10" multiple>
+
+                                </select>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">E-mail：</label>
-                            <div class="col-sm-8">
-                                <input id="email" name="email" class="form-control" type="email">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">座机：</label>
-                            <div class="col-sm-8">
-                                <input id="phone" name="phone" class="form-control" type="phone">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">手机：</label>
-                            <div class="col-sm-8">
-                                <input id="mobile" name="mobile" class="form-control" type="mobile">
-                            </div>
-                        </div>
 
 
 
@@ -205,47 +177,49 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close close_mod_modal" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">修改用户信息</h4>
+                    <h4 class="modal-title" id="myModalLabel">修改主机组</h4>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal m-t" id="signupForm" action="/rbac/users_edit" role="form" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal m-t" id="signupForm" action="/rbac/business_edit" role="form" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
 
                         <div class="form-group hide">
-                            <label class="col-sm-3 control-label">用户ID：</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-2 control-label">ID：</label>
+                            <div class="col-sm-9">
                                 <input id="mod_id" name="id" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">E-mail：</label>
-                            <div class="col-sm-8">
-                                <input id="mod_email" name="email" class="form-control" type="email">
+                            <label class="col-sm-2 control-label">组名：</label>
+                            <div class="col-sm-9">
+                                <input id="mod_name" name="name" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">座机：</label>
-                            <div class="col-sm-8">
-                                <input id="mod_phone" name="phone" class="form-control">
-                            </div>
-                        </div>
+                            <label class="col-sm-2 control-label">对应用户组：</label>
+                            <div class="col-sm-4">
+                                <h4 style="color:red">源菜单:</h4>
+                                <select class="form-control"   id="roles_from" multiple size="10">
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">手机：</label>
-                            <div class="col-sm-8">
-                                <input id="mod_mobile" name="mobile" class="form-control">
+                                </select>
                             </div>
-                        </div>
+                            <div class="col-sm-1">
+                                <div class="btn-group" style="margin-top: 50px;">
+                                    <button type="button" class="btn btn-white" onclick="move('roles_from', 'roles_to')">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                    <br/>
+                                    <button type="button" class="btn btn-white" onclick="move('roles_to', 'roles_from')">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h4 style="color:red">目标菜单:</h4>
+                                <select id="roles_to" class="form-control"  name="roles" size="10" multiple>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">用户组：</label>
-                            <div class="col-sm-8">
-                                <select class="form-control"  name="roles" id="mod_roles" multiple>
-                                    {% for r in role_list %}
-                                        <option value="{{ r.id }}">{{ r.title }}</option>
-                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -263,55 +237,6 @@
         </div>
     </div>
 
-    <div class="modal inmodal" id="PwdModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">重置用户密码</h4>
-                </div>
-                <div class="panel-body">
-                    <form class="form-horizontal m-t" id="signupForm" action="/rbac/users_pwd" role="form" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="form-group hide">
-                            <label class="col-sm-3 control-label">ID：</label>
-                            <div class="col-sm-8">
-                                <input id="user_id" name="id" class="form-control" type="text">
-                            </div>
-                        </div>
-
-                     <!--<div class="form-group">
-                            <label class="col-sm-3 control-label">旧密码：</label>
-                            <div class="col-sm-8">
-                                <input id="old_password" name="old_password" class="form-control" type="password">
-                            </div>
-                        </div> -->
-
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">新密码：</label>
-                            <div class="col-sm-8">
-                                <input id="new_password" name="new_password" class="form-control" type="password">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">确认密码：</label>
-                            <div class="col-sm-8">
-                                <input id="new_confirm_password" name="new_confirm_password" class="form-control" type="password">
-                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请再次输入您的密码</span>
-                            </div>
-                        </div>
-
-                        <hr width="100%" />
-                        <div class="col-sm-12">
-                            <div class="col-sm-5"> </div>
-                            <button type="submit" class="btn btn-primary js_confirm">提交</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- 全局js -->
     <script src="/static/js/jquery.min.js?v=2.1.4"></script>
     <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
@@ -350,7 +275,7 @@
                 rules:{
                     firstname:"required",
                     lastname:"required",
-                    name:"required",
+                    name:{required:true,minlength:2},
                     username:{required:true,minlength:2},
                     password:{required:true,minlength:5},
                     confirm_password:{required:true,minlength:5,equalTo:"#password"},
@@ -361,7 +286,7 @@
                 messages:{
                     firstname:a+"请输入你的姓",
                     lastname:a+"请输入您的名字",
-                    name:a+"请输入你的昵称",
+                    name:{required:a+"请输入主机组名称",minlength:a+"组名必须两个字符以上"},
                     username:{required:a+"请输入您的用户名",minlength:a+"用户名必须两个字符以上"},
                     password:{required:a+"请输入您的密码",minlength:a+"密码必须5个字符以上"},
                     confirm_password:{required:a+"请再次输入密码",minlength:a+"密码必须5个字符以上",equalTo:a+"两次输入的密码不一致"},
@@ -383,7 +308,7 @@
 
     <script>
         $(document).ready(function(){$(".dataTables-example").dataTable(
-            {"order": [[ 1, "desc" ]]}
+            {"order": [[ 0, "desc" ]]}
         );var oTable=$("#editable").dataTable();oTable.$("td").editable("http://www.zi-han.net/theme/example_ajax.php",{"callback":function(sValue,y){var aPos=oTable.fnGetPosition(this);oTable.fnUpdate(sValue,aPos[0],aPos[1])},"submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})});function fnClickAddRow(){$("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
     </script>
 
@@ -434,52 +359,47 @@
         }
     </script>
 
-
     <script>
-        $("table").on("click",".mod-user-btn",function () {
-            user_id = $(this).attr('uid');
-            $("#mod_id").val("");
-            $("#mod_email").val("");
-            $("#mod_mobile").val("");
-            $("#mod_phone").val("");
-
-            $("#mod_roles option").prop("selected",false);
-
-            $.ajax({
-                url: "/rbac/users_edit",
-                type: "GET",
-                data: {user_id: user_id},
-                dataType: 'JSON',
-                success: function (arg) {
-                    if (arg) {
-                        console.log(arg);
-                        $("#mod_id").val(arg.id);
-                        $("#mod_email").val(arg.email);
-                        $("#mod_mobile").val(arg.mobile);
-                        $("#mod_phone").val(arg.phone);
-
-                        $.each(arg.roles,function (k,v) {
-                            $("#mod_roles [value=" + v + "]").prop("selected",true);
-                        });
-
+        function move(from, to, from_o, to_o) {
+            $("#" + from + " option").each(function () {
+                if ($(this).prop("selected") == true) {
+                    $("#" + to).append(this);
+                    if( typeof from_o !== 'undefined'){
+                        $("#"+to_o).append($("#"+from_o +" option[value='"+this.value+"']"));
                     }
                 }
-            })
-        })
+            });
+        }
     </script>
 
     <script>
-        $("table").on('click','.mod-pwd-btn',function () {
-            user_id = $(this).attr('uid');
-            $("#user_id").val("");
+        $("table").on("click",".mod-business-btn",function () {
+            b_id = $(this).attr('bid');
+            $("#mod_id").val("");
+            $("#mod_name").val("");
+            $("#roles_from").empty();
+            $("#roles_to").empty();
 
             $.ajax({
-                url: "/rbac/users_pwd",
+                url: "/rbac/business_edit",
                 type: "GET",
-                data: {user_id: user_id},
+                data: {b_id: b_id},
                 dataType: 'JSON',
-                success:function (arg) {
-                    if(arg){$("#user_id").val(arg)}
+                success: function (arg) {
+                    if (arg) {
+                        //console.log(arg);
+                        $("#mod_id").val(arg.id);
+                        $("#mod_name").val(arg.name);
+
+                        $.each(arg.from_list,function (k,v) {
+                            $("#roles_from").append("<option value="+v[0]+">"+v[1]+"</options>")
+                        });
+                        $.each(arg.to_list,function (k,v) {
+                            $("#roles_to").append("<option value="+v[0]+">"+v[1]+"</options>")
+                        });
+                        $("#roles_to option").prop("selected",true);
+
+                    }
                 }
             })
         })

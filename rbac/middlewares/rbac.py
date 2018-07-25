@@ -51,8 +51,8 @@ class RbacMiddleware(MiddlewareMixin):
         for db_url in permission_list:
             regax = "^{0}$".format(db_url)
             if re.match(regax, current_url):
-                print(regax)
-                print(current_url)
+                # print(regax)
+                # print(current_url)
                 flag = True
                 break
 

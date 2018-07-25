@@ -94,7 +94,7 @@
                                         <th>操作系统</th>
                                         <th>CPU个数</th>
                                         <th>IDC</th>
-                                        <th>业务线</th>
+                                        <th>主机组</th>
                                         <th>TAGS</th>
                                         <th>状态</th>
 
@@ -128,7 +128,17 @@
                                                     <a class="btn-sm btn-primary">{{ t.name }}</a>
                                                 {% endfor %}
                                             </td>
-                                            <td>{{ asset.get_server_status_id_display }}</td>
+                                            <td>
+                                                {% if asset.server_status_id == 1 %}
+                                                    <a class="btn-sm btn-success">{{ asset.get_server_status_id_display }}</a>
+                                                {% elif asset.server_status_id == 2 %}
+                                                    <a class="btn-sm btn-info">{{ asset.get_server_status_id_display }}</a>
+                                                {% elif asset.server_status_id == 3 %}
+                                                    <a class="btn-sm btn-danger">{{ asset.get_server_status_id_display }}</a>
+                                                {% elif asset.server_status_id == 4 %}
+                                                    <a class="btn-sm btn-warning">{{ asset.get_server_status_id_display }}</a>
+                                                {% endif %}
+                                            </td>
 
 
                                             <td>{{ asset.manufacturer }}</td>

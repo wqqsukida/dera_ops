@@ -100,11 +100,12 @@ def asset_list(request):
 
         search_q = request.GET.get('q','')
         user_dict = request.session.get('is_login', None)
+        print(user_dict)
         if UserProfile.objects.get(name=user_dict['user']).is_admin :
             queryset = Server.objects.filter(hostname__contains=search_q)
         else:
             queryset = Server.objects.filter(hostname__contains=search_q,
-                                             business_unit__roles__userprofile__admininfo__username=user_dict['user'])
+                                             business_unit__roles__userprofile__name=user_dict['user'])
 
         idc_list = IDC.objects.all()
         tag_list = Tag.objects.all()
@@ -210,15 +211,15 @@ def asset_update(request):
                    'os_version':os_version,'server_status_id':server_status_id,
                    'tags':tags,'business_unit':business_unit,'idc_id':idc}}
 
-        # try:
-        from api.plugins import server
-        obj = server.Server(server_obj=Server.objects.get(id=id),basic_dict=val_dic,
-                      board_dict={'data':{}})
-        obj.user_obj = UserProfile.objects.get(name=request.session['is_login']['user'])
-        obj.process()
-        # result = {"code": 0, "message": "更新主机成功！"}
-        # except Exception as e:
-        #     result = {"code": 1, "message": e}
+        try:
+            from api.plugins import server
+            obj = server.Server(server_obj=Server.objects.get(id=id),basic_dict=val_dic,
+                          board_dict={'data':{}})
+            obj.user_obj = UserProfile.objects.get(name=request.session['is_login']['user'])
+            obj.process()
+            result = {"code": 0, "message": "更新主机成功！"}
+        except Exception as e:
+            result = {"code": 1, "message": str(e)}
 
         return HttpResponseRedirect('/cmdb/asset_list?status={0}&message={1}'.
                             format(result.get("code", ""),
@@ -258,7 +259,7 @@ def ssd_list(request):
             queryset = Nvme_ssd.objects.filter(node__contains=search_q)
         else:
             queryset = Nvme_ssd.objects.filter(node__contains=search_q,
-                        server_business_unit__roles__userprofile__admininfo__username=user_dict['user'])
+                                               server_obj__business_unit__roles__userprofile__name=user_dict['user'])
 
         return render(request,'ssd.html',locals())
 
