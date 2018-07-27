@@ -8,6 +8,7 @@ import datetime
 from utils.md5 import encrypt
 from django.forms import Form,fields,widgets
 from .models import *
+from django.db.models import Q
 from django.urls import reverse
 
 #========================================================================#
@@ -89,7 +90,28 @@ def index(request):
 
 
 def index_v3(request):
-    return render(request,'index_v3.html')
+    current_date = datetime.date.today()
+    # 获取今日未采集的主机列表
+    query_list = Server.objects.filter(
+        Q(Q(latest_date=None) | Q(latest_date__lt=current_date)) & Q(server_status_id=2)
+    )
+    host_list = list(query_list.values('hostname'))
+    query_list.update(server_status_id=3)
+    print(host_list)
+
+    server_up = Server.objects.filter(server_status_id=1).count()
+    server_online = Server.objects.filter(server_status_id=2).count()
+    server_offline = Server.objects.filter(server_status_id=3).count()
+    server_down = Server.objects.filter(server_status_id=4).count()
+
+    task_new = Task.objects.filter(status=1).count()
+    task_finished = Task.objects.filter(status=2).count()
+    task_error = Task.objects.filter(status=3).count()
+    task_deleted = Task.objects.filter(status=4).count()
+    task_pushing = Task.objects.filter(status=5).count()
+
+
+    return render(request,'index_v1.html',locals())
 
 def asset_list(request):
     if request.method == "GET":
@@ -262,6 +284,23 @@ def ssd_list(request):
                                                server_obj__business_unit__roles__userprofile__name=user_dict['user'])
 
         return render(request,'ssd.html',locals())
+    elif request.method == "POST":
+        '''批量推送任务'''
+        ssd_id_list = request.POST.getlist("input_chk",None)
+        print(ssd_id_list)
+        task = request.POST.get("tasks",None)
+        try:
+            objs=[Task(ssd_obj_id=id,content=task) for id in ssd_id_list]
+            Task.objects.bulk_create(objs)
+            result = {"code": 0, "message": "批量创建任务成功！"}
+        except Exception as e :
+            print(e)
+            result = {"code": 1, "message": "批量创建任务失败！"}
+
+        return HttpResponseRedirect('/cmdb/ssd_list?status={0}&message={1}'.
+                            format(result.get("code", ""),
+                                   result.get("message", "")))
+
 
 def ssd_smartlog(request):
     if request.method == "GET":
