@@ -24,8 +24,10 @@ urlpatterns = [
     url(r'^asset_del', views.asset_del),
     url(r'^asset_update', views.asset_update),
     url(r'^asset_change_log', views.asset_change_log), #主机变更记录
+    url(r'^asset_run_tasks', views.asset_run_tasks), #批量修改主机
     url(r'^ssd_list', views.ssd_list), #SSD列表
     url(r'^ssd_smartlog', views.ssd_smartlog), #SSD查看smart_log
     url(r'^ssd_push_task', views.ssd_push_task), #SSD创建任务
     url(r'^ssd_task_list', views.ssd_task_list), #SSD任务列表
+    url(r'^t1', views.t1),
 ]

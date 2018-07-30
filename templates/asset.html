@@ -24,15 +24,27 @@
     <link href="/static/css/animate.min.css" rel="stylesheet">
     <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
     <link href="/static/css/gstyle.css" rel="stylesheet">
+    <link href="/static/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/static/css/plugins/chosen/chosen.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg">
     <!--通知消息处-->
     {% if result  %}
         {% if result.code == 0 %}
-            <div class="alert alert-success" style="text-align: center">执行成功:<strong>{{ result.message }}</strong></div>
+            <div class="alert alert-success alert-dismissable" style="text-align: center">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                执行成功:<strong>{{ result.message }}</strong>
+            </div>
         {% else %}
-            <div class="alert alert-danger" style="text-align: center">执行失败:<strong>{{ result.message }}</strong></div>
+            <div class="alert alert-danger alert-dismissable" style="text-align: center">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                执行失败:<strong>{{ result.message }}</strong>
+            </div>
         {% endif %}
     {% endif %}
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -66,28 +78,81 @@
                                 <div class="col-sm-1">
                                     <a id="shownv"  type="button" class="btn btn-warning">显示更多</a>
                                 </div>
-                                <div class="col-sm-3"></div>
-                                <div class="col-sm-5 ">
+                                <div class="col-sm-5"></div>
+                                <div class="col-sm-3 ">
                                     <input type="text" name="q" value="{{ cl.q_value }}" class="form-control"  placeholder="请输入主机名关键字进行搜索或导出" />
                                 </div>
                                 <div class="col-sm-1">
                                     <button type="submit" value="搜索" class="btn btn-primary" />
-                                        <i class="fa fa-search"></i>&nbsp;&nbsp;搜索
+                                        <i class="fa fa-search"></i>&nbsp;&nbsp;搜索主机
                                     </button>
                                 </div>
 
                                 <div class="col-sm-1">
-                                    <button id="export" type="submit" class="btn btn-success" name="export" value="xlsx"><i class="fa fa-download"></i>&nbsp;&nbsp;导出</button>
+                                    <button id="export" type="submit" class="btn btn-success" name="export" value="xlsx"><i class="fa fa-download"></i>&nbsp;&nbsp;导出表格</button>
                                 </div>
 
                             </form>
                         </div>
+                        <form method="post" action="/cmdb/asset_run_tasks">
+                            {% csrf_token %}
 
+                            <div class="col-sm-12 m-b-xs" style="padding-bottom: 10px;">
+                                <div class="col-sm-7"></div>
+                                <div class="col-sm-2">
+                                    <select class="form-control"  id="chose-action">
+                                        <option disabled selected='selected'>====选择批量执行动作====</option>
+                                        <option value="1">修改主机组</option>
+                                        <option value="2">修改标签</option>
+                                        <option value="3">修改主机状态</option>
+                                    </select>
+                                </div>
+
+                                <div id="add-action" class="col-sm-2">
+                                    <select class="form-control">
+                                        <option disabled selected="selected">====请选择批量执行动作====</option>
+                                    </select>
+                                </div>
+                                <!--
+                                <div class="col-sm-2">
+                                    <select data-placeholder="选择主机组" name="business_units"  class="chosen-select" multiple style="width:200px;" tabindex="4">
+                                        {% for bussiness in business_list %}
+                                            <option value="{{ bussiness.id }}" hassubinfo="true">{{ bussiness.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <select data-placeholder="选择标签" name="tags"  class="chosen-select" multiple style="width:200px;" tabindex="4">
+                                        {% for tag in tag_list %}
+                                            <option value="{{ tag.id }}">{{ tag.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+
+                                <div class="col-sm-2">
+                                    <select class="form-control"  name="status_ids">
+                                        <option value="1">上架</option>
+                                        <option value="2">在线</option>
+                                        <option value="3">离线</option>
+                                        <option value="4">下架</option>
+                                    </select>
+                                </div>
+                                -->
+
+
+                                <div class="col-sm-1">
+                                    <button type="submit" value="修改" class="btn btn-primary js_confirm" />
+                                        <i class="fa fa-random"></i>&nbsp;&nbsp;批量修改
+                                    </button>
+                                </div>
+                            </div>
 
                              <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10" data-filter=#filter>
                                  <thead>
                                     <tr>
-
+                                        <th></th>
                                         <th>主机名</th>
                                         <th>SN</th>
                                         <th>管理IP</th>
@@ -112,7 +177,14 @@
                                  <tbody>
                                     {% for asset in queryset %}
                                         <tr>
-                                            <td><a title="主机详情" class="btn-white btn-sm" href="/cmdb/asset_detail?id={{ asset.id }}">{{ asset.hostname }}</a></td>
+                                            <td>
+                                                <input type="checkbox"  class="i-checks" name="input_chk" value="{{ asset.id }}">
+                                            </td>
+                                            <td>
+                                                <a title="主机详情" class="btn-white btn-sm" href="/cmdb/asset_detail?id={{ asset.id }}">
+                                                    {{ asset.hostname }}
+                                                </a>
+                                            </td>
                                             <td>{{ asset.sn }}</td>
                                             <td>{{ asset.manage_ip }}</td>
                                             <td>{{ asset.os_platform }}</td>
@@ -167,11 +239,13 @@
                                     </tr>
                                 </tfoot>
                              </table>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="modal inmodal" id="AddModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -397,6 +471,19 @@
 {#    <script src="/static/js/plugins/layer/layer.min.js"></script>#}
     <script src="/static/js/plugins/footable/footable.all.min.js"></script>
     <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/iCheck/icheck.min.js"></script>
+    <!-- Chosen -->
+    <script src="/static/js/plugins/chosen/chosen.jquery.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+
     <script>
         $(document).ready(function() {
 
@@ -442,12 +529,6 @@
         });
     </script>
 
-    <script>
-    // 如果通知元素存在,则5秒后淡出
-        if ($(".alert")){
-            $(".alert").fadeOut(5000);
-        }
-    </script>
 
 
     <script>
@@ -519,6 +600,71 @@
         })
     </script>
 
+    <script>
+        $("#top-box").click(function () {
+            if($("#top-box").prop("checked")){
+                $(".i-checks").prop("checked",true)
+            }
+            else {
+                $(".i-checks").prop("checked",false)
+            }
+        })
+    </script>
+
+    <script>
+
+        function init_ms() {
+            var config={
+                ".chosen-select":{},
+                ".chosen-select-deselect":{allow_single_deselect:true},
+                ".chosen-select-no-single":{disable_search_threshold:10},
+                ".chosen-select-no-results":{no_results_text:"Oops, nothing found!"},
+                ".chosen-select-width":{width:"95%"}
+            };
+            for(var selector in config){
+                $(selector).chosen(config[selector])
+            }
+        }
+
+    </script>
+
+
+    <script>
+        el1 = '                                    <select  data-placeholder="选择主机组" name="business_units"  class="chosen-select" multiple style="width:241px;" tabindex="4">\n' +
+            '                                        {% for bussiness in business_list %}\n'+
+                '                                            <option value="{{ bussiness.id }}" >{{ bussiness.name }}</option>\n'
+                +
+                '                                        {% endfor %}\n' +
+            '                                    </select>';
+        el2 = '                                    <select  data-placeholder="选择标签" name="tags"  class="chosen-select" multiple style="width:241px;" tabindex="4">\n' +
+            '                                        {% for tag in tag_list %}\n'+
+                '                                            <option value="{{ tag.id }}">{{ tag.name }}</option>\n'+
+                '                                        {% endfor %}\n' +
+            '                                    </select>';
+        el3 = '                                    <select class="form-control"  name="status_ids">\n' +
+            '                                        <option value="1">上架</option>\n' +
+            '                                        <option value="2">在线</option>\n' +
+            '                                        <option value="3">离线</option>\n' +
+            '                                        <option value="4">下架</option>\n' +
+            '                                    </select>';
+        $("#chose-action").on('change',function () {
+            $("#add-action").empty();
+            if($(this).val() == 1){
+                $("#add-action").append(el1);
+                init_ms()
+
+            }
+            else if($(this).val() == 2){
+                $("#add-action").append(el2);
+                init_ms();
+            }
+            else if($(this).val() == 3){
+                $("#add-action").append(el3)
+
+            }
+        }
+        )
+    </script>
 </body>
 
 

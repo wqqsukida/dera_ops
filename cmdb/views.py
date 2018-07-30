@@ -135,6 +135,43 @@ def asset_list(request):
 
         return render(request,'asset.html',locals())
 
+def asset_run_tasks(request):
+    if request.method == "POST":
+        id_list = request.POST.getlist("input_chk",None)
+        print('run_actions id :%s'%id_list)
+        server_objs = Server.objects.filter(id__in=id_list)
+        server_status_id = request.POST.get("status_ids",None)
+        tags = request.POST.getlist("tags",None)
+        business_unit = request.POST.getlist("business_units",None)
+        try:
+            if server_status_id:
+                server_objs.update(server_status_id=server_status_id)
+                code = 0
+                msg="成功修改主机状态！"
+            elif tags:
+                for s in server_objs:
+                    setattr(s,'tags',tags)
+                    s.save()
+                code = 0
+                msg="成功修改主机标签！"
+            elif business_unit:
+                for s in server_objs:
+                    setattr(s,'business_unit',business_unit)
+                    s.save()
+                code = 0
+                msg="成功修改主机组！"
+            else:
+                code = 1
+                msg = "没有可执行的任务！"
+            result = {"code": code, "message": msg}
+        except Exception as e:
+            result = {"code": 1, "message": str(e)}
+
+        return HttpResponseRedirect('/cmdb/asset_list?status={0}&message={1}'.
+                                    format(result.get("code", ""),
+                                           result.get("message", "")))
+
+
 def asset_detail(request):
     result = {}
     if request.method == "GET":
@@ -355,3 +392,5 @@ def ssd_task_list(request):
 
         return HttpResponse(json.dumps(res))
 
+def t1(request):
+    return render(request,'t1.html')

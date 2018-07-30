@@ -102,7 +102,7 @@
                                  <thead>
                                     <tr>
                                         <th>
-                                            <input type="checkbox" id="top-box" class="i-checks">
+{#                                            <input type="checkbox" id="top-box" class="i-checks">#}
                                         </th>
                                         <th>node</th>
                                         <th>sn</th>
@@ -210,9 +210,15 @@
 {#    <script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>#}
     <!-- 自定义js -->
     <script src="/static/js/content.min.js?v=1.0.0"></script>
-
-
-
+    <script src="/static/js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
     <script>
         $(document).ready(function(){$(".dataTables-example").dataTable(
             {
@@ -312,6 +318,7 @@
             $('#ssd_id').val($(this).attr('ssd_id'))
         })
     </script>
+
 
     <script>
         $("#top-box").click(function () {

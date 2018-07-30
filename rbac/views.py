@@ -229,6 +229,7 @@ def roles_edit(request):
         try:
             for k ,v in form_data.items():
                 setattr(role_obj,k,v)
+            role_obj.save()
             result = {"code": 0, "message": "修改用户组成功！"}
         except Exception as e:
             print(e)
@@ -389,6 +390,7 @@ def business_edit(request):
         try:
             for k ,v in form_data.items():
                 setattr(b_obj,k,v)
+            b_obj.save()
             result = {"code": 0, "message": "修改主机组成功！"}
         except Exception as e:
             print(e)
