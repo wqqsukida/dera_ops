@@ -148,7 +148,7 @@
                                     </button>
                                 </div>
                             </div>
-
+                            <div class="row">
                              <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="10" data-filter=#filter>
                                  <thead>
                                     <tr>
@@ -232,13 +232,21 @@
                                     {% endfor %}
                                  </tbody>
                                  <tfoot>
-                                    <tr>
+                                    <tr class="hide">
                                         <td colspan="10">
                                             <ul class="pagination pull-right"></ul>
                                         </td>
                                     </tr>
                                 </tfoot>
                              </table>
+                             <div class="row">
+                                <div class="col-md-6 col-md-offset-3" style="text-align: center">
+                                    <ul class="pagination">
+                                        {{ page_html|safe }}
+                                    </ul>
+                                </div>
+                            </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -502,10 +510,36 @@
         </script>
 
     <script>
-        $(document).ready(function(){$(".dataTables-example").dataTable( {
-              //跟数组下标一样，第一列从0开始，这里表格初始化时，第四列默认降序
-                "order": [[ 1, "desc" ]]
-              });var oTable=$("#editable").dataTable();oTable.$("td").editable("http://www.zi-han.net/theme/example_ajax.php",{"callback":function(sValue,y){var aPos=oTable.fnGetPosition(this);oTable.fnUpdate(sValue,aPos[0],aPos[1])},"submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),"column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"})});function fnClickAddRow(){$("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])};
+        $(document).ready(function(){$(".dataTables-example").dataTable(
+            {
+                "order": [], //取消加载后的第一列默认排序
+                "aLengthMenu" : [10, 25, 50, 100], //更改显示记录数选项
+                "iDisplayLength" : 10, //默认显示的记录数
+                "paging": false
+            }
+        );
+
+        var oTable=$("#editable").dataTable();
+        oTable.$("td").editable(
+            "http://www.zi-han.net/theme/example_ajax.php",
+            {
+                "callback":function(sValue,y){
+                    var aPos=oTable.fnGetPosition(this);
+                    oTable.fnUpdate(sValue,aPos[0],aPos[1])
+                },
+                "submitdata":function(value,settings){
+                    return{
+                        "row_id":this.parentNode.getAttribute("id"),
+                        "column":oTable.fnGetPosition(this)[2]
+                    }
+                },
+                "width":"90%",
+                "height":"100%"
+            })});
+
+        function fnClickAddRow(){
+            $("#editable").dataTable().fnAddData(["Custom row","New row","New row","New row","New row"])
+        }
     </script>
 
     <script>

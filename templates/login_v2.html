@@ -1,0 +1,85 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/static/favicon.ico" type="image/png">
+
+    <title> 登录 </title>
+
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/font-awesome.min93e3.css" %}" rel="stylesheet">
+    <link href="{% static "css/animate.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/style.min.css?v=3.3.0" %}" rel="stylesheet">
+    <link href="{% static "css/login.min.css" %}" rel="stylesheet">
+
+</head>
+
+<body class="signin">
+    <div class="signinpanel">
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="signin-info">
+                    <div class="logopanel m-b">
+                        <h1><strong>欢迎使用DeraOps</strong></h1>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <form class="form-horizontal"  novalidate method="post">{% csrf_token %}
+                    <h3 class="no-margins">登录：</h3>
+                    {{ form.username }}
+                    {{ form.password }}
+{#                    <input type="text" class="form-control uname" placeholder="用户名" />#}
+{#                    <input type="password" class="form-control pword m-b" placeholder="密码" />#}
+                    <a href="">忘记密码了？</a>
+                    <a id="login_btn" class="btn btn-success btn-block">登录</a>
+                </form>
+            </div>
+        </div>
+        <div class="signup-footer">
+            <div class="pull-left">
+                &copy; 2018 All Rights Reserved. 北京紫光得瑞科技
+            </div>
+        </div>
+    </div>
+</body>
+        <script src="{% static "js/login_js/jquery-1.8.2.min.js" %}"></script>
+        <script src="{% static "js/jquery.cookie.js" %}"></script>
+<script>
+    $("#login_btn").click(function () {
+        $('.form-horizontal .error').remove();
+        $.ajax({
+            url:"http://10.0.2.17/login/",
+            type:"POST",
+            data:$(".form-horizontal").serialize(),
+            dataType:'JSON',
+            headers: {"X-CSRFToken": $.cookie('csrftoken')},
+            success:function (arg) {
+                if(arg.status){
+                    location.href = "/index/"
+                }else{
+                    console.log(arg.msg);
+                    $.each(arg.msg,function (k,v) {
+                        var tag = document.createElement('span');
+                        tag.innerHTML = v[0];
+                        tag.className = "error";
+                        tag.style = "color:red;font-weight:800;left:20px";
+                        console.log(tag.innerHTML);
+                        // <span class='error'>v[0]</span>
+                        //$('#login_btn').before(tag);
+                        $('.form-horizontal input[name="'+k+'"]').after(tag);
+                    })
+                }
+            }
+        })
+    });
+
+</script>
+</html>

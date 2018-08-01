@@ -1,22 +1,41 @@
+import urllib.parse
 
-class Page(object):
-    def __init__(self,current_page,all_count,base_url,search_str=None,per_page=10,pager_page_count=9):
+
+class Pagination(object):
+    def __init__(self, current_page, all_count, base_url, query_params, per_page=10, pager_page_count=11):
         """
         分页初始化
         :param current_page: 当前页码
         :param per_page: 每页显示数据条数
         :param all_count: 数据库中总条数
-        :param base_url: get请求的目录
-        :param search_str: get请求search_str的值
         :param pager_page_count: 页面上最多显示的页码数量
         """
         self.base_url = base_url
-        self.search_str = search_str
-        self.current_page = current_page
+        self.query_params = query_params
+        # QueryDict
+        """
+        {
+            q:'xxx',
+            page:2
+        }
+        query_params[page] = 9
+        {
+            q:'xxx',
+            page:9
+        }
+        QueryDict.urlencode() # /arya/app01/userinfo/?q=xxx&page=9
+        """
+        try:
+            self.current_page = int(current_page)
+            if self.current_page <= 0:
+                raise Exception()
+        except Exception as e:
+            self.current_page = 1
+
         self.per_page = per_page
         self.all_count = all_count
         self.pager_page_count = pager_page_count
-        pager_count, b = divmod(all_count, per_page) #获得总页数
+        pager_count, b = divmod(all_count, per_page)
         if b != 0:
             pager_count += 1
         self.pager_count = pager_count
@@ -65,26 +84,27 @@ class Page(object):
                     pager_end = self.current_page + self.half_pager_page_count
 
         page_list = []
-        first_page='<li><a href="%s?search_string=%s">首页</a></li>'%(self.base_url,self.search_str)
-        page_list.append(first_page)
+
         if self.current_page <= 1:
-            prev = '<li><a href="#">&laquo;</a></li>'
+            prev = '<li><a href="#">上一页</a></li>'
         else:
-            prev = '<li><a href="%s?page_num=%s&search_string=%s">&laquo;</a></li>' % (self.base_url,self.current_page - 1,self.search_str)
+            self.query_params['page'] = self.current_page - 1
+            prev = '<li><a href="%s?%s">上一页</a></li>' % (self.base_url,self.query_params.urlencode())
         page_list.append(prev)
         for i in range(pager_start, pager_end + 1):
+            self.query_params['page'] = i
             if self.current_page == i:
-                tpl = '<li><a id="active-page-num" href="%s?page_num=%s&search_string=%s">%s</a></li>' % (self.base_url,i,self.search_str, i,)
+                tpl = '<li class="active"><a href="%s?%s">%s</a></li>' % (
+                    self.base_url, self.query_params.urlencode(), i,)
             else:
-                tpl = '<li><a href="%s?page_num=%s&search_string=%s">%s</a></li>' % (self.base_url,i,self.search_str, i,)
+                tpl = '<li><a href="%s?%s">%s</a></li>' % (self.base_url, self.query_params.urlencode(), i,)
             page_list.append(tpl)
 
         if self.current_page >= self.pager_count:
-            nex = '<li><a href="#">&raquo;</a></li>'
+            nex = '<li><a href="#">下一页</a></li>'
         else:
-            nex = '<li><a href="%s?page_num=%s&search_string=%s">&raquo;</a></li>' % (self.base_url,self.current_page + 1,self.search_str)
+            self.query_params['page'] = self.current_page + 1
+            nex = '<li><a href="%s?%s">下一页</a></li>' % (self.base_url, self.query_params.urlencode(),)
         page_list.append(nex)
-        trailer_page = '<li><a href="%s?page_num=%s&search_string=%s">尾页</a></li>' % (self.base_url,self.pager_count,self.search_str)
-        page_list.append(trailer_page)
         page_str = "".join(page_list)
         return page_str

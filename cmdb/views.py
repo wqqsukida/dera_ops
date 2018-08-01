@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,HttpResponseRedirect
 from django.shortcuts import HttpResponse
 from rbac.models import *
 from rbac.service.init_permission import init_permission
+import copy
 import json
 import paramiko
 import datetime
@@ -10,13 +11,14 @@ from django.forms import Form,fields,widgets
 from .models import *
 from django.db.models import Q
 from django.urls import reverse
+from utils.pagination import Pagination
 
 #========================================================================#
 class LoginForm(Form):
     username = fields.CharField(
         required=True,
         error_messages={'required':'*用户名不能为空'},
-        widget=widgets.TextInput(attrs={'class':'form-control',
+        widget=widgets.TextInput(attrs={'class':'form-control uname',
                                         'type':'text',
                                         'id':'inputUsername3',
                                         'placeholder':'Username',
@@ -26,7 +28,7 @@ class LoginForm(Form):
     password = fields.CharField(
         required=True,
         error_messages={'required': '*密码不能为空'},
-        widget = widgets.PasswordInput(attrs={'class':'form-control',
+        widget = widgets.PasswordInput(attrs={'class':'form-control pword m-b',
                                         'id':'inputPassword3',
                                         'placeholder':'Password',
                                         'name':'password'
@@ -39,7 +41,7 @@ def login(request):
     '''
     if request.method == "GET":
         form = LoginForm()
-        return render(request,'login.html',{'form':form})
+        return render(request,'login_v2.html',{'form':form})
     else:
         response = {'status': True, 'data': None, 'msg': None}
         form = LoginForm(request.POST)
@@ -132,6 +134,16 @@ def asset_list(request):
         idc_list = IDC.objects.all()
         tag_list = Tag.objects.all()
         business_list = BusinessUnit.objects.all()
+        # 加载分页器
+        query_params = copy.deepcopy(request.GET) # QueryDict
+        current_page = request.GET.get('page',1)
+        # per_page = config.per_page
+        # pager_page_count = config.pager_page_count
+        all_count = queryset.count()
+        base_url = request.path_info
+        page_obj = Pagination(current_page,all_count,base_url,query_params)
+        queryset = queryset[page_obj.start:page_obj.end]
+        page_html = page_obj.page_html()
 
         return render(request,'asset.html',locals())
 
@@ -320,7 +332,19 @@ def ssd_list(request):
             queryset = Nvme_ssd.objects.filter(node__contains=search_q,
                                                server_obj__business_unit__roles__userprofile__name=user_dict['user'])
 
+        # 加载分页器
+        query_params = copy.deepcopy(request.GET) # QueryDict
+        current_page = request.GET.get('page',1)
+        # per_page = config.per_page
+        # pager_page_count = config.pager_page_count
+        all_count = queryset.count()
+        base_url = request.path_info
+        page_obj = Pagination(current_page,all_count,base_url,query_params)
+        queryset = queryset[page_obj.start:page_obj.end]
+        page_html = page_obj.page_html()
+
         return render(request,'ssd.html',locals())
+
     elif request.method == "POST":
         '''批量推送任务'''
         ssd_id_list = request.POST.getlist("input_chk",None)
