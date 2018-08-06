@@ -411,7 +411,7 @@ def ssd_task_list(request):
         res = {'res':'task running......'}
         if t_res:
             import ast
-            res = ast.literal_eval(t_res)
+            res = ast.literal_eval(t_res)  # 字符串转换字典
 
 
         return HttpResponse(json.dumps(res))
