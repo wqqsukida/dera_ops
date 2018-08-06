@@ -4,13 +4,8 @@
     <bookmark url="file://$PROJECT_DIR$/templates/asset_detail.html" line="194" mnemonic="5" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47e6c2be-8a09-4c2a-9ff7-3aa60dbb48bd" name="Default" comment="添加主机批量操作方法">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="47e6c2be-8a09-4c2a-9ff7-3aa60dbb48bd" name="Default" comment="add mark_down">
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/plugins/nvme_ssd.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/plugins/nvme_ssd.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dera_ops/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dera_ops/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dera_ops/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dera_ops/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/pagination.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/pagination.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -74,19 +69,10 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="382">
-                <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
+              <first_editor relative-caret-position="360">
+                <caret line="77" selection-start-line="77" selection-end-line="77" />
               </first_editor>
               <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bs64.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/bs64.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="9" column="6" lean-forward="true" selection-start-line="9" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -242,11 +228,6 @@
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
               <item name="rbac" type="462c0819:PsiDirectoryNode" />
               <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -431,7 +412,14 @@
       <option name="project" value="LOCAL" />
       <updated>1532943457321</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="添加主机批量操作方法">
+      <created>1533534862936</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1533534862936</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -450,13 +438,13 @@
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49893048" weight="0.32936978" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50160426" side_tool="true" weight="0.3781213" />
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30558857" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.30558857" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49946523" weight="0.32699168" />
       <window_info anchor="bottom" id="Python Console" order="11" sideWeight="0.49946523" weight="0.41379312" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4983957" weight="0.39952436" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.142246" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.142246" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.14812835" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.15026738" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936978" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32994652" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -512,7 +500,8 @@
     <MESSAGE value="1.API增加token验证功能&#10;2.添加用户管理,用户组管理,权限管理,主机组管理相关方法和页面" />
     <MESSAGE value="1.添加主机、任务概况统计(首页图表展示)&#10;2.添加批量推送任务" />
     <MESSAGE value="添加主机批量操作方法" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加主机批量操作方法" />
+    <MESSAGE value="add mark_down" />
+    <option name="LAST_COMMIT_MESSAGE" value="add mark_down" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -871,8 +860,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="382">
-            <caret line="78" lean-forward="true" selection-start-line="78" selection-end-line="78" />
+          <first_editor relative-caret-position="360">
+            <caret line="77" selection-start-line="77" selection-end-line="77" />
           </first_editor>
           <second_editor />
         </state>
