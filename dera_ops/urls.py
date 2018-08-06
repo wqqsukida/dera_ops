@@ -18,7 +18,7 @@ from django.contrib import admin
 from cmdb import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    # url(r'^admin/', admin.site.urls),
     url(r'^api/', include("api.urls")),
     url(r'^cmdb/', include("cmdb.urls")),
     url(r'^rbac/', include("rbac.urls")),

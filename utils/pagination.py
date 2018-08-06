@@ -1,8 +1,10 @@
 import urllib.parse
-
+from django.conf import settings
 
 class Pagination(object):
-    def __init__(self, current_page, all_count, base_url, query_params, per_page=10, pager_page_count=11):
+    def __init__(self, current_page, all_count, base_url, query_params,
+                 per_page=settings.PER_PAGE,
+                 pager_page_count=settings.PAGER_PAGE_COUNT):
         """
         分页初始化
         :param current_page: 当前页码

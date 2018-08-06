@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'rbac.middlewares.rbac.RbacMiddleware',
+    'rbac.middlewares.rbac.RbacMiddleware',    #权限中间件
 ]
 
 ROOT_URLCONF = 'dera_ops.urls'
@@ -158,4 +158,10 @@ PLUGIN_ITEMS = {
 
 ##################### Nvme Settings ###################################
 
-SMART_LOG_LIMIT_TIME = 1
+SMART_LOG_LIMIT_TIME = 1    #数据库保留smart_log天数
+
+
+##################### 分页器设置 ########################################
+
+PER_PAGE = 10    #每页显示数据数
+PAGER_PAGE_COUNT = 11    #页面上最多显示页码数

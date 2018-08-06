@@ -65,7 +65,7 @@ class Nvme_ssd(object):
         #     obj.save()
     def add_smart_log(self,smart_log,ssd_obj):
         smart_log['ssd_obj'] = ssd_obj
-        # 删除数据库中此SSD 7天前的smart_log
+        # 删除数据库中此SSD 1天前的smart_log
         limit_time = datetime.datetime.now() - datetime.timedelta(days=settings.SMART_LOG_LIMIT_TIME)
         models.Smart_log.objects.filter(ssd_obj=ssd_obj,log_date__lt=limit_time).delete()
         '''
