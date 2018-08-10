@@ -25,6 +25,12 @@
     <link href="/static/css/animate.min.css" rel="stylesheet">
     <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
     <link href="/static/css/gstyle.css" rel="stylesheet">
+    <style>
+        .status-a {
+            display: inline-block;
+            margin: 0.5px;
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -43,8 +49,8 @@
                     <div class="ibox-title">
                         <ol class="breadcrumb">
                               <li><a href="/index_v3"><span class="g_nav_font">首页</span></a></li>
-                              <li><a href="/cmdb/ssd_list"><span class="g_nav_font">SSD列表</span></a></li>
-                              <li class="active">{{ ssd_obj.server_obj.hostname }}-{{ ssd_obj.node }}</li>
+                              <li><a href="/cmdb/asset_list"><span class="g_nav_font">主机列表</span></a></li>
+                              <li class="active">{{ server_obj.hostname }}</li>
                             <div class="ibox-tools">
                                 <a onclick="refresh()">
                                     <i class="fa fa-refresh"></i>
@@ -79,6 +85,7 @@
                              <table class="table table-striped table-bordered table-hover dataTables-example" data-page-size="20">
                                  <thead>
                                     <tr>
+                                        <th>task_title</th>
                                         <th>task_content</th>
                                         <th>create_date</th>
                                         <th>finished_date</th>
@@ -89,20 +96,21 @@
                                  <tbody>
                                     {% for task in task_list %}
                                         <tr>
-                                            <td>{{ task.content}}</td>
+                                            <td>{{ task.task.title }}</td>
+                                            <td>{{ task.task.content }}</td>
                                             <td>{{ task.create_date | date:'Y-m-d H:i:s'}}</td>
                                             <td>{{ task.finished_date | date:'Y-m-d H:i:s'}}</td>
                                             <td>
                                                 {% if task.status == 1 %}
-                                                    <a class="btn-sm btn-success">{{ task.get_status_display }}</a>
+                                                    <a class="btn-sm btn-success status-a">{{ task.get_status_display }}</a>
                                                 {% elif task.status == 2 %}
-                                                    <a class="btn-sm btn-primary">{{ task.get_status_display }}</a>
+                                                    <a class="btn-sm btn-primary status-a">{{ task.get_status_display }}</a>
                                                 {% elif task.status == 3 %}
-                                                    <a class="btn-sm btn-danger">{{ task.get_status_display }}</a>
+                                                    <a class="btn-sm btn-danger status-a">{{ task.get_status_display }}</a>
                                                 {% elif task.status == 4 %}
-                                                    <a class="btn-sm btn-warning">{{ task.get_status_display }}</a>
+                                                    <a class="btn-sm btn-warning status-a">{{ task.get_status_display }}</a>
                                                 {% elif task.status == 5 %}
-                                                    <a class="btn-sm btn-info">{{ task.get_status_display }}</a>
+                                                    <a class="btn-sm btn-info status-a">{{ task.get_status_display }}</a>
                                                 {% endif %}
                                             </td>
                                             <td style="font-size: 20px">
@@ -165,7 +173,7 @@
             {
                 "order": [],
                 "aLengthMenu" : [10, 25, 50, 100], //更改显示记录数选项
-                "iDisplayLength" : 10 ,//默认显示的记录数
+                "iDisplayLength" : 10, //默认显示的记录数
                 "paging": false
 
             }
@@ -215,7 +223,7 @@
             task_id = $(this).attr('task_id');
             $("#get-res").empty();
             $.ajax({
-                url:'/cmdb/ssd_task_list',
+                url:'/cmdb/server_task_status',
                 type:'POST',
                 headers:{"X-CSRFToken": $.cookie('csrftoken')},
                 data:{task_id:task_id},

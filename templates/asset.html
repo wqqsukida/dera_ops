@@ -105,6 +105,7 @@
                                         <option value="1">修改主机组</option>
                                         <option value="2">修改标签</option>
                                         <option value="3">修改主机状态</option>
+                                        <option value="4">执行主机任务</option>
                                     </select>
                                 </div>
 
@@ -144,7 +145,7 @@
 
                                 <div class="col-sm-1">
                                     <button type="submit" value="修改" class="btn btn-primary js_confirm" />
-                                        <i class="fa fa-random"></i>&nbsp;&nbsp;批量修改
+                                        <i class="fa fa-random"></i>&nbsp;&nbsp;批量执行
                                     </button>
                                 </div>
                             </div>
@@ -171,7 +172,7 @@
                                         <th data-hide="all">创建日期</th>
                                         <th data-hide="all">修改日期</th>
                                         <th data-hide="all">机柜号</th>
-                                        <th>操作(更新/删除)</th>
+                                        <th>操作(更新/删除/任务)</th>
                                     </tr>
                                  </thead>
                                  <tbody>
@@ -225,8 +226,12 @@
                                                 <a class="mod-asset-btn" title="更新主机" sid="{{ asset.id }}" data-toggle="modal" data-target="#UpdateModal">
                                                     <i class="fa fa-cog"></i>
                                                 </a>
-                                                <a href="/cmdb/asset_del?server_id={{ asset.id }}" title="删除主机" class="del_confirm" style="margin-right: 15px"><i class="fa fa-trash"></i></a>
-
+                                                <a href="/cmdb/asset_del?server_id={{ asset.id }}" title="删除主机" class="del_confirm" style="margin-left: 15px">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                                <a href="/cmdb/server_task_status?sid={{ asset.id }}" title="任务列表" style="margin-left: 15px">
+                                                    <i class="fa fa-cubes"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -262,26 +267,26 @@
                     <h4 class="modal-title" id="myModalLabel">添加主机</h4>
                 </div>
                 <div class="panel-body">
-                    <form action="/cmdb/asset_add" role="form" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal m-t" action="/cmdb/asset_add"  role="form" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <div class="form-group col-sm-12">
-                            <div class="col-sm-3">  <h5 style="float:right;">主机名<font style="color:red;"> *</font></h5></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">主机名：</label>
                             <div class="col-sm-8">
                                 <input class="form-control" type="text"  name="hostname" id="get_hostname"
                                        placeholder="主机名,必选">
                             </div>
                         </div>
 
-                        <div class="form-group col-sm-12">
-                            <div class="col-sm-3">  <h5 style="float:right;">SN<font style="color:red;"> *</font></h5></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">SN：</label>
                             <div class="col-sm-8">
                                 <input class="form-control" type="text"  name="sn" id="get_sn"
                                        placeholder="SN号，必选">
                             </div>
                         </div>
 
-                        <div class="form-group col-sm-12">
-                            <div class="col-sm-3">  <h5 style="float:right;">主机状态<font style="color:red;"> *</font></h5></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">主机状态：</label>
                             <div class="col-sm-8">
                                 <select class="form-control"  name="server_status_id" id="get_server_status_id">
                                     <option value="1">上架</option>
@@ -681,6 +686,12 @@
             '                                        <option value="3">离线</option>\n' +
             '                                        <option value="4">下架</option>\n' +
             '                                    </select>';
+        el4= '    <select data-placeholder="选择任务项" name="taskmethods" class="chosen-select" multiple style="width:241px;" tabindex="4">\n' +
+            '        {% for tm in taskmethod_list %}\n'+
+                '            <option value="{{ tm.id }}">{{ tm.title }}</option>\n'+
+                '        {% endfor %}\n' +
+            '    </select>';
+
         $("#chose-action").on('change',function () {
             $("#add-action").empty();
             if($(this).val() == 1){
@@ -694,7 +705,10 @@
             }
             else if($(this).val() == 3){
                 $("#add-action").append(el3)
-
+            }
+            else if($(this).val() == 4){
+                $("#add-action").append(el4);
+                init_ms();
             }
         }
         )

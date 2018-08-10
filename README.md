@@ -20,9 +20,8 @@
 ##### paramiko==2.4.1
 
 
-
 #### 代码结构:
-##### <font color=#00ffff >dera_ops:</font>
+##### dera_ops:
 ##### 主程序目录，包含server端配置信息settings.py,访问路由urls.py  
 * settings.py:配置文件  
 * urls.py:路由文件，包含rbac,cmdb,api三部分和一些基础访问页面

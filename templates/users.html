@@ -61,7 +61,9 @@
                         <div class="col-sm-12 m-b-xs" style="padding-bottom: 10px;">
                             <form method="get">
                                 <div class="col-sm-1"> <!--添加-->
-                                    <a class="btn btn-info" href="#" data-toggle="modal" data-target="#AddModal">+ 添加</a>
+                                    <a class="btn btn-info" href="#" data-toggle="modal" data-target="#AddModal">
+                                        <i class="fa fa-user-plus"></i> 添加
+                                    </a>
                                 </div>
 
                                 <div class="col-sm-1">
@@ -90,7 +92,7 @@
                                         <th>座机</th>
                                         <th>手机</th>
                                         <th>所属用户组</th>
-                                        <th>操作(更新/删除)</th>
+                                        <th>操作(更新/删除/修改密码)</th>
                                     </tr>
                                  </thead>
                                  <tbody>
@@ -111,7 +113,9 @@
                                                 <a class="mod-user-btn" title="修改用户信息" uid="{{ user.id }}" data-toggle="modal" data-target="#UpdateModal">
                                                     <i class="fa fa-cog"></i>
                                                 </a>
-                                                <a href="/rbac/users_del?user_id={{ user.id }}" title="删除用户" class="del_confirm" style="margin-left: 15px"><i class="fa fa-trash"></i></a>
+                                                <a href="/rbac/users_del?user_id={{ user.id }}" title="删除用户" class="del_confirm" style="margin-left: 15px">
+                                                    <i class="fa fa-user-times"></i>
+                                                </a>
                                                 <a class="mod-pwd-btn" title="重置用户密码" uid="{{ user.id }}" style="margin-left: 15px" data-toggle="modal" data-target="#PwdModal">
                                                     <i class="fa fa-lock"></i>
                                                 </a>

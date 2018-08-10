@@ -261,3 +261,39 @@ class Task(models.Model):
     create_date = models.DateTimeField('任务创建时间',auto_now_add=True)
     finished_date = models.DateTimeField('任务完成时间',null=True,blank=True)
     task_res = models.TextField('任务结果',null=True,blank=True)
+
+class TaskMethod(models.Model):
+    '''
+    任务类别
+    '''
+    title = models.CharField('任务名称', max_length=32)
+    content = models.TextField('任务内容')
+    create_date = models.DateTimeField('任务创建时间', auto_now_add=True)
+
+class ServerTask(models.Model):
+    '''
+    主机任务表
+    '''
+    server_obj = models.ForeignKey(to='Server',related_name='server_task')
+    task = models.ForeignKey(to='TaskMethod')
+    task_status_choices = (
+        (1, '新建任务'),
+        (2, '执行完成'),
+        (3, '执行错误'),
+        (4, '已删除'),
+        (5, '推送执行中')
+    )
+    status = models.IntegerField('任务状态',choices=task_status_choices,default='1')
+    create_date = models.DateTimeField('任务创建时间',auto_now_add=True)
+    finished_date = models.DateTimeField('任务完成时间',null=True,blank=True)
+    task_res = models.TextField('任务结果',null=True,blank=True)
+
+class TaskModel(models.Model):
+    '''
+    主机任务模板表
+    '''
+    title = models.CharField('模板名称', max_length=32,null=False,blank=False)
+    server_obj = models.ManyToManyField(to='Server')
+    task_obj = models.ManyToManyField(to='TaskMethod')
+    content = models.TextField('任务模板描述',null=True,blank=True)
+    create_date = models.DateTimeField('任务模板创建时间', auto_now_add=True)

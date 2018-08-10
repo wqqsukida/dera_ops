@@ -106,17 +106,16 @@ def server(request):
 @api_auth
 def task(request):
     if request.method == "POST":
-        res = json.loads(request.body.decode('utf-8'))
+        res = json.loads(request.body.decode('utf-8'))    #结果必须为字典形式
         print(res)
         # for res in res_list:
         if res.get('task_res'):
             models.Task.objects.filter(id=res.get('task_id')).\
-                update(status=2,finished_date=datetime.datetime.now(),
+                update(status = 2 , finished_date = datetime.datetime.now(),
                        task_res=res.get('task_res'))
         else:
             models.Task.objects.filter(id=res.get('task_id')).\
-                update(status=3,finished_date=datetime.datetime.now())
-
+                update(status = 3 , finished_date = datetime.datetime.now())
 
         return HttpResponse('finish task')
     elif request.method == "GET":
