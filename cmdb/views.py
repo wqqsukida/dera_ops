@@ -4,7 +4,7 @@ from rbac.models import *
 from rbac.service.init_permission import init_permission
 import copy
 import json
-import paramiko
+import random
 import datetime
 from utils.md5 import encrypt
 from django.forms import Form,fields,widgets
@@ -12,6 +12,7 @@ from .models import *
 from django.db.models import Q
 from django.urls import reverse
 from utils.pagination import Pagination
+from django.http.request import QueryDict
 
 #========================================================================#
 def init_paginaion(request,queryset):
@@ -120,16 +121,17 @@ def index_v3(request):
     server_offline = Server.objects.filter(server_status_id=3).count()
     server_down = Server.objects.filter(server_status_id=4).count()
 
-    task_new = Task.objects.filter(status=1).count()
-    task_finished = Task.objects.filter(status=2).count()
-    task_error = Task.objects.filter(status=3).count()
-    task_deleted = Task.objects.filter(status=4).count()
-    task_pushing = Task.objects.filter(status=5).count()
+    task_new = SSDTask.objects.filter(status=1).count()
+    task_finished = SSDTask.objects.filter(status=2).count()
+    task_error = SSDTask.objects.filter(status=3).count()
+    task_deleted = SSDTask.objects.filter(status=4).count()
+    task_pushing = SSDTask.objects.filter(status=5).count()
 
     return render(request,'index_v1.html',locals())
 #========================================================================#
 def asset_list(request):
     if request.method == "GET":
+        page = request.GET.get("page")
         status = request.GET.get("status", "")
         message = request.GET.get("message", "")
         if status.isdigit():
@@ -137,7 +139,7 @@ def asset_list(request):
 
         search_q = request.GET.get('q','')
         user_dict = request.session.get('is_login', None)
-        print(user_dict)
+        # print(user_dict)
         if UserProfile.objects.get(name=user_dict['user']).is_admin :
             queryset = Server.objects.filter(hostname__contains=search_q)
         else:
@@ -155,8 +157,9 @@ def asset_list(request):
 
 def asset_run_tasks(request):
     if request.method == "POST":
+        page = request.POST.get("page")
         id_list = request.POST.getlist("input_chk",None)
-        print('run_actions id :%s'%id_list)
+        # print('run_actions id :%s'%id_list)
         server_objs = Server.objects.filter(id__in=id_list)
         server_status_id = request.POST.get("status_ids",None)
         tags = request.POST.getlist("tags",None)
@@ -181,18 +184,18 @@ def asset_run_tasks(request):
                     code = 0
                     msg="成功修改主机组！"
                 elif taskmethods:
-                    # 创建任务模板
-                    # if request.POST.get("save_model"):
-                    title = 'auto_create_taskmodel'
+                    # 创建任务子会话
+                    # if request.POST.get("save_session"):
+                    title = 'auto_create_secsession'
                     content = ''
-                    new_tm = TaskModel.objects.create(title=title,content=content)
+                    new_ts = Task_SecSession.objects.create(title=title,content=content)
                     t_objs = TaskMethod.objects.filter(id__in=taskmethods)
-                    new_tm.server_obj.add(*server_objs)
-                    new_tm.task_obj.add(*t_objs)
-                    # 执行刚创建的任务模板
-                    for t in new_tm.task_obj.all():
-                        for s in new_tm.server_obj.all():
-                            ServerTask.objects.create(server_obj=s, task=t)
+                    new_ts.server_obj.add(*server_objs)
+                    new_ts.task_obj.add(*t_objs)
+                    # 执行刚创建的子会话
+                    # for t in new_ts.task_obj.all():
+                    #     for s in new_ts.server_obj.all():
+                    #         ServerTask.objects.create(server_obj=s, task=t)
 
                     code = 0
                     msg="成功执行主机任务！"
@@ -204,9 +207,10 @@ def asset_run_tasks(request):
                 result = {"code": 1, "message": str(e)}
         else:
             result = {"code": 1, "message": "请至少选择一个主机!!"}
-        return HttpResponseRedirect('/cmdb/asset_list?status={0}&message={1}'.
+        return HttpResponseRedirect('/cmdb/asset_list?status={0}&message={1}&page={2}'.
                                     format(result.get("code", ""),
-                                           result.get("message", "")))
+                                           result.get("message", ""),
+                                           page))
 
 def asset_detail(request):
     result = {}
@@ -230,6 +234,7 @@ def asset_detail(request):
 def asset_add(request):
     result = {}
     if request.method == "POST":
+        page = request.POST.get('page')
         hostname = request.POST.get('hostname',None)
         sn = request.POST.get('sn',None)
         server_status_id = request.POST.get('server_status_id',None)
@@ -242,23 +247,25 @@ def asset_add(request):
                 result = {"code": 1, "message":e }
         else:
             result = {"code": 1, "message": "主机名不能为空！"}
-        return HttpResponseRedirect('/cmdb/asset_list?status={0}&message={1}'.
+        return HttpResponseRedirect('/cmdb/asset_list?status={0}&message={1}&page={2}'.
                             format(result.get("code", ""),
-                                   result.get("message", "")))
+                                   result.get("message", ""),
+                                   page))
 
 def asset_del(request):
     if request.method == "GET":
         id = request.GET.get("server_id",None)
-
+        page = request.GET.get("page")
         try:
             Server.objects.get(id=id).delete()
             result = {"code": 0, "message": "删除主机成功！"}
         except Exception as e:
             result = {"code": 1, "message":e }
 
-        return HttpResponseRedirect('/cmdb/asset_list?status={0}&message={1}'.
+        return HttpResponseRedirect('/cmdb/asset_list?status={0}&message={1}&page={2}'.
                             format(result.get("code", ""),
-                                   result.get("message", "")))
+                                   result.get("message", ""),
+                                   page))
 
 def asset_update(request):
     if request.method == "GET":
@@ -286,6 +293,7 @@ def asset_update(request):
     elif request.method == "POST":
 
         result = {}
+        page = request.POST.get('page')
         id = request.POST.get("id",None)
         hostname = request.POST.get("hostname",None)
         sn = request.POST.get("sn",None)
@@ -315,9 +323,10 @@ def asset_update(request):
         except Exception as e:
             result = {"code": 1, "message": str(e)}
 
-        return HttpResponseRedirect('/cmdb/asset_list?status={0}&message={1}'.
+        return HttpResponseRedirect('/cmdb/asset_list?status={0}&message={1}&page={2}'.
                             format(result.get("code", ""),
-                                   result.get("message", "")))
+                                   result.get("message", ""),
+                                   page))
 
 def asset_change_log(request):
     if request.method == "GET":
@@ -340,6 +349,7 @@ def asset_change_log(request):
 #========================================================================#
 def ssd_list(request):
     if request.method == "GET":
+        page = request.GET.get("page")
         status = request.GET.get("status", "")
         message = request.GET.get("message", "")
         if status.isdigit():
@@ -360,20 +370,22 @@ def ssd_list(request):
 
     elif request.method == "POST":
         '''批量推送任务'''
+        page = request.POST.get("page")
         ssd_id_list = request.POST.getlist("input_chk",None)
         print(ssd_id_list)
         task = request.POST.get("tasks",None)
         try:
-            objs=[Task(ssd_obj_id=id,content=task) for id in ssd_id_list]
-            Task.objects.bulk_create(objs)
+            objs=[SSDTask(ssd_obj_id=id,content=task) for id in ssd_id_list]
+            SSDTask.objects.bulk_create(objs)
             result = {"code": 0, "message": "批量创建任务成功！"}
         except Exception as e :
             print(e)
             result = {"code": 1, "message": "批量创建任务失败！"}
 
-        return HttpResponseRedirect('/cmdb/ssd_list?status={0}&message={1}'.
+        return HttpResponseRedirect('/cmdb/ssd_list?status={0}&message={1}&page={2}'.
                             format(result.get("code", ""),
-                                   result.get("message", "")))
+                                   result.get("message", ""),
+                                   page))
 
 def ssd_smartlog(request):
     if request.method == "GET":
@@ -395,30 +407,31 @@ def ssd_smartlog(request):
 
 def ssd_push_task(request):
     if request.method == "POST":
+        page = request.POST.get("page")
         ssd_id = request.POST.get("ssd_id",None)
         task = request.POST.get("task",None)
         try:
-            Task.objects.create(ssd_obj_id=ssd_id,content=task)
+            SSDTask.objects.create(ssd_obj_id=ssd_id,content=task)
             result = {"code": 0, "message": "创建任务成功！"}
         except Exception as e :
             print(e)
             result = {"code": 1, "message": "创建任务失败！"}
 
-
-        return HttpResponseRedirect('/cmdb/ssd_list?status={0}&message={1}'.
+        return HttpResponseRedirect('/cmdb/ssd_list?status={0}&message={1}&page={2}'.
                             format(result.get("code", ""),
-                                   result.get("message", "")))
+                                   result.get("message", ""),
+                                   page))
 
 def ssd_task_list(request):
     if request.method == "GET":
         ssd_id = request.GET.get("ssd_id")
         ssd_obj = Nvme_ssd.objects.get(id=ssd_id)
-        task_list = Task.objects.filter(ssd_obj=ssd_obj).order_by('-create_date')
+        task_list = SSDTask.objects.filter(ssd_obj=ssd_obj).order_by('-create_date')
         task_list, page_html = init_paginaion(request, task_list)
         return render(request,'ssd_task.html',locals())
     elif request.method == "POST":
         task_id = request.POST.get("task_id")
-        task_obj = Task.objects.get(id=task_id)
+        task_obj = SSDTask.objects.get(id=task_id)
         t_res = task_obj.task_res
         res = {'res':'task running......'}
         if t_res:
@@ -430,6 +443,7 @@ def ssd_task_list(request):
 def t1(request):
     return render(request,'t1.html')
 #========================================================================#
+#==========主机任务状态视图===========
 def server_task_status(request):
     '''
     任务执行列表
@@ -438,8 +452,45 @@ def server_task_status(request):
     '''
     if request.method == "GET":
         server_id = request.GET.get("sid")
-        server_obj = Server.objects.get(id=server_id)
-        queryset = ServerTask.objects.filter(server_obj=server_obj).order_by('-create_date')
+        secsession_id = request.GET.get("ssid")
+        st_status_id = request.GET.get("sts_id")
+        fsid = request.GET.get("fsid")
+        search_q = request.GET.get("q","")
+        if server_id: #从主机列表访问
+            server_obj = Server.objects.get(id=server_id)
+            queryset = ServerTask.objects.filter(server_obj=server_obj).order_by('-create_date')
+        elif secsession_id: #从任务会话列表访问
+            ss_obj = Task_SecSession.objects.get(id=secsession_id)
+            if st_status_id == '1':
+                queryset = ServerTask.objects.filter(status=1,secsession_obj=ss_obj).order_by('-create_date')
+            elif st_status_id == '2':
+                queryset = ServerTask.objects.filter(status=2,secsession_obj=ss_obj).order_by('-create_date')
+            elif st_status_id == '3':
+                queryset = ServerTask.objects.filter(status=3,secsession_obj=ss_obj).order_by('-create_date')
+            elif st_status_id == '4':
+                queryset = ServerTask.objects.filter(status=4,secsession_obj=ss_obj).order_by('-create_date')
+            elif st_status_id == '5':
+                queryset = ServerTask.objects.filter(status=5,secsession_obj=ss_obj).order_by('-create_date')
+            else:
+                queryset = ServerTask.objects.filter(secsession_obj=ss_obj).order_by('-create_date')
+        elif fsid:
+            fs_obj =  TaskSession.objects.filter(id=fsid)
+            ss_objs = fs_obj.values('task_secsession__id')
+            ssid_list = [t['task_secsession__id'] for t in ss_objs]
+            if st_status_id == '1':
+                queryset = ServerTask.objects.filter(status=1,secsession_obj_id__in=ssid_list).order_by('-create_date')
+            elif st_status_id == '2':
+                queryset = ServerTask.objects.filter(status=2,secsession_obj_id__in=ssid_list).order_by('-create_date')
+            elif st_status_id == '3':
+                queryset = ServerTask.objects.filter(status=3,secsession_obj_id__in=ssid_list).order_by('-create_date')
+            elif st_status_id == '4':
+                queryset = ServerTask.objects.filter(status=4,secsession_obj_id__in=ssid_list).order_by('-create_date')
+            elif st_status_id == '5':
+                queryset = ServerTask.objects.filter(status=5,secsession_obj_id__in=ssid_list).order_by('-create_date')
+            else:
+                queryset = ServerTask.objects.filter(secsession_obj_id__in=ssid_list).order_by('-create_date')
+        else:
+            queryset = ServerTask.objects.filter(task__title__contains=search_q).order_by('-create_date')
         # 加载分页器
         task_list, page_html = init_paginaion(request, queryset)
 
@@ -454,54 +505,91 @@ def server_task_status(request):
             res = ast.literal_eval(t_res)  # 字符串转换字典
 
         return HttpResponse(json.dumps(res))
-
-def server_task_model(request):
+#==========子任务会话视图=============
+def server_task_secsession(request):
     '''
-    服务器任务模板列表
+    服务器子任务会话列表
     :param request:
     :return:
     '''
     if request.method == "GET":
+        fs_id = request.GET.get("sid")
         status = request.GET.get("status", "")
         message = request.GET.get("message", "")
         if status.isdigit():
             result = {"code":int(status),"message":message}
-
-        queryset = TaskModel.objects.all()
+        if fs_id:
+            queryset = Task_SecSession.objects.filter(father_session_id=fs_id)
+            current_session = TaskSession.objects.get(id=fs_id)
+        else:
+            queryset = Task_SecSession.objects.all()
         # 加载分页器
         model_list, page_html = init_paginaion(request, queryset)
 
         server_queryset = Server.objects.all()
         task_queryset = TaskMethod.objects.all()
+        fs_queryset = TaskSession.objects.all()
 
-        return render(request,'server_task_model.html',locals())
+        page = request.GET.get('page')
 
-def server_run_model(request):
+        return render(request,'server_task_secsession.html',locals())
+
+def server_run_secsession(request):
     '''
-    执行任务模板
+    单独执行子任务会话
     :param request:
     :return:
     '''
     if request.method == "GET":
-        mid = request.GET.get("mid")
-        m_obj = TaskModel.objects.get(id=mid)
+        sid = request.GET.get("mid")
+        s_obj = Task_SecSession.objects.get(id=sid)
 
+        fs_id = request.GET.get("fs_id")
+        page = request.GET.get("page")
         try:
-            for t in m_obj.task_obj.all():
-                for s in m_obj.server_obj.all():
-                    ServerTask.objects.create(server_obj=s,task=t)
-            result = {"code": 0, "message": "任务模板执行成功!"}
+            for t in s_obj.task_obj.all():
+                for s in s_obj.server_obj.all():
+                    ServerTask.objects.create(server_obj=s,task=t,secsession_obj=s_obj)
+            result = {"code": 0, "message": "子任务会话执行成功 !"}
 
         except Exception as e:
             result = {"code": 1, "message": str(e)}
 
-        return HttpResponseRedirect('/cmdb/server_task_model?status={0}&message={1}'.
+        return HttpResponseRedirect('/cmdb/server_task_secsession?status={0}&message={1}&page={2}&sid={3}'.
                             format(result.get("code", ""),
-                                   result.get("message", "")))
+                                   result.get("message", ""),
+                                   page,fs_id))
 
-def server_create_model(request):
+def server_random_runsecs(request):
     '''
-    创建任务模板
+    随机执行子任务会话里的任务
+    :param request:
+    :return:
+    '''
+    if request.method == "GET":
+        sid = request.GET.get("sid")
+        s_obj = Task_SecSession.objects.get(id=sid)
+
+        fs_id = request.GET.get("fs_id")
+        page = request.GET.get("page")
+        try:
+            for t in s_obj.task_obj.all():
+                s = random.choice(s_obj.server_obj.all())
+                # print(s.hostname,t.title)
+                ServerTask.objects.create(server_obj=s,task=t,secsession_obj=s_obj)
+            result = {"code": 0, "message": "随机执行成功 !"}
+
+        except Exception as e:
+            result = {"code": 1, "message": str(e)}
+
+        return HttpResponseRedirect('/cmdb/server_task_secsession?status={0}&message={1}&page={2}&sid={3}'.
+                            format(result.get("code", ""),
+                                   result.get("message", ""),
+                                   page,fs_id))
+
+def server_create_secsession(request):
+    '''
+    创建子任务会话
     :param request:
     :return:
     '''
@@ -511,32 +599,38 @@ def server_create_model(request):
         sid_list = request.POST.getlist("sids")
         tid_list = request.POST.getlist("tids")
         content = request.POST.get("content")
+        father_session_id = request.POST.get("fs") #要修改的fs_id
+
+        fs_id = request.POST.get("fs_id") #当前页面的fs_id
+        page = request.POST.get("page")
         if title:
             try:
-                new_tm = TaskModel.objects.create(title=title,content=content)
+                new_ts = Task_SecSession.objects.create(title=title,content=content,
+                                                        father_session_id=father_session_id)
                 s_objs = Server.objects.filter(id__in=sid_list)
                 t_objs = TaskMethod.objects.filter(id__in=tid_list)
-                new_tm.server_obj.add(*s_objs)
-                new_tm.task_obj.add(*t_objs)
-                result = {"code": 0, "message": "任务模板创建成功!"}
+                new_ts.server_obj.add(*s_objs)
+                new_ts.task_obj.add(*t_objs)
+                result = {"code": 0, "message": "子任务会话创建成功!"}
             except Exception as e:
                 result = {"code": 1, "message": str(e)}
         else:
-            result = {"code": 1, "message": "必须指定模板名称!"}
-    return HttpResponseRedirect('/cmdb/server_task_model?status={0}&message={1}'.
-                                format(result.get("code", ""),
-                                       result.get("message", "")))
+            result = {"code": 1, "message": "必须指定子会话名称!"}
+        return HttpResponseRedirect('/cmdb/server_task_secsession?status={0}&message={1}&page={2}&sid={3}'.
+                                    format(result.get("code", ""),
+                                           result.get("message", ""),
+                                           page, fs_id))
 
-def server_edit_model(request):
+def server_edit_secsession(request):
     '''
-    修改任务模板
+    修改子任务会话
     :param request:
     :return:
     '''
     if request.method == "GET":
         mid = request.GET.get('mid',None)
 
-        m_obj = TaskModel.objects.filter(id=mid)
+        m_obj = Task_SecSession.objects.filter(id=mid)
         m_dict = m_obj.values().first()
         m_dict.pop('create_date')
 
@@ -574,48 +668,58 @@ def server_edit_model(request):
         content = request.POST.get("content",None)
         server_obj = request.POST.getlist("sids",None)
         task_obj = request.POST.getlist("tids",None)
+        fs = request.POST.get("fs")
+
+        fs_id = request.POST.get("fs_id")
+        page = request.POST.get("page")
 
         form_data = {
             'title':title,
             'server_obj':server_obj,
             'task_obj':task_obj,
-            'content':content
+            'content':content,
+            'father_session_id':fs
         }
 
-        m_obj = TaskModel.objects.get(id=mid)
+        m_obj = Task_SecSession.objects.get(id=mid)
         try:
             for k ,v in form_data.items():
                 setattr(m_obj,k,v)
                 m_obj.save()
-            result = {"code": 0, "message": "任务模板修改成功！"}
+            result = {"code": 0, "message": "子任务会话更新成功！"}
         except Exception as e:
             print(e)
             result = {"code": 1, "message": str(e)}
 
-        return HttpResponseRedirect('/cmdb/server_task_model?status={0}&message={1}'.
+        return HttpResponseRedirect('/cmdb/server_task_secsession?status={0}&message={1}&page={2}&sid={3}'.
                             format(result.get("code", ""),
-                                   result.get("message", "")))
+                                   result.get("message", ""),
+                                   page,fs_id))
 
-def server_del_model(request):
+def server_del_secsession(request):
     '''
-    删除任务模板
+    删除子任务会话
     :param request:
     :return:
     '''
     if request.method == "GET":
         mid = request.GET.get("mid")
+
+        fs_id = request.GET.get("fs_id")
+        page = request.GET.get("page")
         try:
-            TaskModel.objects.get(id=mid).delete()
-            result = {"code": 0, "message": "任务模板删除成功!"}
+            Task_SecSession.objects.get(id=mid).delete()
+            result = {"code": 0, "message": "子任务会话删除成功!"}
         except Exception as e:
             result = {"code": 1, "message": str(e)}
-        return HttpResponseRedirect('/cmdb/server_task_model?status={0}&message={1}'.
+        return HttpResponseRedirect('/cmdb/server_task_secsession?status={0}&message={1}&page={2}&sid={3}'.
                                     format(result.get("code", ""),
-                                           result.get("message", "")))
-
+                                           result.get("message", ""),
+                                           page,fs_id))
+#==========任务模板视图===============
 def server_taskmethod_list(request):
     '''
-    任务项列表
+    任务模板列表
     :param request:
     :return:
     '''
@@ -631,7 +735,6 @@ def server_taskmethod_list(request):
 
 
         return render(request,'server_taskmethod.html',locals())
-
 
 def server_taskmethod_add(request):
     result = {}
@@ -692,3 +795,158 @@ def server_taskmethod_del(request):
         return HttpResponseRedirect('/cmdb/server_taskmethod_list?status={0}&message={1}'.
                                     format(result.get("code", ""),
                                            result.get("message", "")))
+#==========任务会话视图===============
+def server_task_session(request):
+    '''
+    服务器任务会话列表
+    :param request:
+    :return:
+    '''
+    if request.method == "GET":
+        status = request.GET.get("status", "")
+        message = request.GET.get("message", "")
+        if status.isdigit():
+            result = {"code": int(status), "message": message}
+
+        queryset = TaskSession.objects.all()
+        #加载分页器
+        session_list, page_html = init_paginaion(request, queryset)
+
+        page = request.GET.get('page')
+
+        return render(request, 'server_task_session.html', locals())
+
+def server_run_session(request):
+    if request.method == "GET":
+        sid = request.GET.get("sid")
+        s_obj = TaskSession.objects.get(id=sid)
+
+        page = request.GET.get("page")
+
+        ss_list = s_obj.task_secsession_set.all()
+        try:
+            for ss in ss_list:
+                for t in ss.task_obj.all():
+                    for s in ss.server_obj.all():
+                        print(ss.title,t.title,s.hostname)
+                        # ServerTask.objects.create(server_obj=s,task=t,secsession_obj=ss)
+
+            result = {"code": 0, "message": "执行任务会话成功!"}
+        except Exception as e:
+            result = {"code": 1, "message": str(e)}
+
+        return HttpResponseRedirect('/cmdb/server_task_session?status={0}&message={1}&page={2}'.
+                                    format(result.get("code", ""),
+                                           result.get("message", ""),
+                                           page))
+
+def server_random_runs(request):
+    if request.method == "GET":
+        sid = request.GET.get("sid")
+        s_obj = TaskSession.objects.get(id=sid)
+
+        page = request.GET.get("page")
+
+        ss_list = s_obj.task_secsession_set.all()
+        try:
+            for ss in ss_list:
+                for t in ss.task_obj.all():
+                    s = random.choice(ss.server_obj.all())
+                    print(ss.title, t.title, s.hostname)
+                    # ServerTask.objects.create(server_obj=s,task=t,secsession_obj=ss)
+
+            result = {"code": 0, "message": "随机执行任务会话成功!"}
+        except Exception as e:
+            result = {"code": 1, "message": str(e)}
+
+        return HttpResponseRedirect('/cmdb/server_task_session?status={0}&message={1}&page={2}'.
+                                    format(result.get("code", ""),
+                                           result.get("message", ""),
+                                           page))
+
+def server_create_session(request):
+    '''
+    创建任务会话
+    :param request:
+    :return:
+    '''
+    result = {}
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+
+        page = request.POST.get("page")
+        if title:
+            try:
+                new_ts = TaskSession.objects.create(title=title, content=content)
+                result = {"code": 0, "message": "任务会话创建成功!"}
+            except Exception as e:
+                result = {"code": 1, "message": str(e)}
+        else:
+            result = {"code": 1, "message": "必须指定会话名称!"}
+        return HttpResponseRedirect('/cmdb/server_task_session?status={0}&message={1}&page={2}'.
+                                    format(result.get("code", ""),
+                                           result.get("message", ""),
+                                           page))
+
+def server_edit_session(request):
+    '''
+    修改任务会话
+    :param request:
+    :return:
+    '''
+    if request.method == "GET":
+        sid = request.GET.get('sid',None)
+
+        s_obj = TaskSession.objects.filter(id=sid)
+        s_dict = s_obj.values().first()
+        s_dict.pop('create_date')
+
+        return HttpResponse(json.dumps(dict(s_dict)))
+
+    elif request.method == "POST":
+
+        sid = request.POST.get("id")
+        title = request.POST.get("title",None)
+        content = request.POST.get("content",None)
+
+        page = request.POST.get("page")
+
+        form_data = {
+            'title':title,
+            'content':content,
+        }
+        s_obj = TaskSession.objects.get(id=sid)
+        try:
+            for k ,v in form_data.items():
+                setattr(s_obj,k,v)
+                s_obj.save()
+            result = {"code": 0, "message": "任务会话更新成功！"}
+        except Exception as e:
+            print(e)
+            result = {"code": 1, "message": str(e)}
+
+        return HttpResponseRedirect('/cmdb/server_task_session?status={0}&message={1}&page={2}'.
+                            format(result.get("code", ""),
+                                   result.get("message", ""),
+                                   page))
+
+def server_del_session(request):
+    '''
+    删除任务会话
+    :param request:
+    :return:
+    '''
+    if request.method == "GET":
+        sid = request.GET.get("sid")
+
+        page = request.GET.get("page")
+        try:
+            TaskSession.objects.get(id=sid).delete()
+            result = {"code": 0, "message": "任务会话删除成功!"}
+        except Exception as e:
+            result = {"code": 1, "message": str(e)}
+        return HttpResponseRedirect('/cmdb/server_task_session?status={0}&message={1}&page={2}'.
+                                    format(result.get("code", ""),
+                                           result.get("message", ""),
+                                           page))

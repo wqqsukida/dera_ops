@@ -244,9 +244,9 @@ class ErrorLog(models.Model):
     def __str__(self):
         return self.title
 
-class Task(models.Model):
+class SSDTask(models.Model):
     '''
-    任务表
+    ssd任务状态表
     '''
     ssd_obj = models.ForeignKey(to='Nvme_ssd',related_name='task')
     content = models.TextField('任务内容')
@@ -264,7 +264,7 @@ class Task(models.Model):
 
 class TaskMethod(models.Model):
     '''
-    任务类别
+    主机任务模板
     '''
     title = models.CharField('任务名称', max_length=32)
     content = models.TextField('任务内容')
@@ -272,7 +272,7 @@ class TaskMethod(models.Model):
 
 class ServerTask(models.Model):
     '''
-    主机任务表
+    主机任务状态表
     '''
     server_obj = models.ForeignKey(to='Server',related_name='server_task')
     task = models.ForeignKey(to='TaskMethod')
@@ -287,13 +287,78 @@ class ServerTask(models.Model):
     create_date = models.DateTimeField('任务创建时间',auto_now_add=True)
     finished_date = models.DateTimeField('任务完成时间',null=True,blank=True)
     task_res = models.TextField('任务结果',null=True,blank=True)
+    secsession_obj = models.ForeignKey(to='Task_SecSession',null=True, blank=True)
 
-class TaskModel(models.Model):
+class TaskSession(models.Model):
     '''
-    主机任务模板表
+    主机任务会话表
     '''
-    title = models.CharField('模板名称', max_length=32,null=False,blank=False)
+    title = models.CharField('会话名称', max_length=32,null=False,blank=False)
+    content = models.TextField('会话描述',null=True,blank=True)
+    create_date = models.DateTimeField('会话创建时间', auto_now_add=True)
+
+    def nst(self):
+        count = 0
+        server_tasks = self.task_secsession_set.values('servertask__id','servertask__status')
+        for st in server_tasks:
+            if st.get('servertask__status') == 1:
+                count += 1
+        return count
+
+    def fst(self):
+        count = 0
+        server_tasks = self.task_secsession_set.values('servertask__id','servertask__status')
+        for st in server_tasks:
+            if st.get('servertask__status') == 2:
+                count += 1
+        return count
+
+    def est(self):
+        count = 0
+        server_tasks = self.task_secsession_set.values('servertask__id','servertask__status')
+        for st in server_tasks:
+            if st.get('servertask__status') == 3:
+                count += 1
+        return count
+
+    def dst(self):
+        count = 0
+        server_tasks = self.task_secsession_set.values('servertask__id','servertask__status')
+        for st in server_tasks:
+            if st.get('servertask__status') == 4:
+                count += 1
+        return count
+
+    def pst(self):
+        count = 0
+        server_tasks = self.task_secsession_set.values('servertask__id','servertask__status')
+        for st in server_tasks:
+            if st.get('servertask__status') == 5:
+                count += 1
+        return count
+
+class Task_SecSession(models.Model):
+    '''
+    主机子任务会话表
+    '''
+    title = models.CharField('子会话名称', max_length=32,null=False,blank=False)
     server_obj = models.ManyToManyField(to='Server')
     task_obj = models.ManyToManyField(to='TaskMethod')
-    content = models.TextField('任务模板描述',null=True,blank=True)
-    create_date = models.DateTimeField('任务模板创建时间', auto_now_add=True)
+    content = models.TextField('子会话描述',null=True,blank=True)
+    create_date = models.DateTimeField('子会话创建时间', auto_now_add=True)
+    father_session = models.ForeignKey(to='TaskSession',null=True, blank=True)
+
+    def nst(self):
+        return self.servertask_set.filter(status=1).count()
+
+    def fst(self):
+        return self.servertask_set.filter(status=2).count()
+
+    def est(self):
+        return self.servertask_set.filter(status=3).count()
+
+    def dst(self):
+        return self.servertask_set.filter(status=4).count()
+
+    def pst(self):
+        return self.servertask_set.filter(status=5).count()

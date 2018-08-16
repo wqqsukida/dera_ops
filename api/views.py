@@ -88,7 +88,7 @@ def server(request):
         ####################################推送任务请求########################################
         hostname = server_dict['basic']['data']['hostname']
         server_obj = models.Server.objects.filter(hostname=hostname).first()
-        task_query_list = models.Task.objects.filter(ssd_obj__server_obj=server_obj,status=1)
+        task_query_list = models.SSDTask.objects.filter(ssd_obj__server_obj=server_obj,status=1)
         task_list = []
         if task_query_list:
             for task in task_query_list:
@@ -110,11 +110,11 @@ def task(request):
         print(res)
         # for res in res_list:
         if res.get('task_res'):
-            models.Task.objects.filter(id=res.get('task_id')).\
+            models.SSDTask.objects.filter(id=res.get('task_id')).\
                 update(status = 2 , finished_date = datetime.datetime.now(),
                        task_res=res.get('task_res'))
         else:
-            models.Task.objects.filter(id=res.get('task_id')).\
+            models.SSDTask.objects.filter(id=res.get('task_id')).\
                 update(status = 3 , finished_date = datetime.datetime.now())
 
         return HttpResponse('finish task')

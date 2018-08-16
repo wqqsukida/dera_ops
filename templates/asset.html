@@ -96,7 +96,7 @@
                         </div>
                         <form method="post" action="/cmdb/asset_run_tasks">
                             {% csrf_token %}
-
+                            <input class="hide" type="text" name="page" value="{{ page }}">
                             <div class="col-sm-12 m-b-xs" style="padding-bottom: 10px;">
                                 <div class="col-sm-7"></div>
                                 <div class="col-sm-2">
@@ -226,7 +226,7 @@
                                                 <a class="mod-asset-btn" title="更新主机" sid="{{ asset.id }}" data-toggle="modal" data-target="#UpdateModal">
                                                     <i class="fa fa-cog"></i>
                                                 </a>
-                                                <a href="/cmdb/asset_del?server_id={{ asset.id }}" title="删除主机" class="del_confirm" style="margin-left: 15px">
+                                                <a href="/cmdb/asset_del?server_id={{ asset.id }}&page={{ page }}" title="删除主机" class="del_confirm" style="margin-left: 15px">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                                 <a href="/cmdb/server_task_status?sid={{ asset.id }}" title="任务列表" style="margin-left: 15px">
@@ -269,6 +269,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal m-t" action="/cmdb/asset_add"  role="form" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
+                        <input class="hide" type="text" name="page" value="{{ page }}">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">主机名：</label>
                             <div class="col-sm-8">
@@ -318,6 +319,7 @@
                 <div class="panel-body">
                     <form action="/cmdb/asset_update" role="form" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
+                        <input class="hide" type="text" name="page" value="{{ page }}">
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">基本设置</a>

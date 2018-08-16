@@ -25,19 +25,31 @@ urlpatterns = [
     url(r'^asset_update', views.asset_update),
     url(r'^asset_change_log', views.asset_change_log), #主机变更记录
     url(r'^asset_run_tasks', views.asset_run_tasks), #批量修改主机
-    url(r'^server_task_status', views.server_task_status), #主机任务状态列表
-    url(r'^server_task_model', views.server_task_model), #主机任务模板
-    url(r'^server_create_model', views.server_create_model), #创建主机任务模板
-    url(r'^server_edit_model', views.server_edit_model), #修改主机任务模板
-    url(r'^server_del_model', views.server_del_model), #删除主机任务模板
-    url(r'^server_run_model', views.server_run_model), #执行主机任务模板
-    url(r'^server_taskmethod_list', views.server_taskmethod_list), #主机任务项
-    url(r'^server_taskmethod_add', views.server_taskmethod_add), #添加主机任务项
-    url(r'^server_taskmethod_edit', views.server_taskmethod_edit), #修改主机任务项
-    url(r'^server_taskmethod_del', views.server_taskmethod_del), #删除主机任务项
+
     url(r'^ssd_list', views.ssd_list), #SSD列表
     url(r'^ssd_smartlog', views.ssd_smartlog), #SSD查看smart_log
     url(r'^ssd_push_task', views.ssd_push_task), #SSD创建任务
     url(r'^ssd_task_list', views.ssd_task_list), #SSD任务列表
+
+    url(r'^server_task_status', views.server_task_status),  # 主机任务状态列表
+    url(r'^server_task_session', views.server_task_session),  # 主机任务会话列表
+    url(r'^server_create_session', views.server_create_session),  # 创建主机任务会话
+    url(r'^server_edit_session', views.server_edit_session),  # 修改主机任务会话
+    url(r'^server_del_session', views.server_del_session),  # 删除主机任务会话
+    url(r'^server_run_session', views.server_run_session),  # 执行主机任务会话
+    url(r'^server_random_runs', views.server_random_runs),  # 随机执行主机任务会话
+
+    url(r'^server_task_secsession', views.server_task_secsession),  # 主机子任务会话列表
+    url(r'^server_create_secsession', views.server_create_secsession),  # 创建主机子任务会话
+    url(r'^server_edit_secsession', views.server_edit_secsession),  # 修改主机子任务会话
+    url(r'^server_del_secsession', views.server_del_secsession),  # 删除主机子任务会话
+    url(r'^server_run_secsession', views.server_run_secsession),  # 执行主机子任务会话
+    url(r'^server_random_runsecs', views.server_random_runsecs),  # 随机执行主机子任务会话
+
+    url(r'^server_taskmethod_list', views.server_taskmethod_list),  # 主机任务项
+    url(r'^server_taskmethod_add', views.server_taskmethod_add),  # 添加主机任务项
+    url(r'^server_taskmethod_edit', views.server_taskmethod_edit),  # 修改主机任务项
+    url(r'^server_taskmethod_del', views.server_taskmethod_del),  # 删除主机任务项
+
     url(r'^t1', views.t1),
 ]

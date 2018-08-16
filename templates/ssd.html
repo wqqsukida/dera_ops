@@ -82,6 +82,7 @@
 
                         <form method="post">
                             {% csrf_token %}
+                            <input class="hide" type="text" name="page" value="{{ page }}">
                             <div class="col-sm-12 m-b-xs" style="padding-bottom: 10px;">
                                 <div class="col-sm-9"></div>
                                 <div class="col-sm-2">
@@ -172,7 +173,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal m-t" id="signupForm" action="/cmdb/ssd_push_task" role="form" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-
+                        <input class="hide" type="text" name="page" value="{{ page }}">
                         <div class="form-group hide">
                             <label class="col-sm-3 control-label">SSD_ID：</label>
                             <div class="col-sm-8">
@@ -232,7 +233,8 @@
                 "order": [], //取消加载后的第一列默认排序
                 "aLengthMenu" : [10, 25, 50, 100], //更改显示记录数选项
                 "iDisplayLength" : 10, //默认显示的记录数
-                "paging": false
+                "paging": false,
+                "searching": false
             }
         );
 
