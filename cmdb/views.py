@@ -127,6 +127,12 @@ def index_v3(request):
     task_deleted = SSDTask.objects.filter(status=4).count()
     task_pushing = SSDTask.objects.filter(status=5).count()
 
+    stask_new = ServerTask.objects.filter(status=1).count()
+    stask_finished = ServerTask.objects.filter(status=2).count()
+    stask_error = ServerTask.objects.filter(status=3).count()
+    stask_deleted = ServerTask.objects.filter(status=4).count()
+    stask_pushing = ServerTask.objects.filter(status=5).count()
+
     return render(request,'index_v1.html',locals())
 #========================================================================#
 def asset_list(request):
@@ -141,10 +147,18 @@ def asset_list(request):
         user_dict = request.session.get('is_login', None)
         # print(user_dict)
         if UserProfile.objects.get(name=user_dict['user']).is_admin :
-            queryset = Server.objects.filter(hostname__contains=search_q)
+            queryset = Server.objects.filter(Q(Q(hostname__contains=search_q) |
+                                               Q(sn__contains=search_q) |
+                                               Q(manage_ip__contains=search_q) |
+                                               Q(business_unit__name__contains=search_q) |
+                                               Q(tags__name__contains=search_q))).distinct()
         else:
-            queryset = Server.objects.filter(hostname__contains=search_q,
-                                             business_unit__roles__userprofile__name=user_dict['user'])
+            queryset = Server.objects.filter(Q(Q(hostname__contains=search_q) |
+                                               Q(sn__contains=search_q) |
+                                               Q(manage_ip__contains=search_q) |
+                                               Q(business_unit__name__contains=search_q) |
+                                               Q(tags__name__contains=search_q)),
+                       business_unit__roles__userprofile__name=user_dict['user']).distinct()
 
         idc_list = IDC.objects.all()
         tag_list = Tag.objects.all()
@@ -490,7 +504,15 @@ def server_task_status(request):
             else:
                 queryset = ServerTask.objects.filter(secsession_obj_id__in=ssid_list).order_by('-create_date')
         else:
-            queryset = ServerTask.objects.filter(task__title__contains=search_q).order_by('-create_date')
+            queryset = ServerTask.objects.filter(Q(Q(task__title__contains=search_q) |
+                                                   Q(task__content__contains=search_q) |
+                                                   Q(server_obj__hostname__contains=search_q) |
+                                                   Q(secsession_obj__title__contains=search_q)
+                                                   )).order_by('-create_date')
+        # # 权限处理
+        # user_dict = request.session.get('is_login', None)
+        # if not UserProfile.objects.get(name=user_dict['user']).is_admin:
+        #     queryset = queryset.filter(server_obj__business_unit__roles__userprofile__name=user_dict['user'])
         # 加载分页器
         task_list, page_html = init_paginaion(request, queryset)
 
@@ -527,6 +549,11 @@ def server_task_secsession(request):
         model_list, page_html = init_paginaion(request, queryset)
 
         server_queryset = Server.objects.all()
+        # # 权限处理:添加子任务会话时只能指定当前用户属组下的主机
+        # user_dict = request.session.get('is_login', None)
+        # if not UserProfile.objects.get(name=user_dict['user']).is_admin:
+        #     server_queryset = Server.objects.filter(business_unit__roles__userprofile__name=user_dict['user'])
+
         task_queryset = TaskMethod.objects.all()
         fs_queryset = TaskSession.objects.all()
 
@@ -546,6 +573,13 @@ def server_run_secsession(request):
 
         fs_id = request.GET.get("fs_id")
         page = request.GET.get("page")
+        # # 权限处理
+        # user_dict = request.session.get('is_login', None)
+        # if UserProfile.objects.get(name=user_dict['user']).is_admin:
+        #     server_obj = s_obj.server_obj.all()
+        # else:
+        #     server_obj = s_obj.server_obj.filter(business_unit__roles__userprofile__name=user_dict['user'])
+        # if server_obj:
         try:
             for t in s_obj.task_obj.all():
                 for s in s_obj.server_obj.all():
@@ -554,6 +588,8 @@ def server_run_secsession(request):
 
         except Exception as e:
             result = {"code": 1, "message": str(e)}
+        # else:
+        #     result = {"code": 1, "message": "你没有权限执行该会话下的任务!"}
 
         return HttpResponseRedirect('/cmdb/server_task_secsession?status={0}&message={1}&page={2}&sid={3}'.
                             format(result.get("code", ""),
@@ -829,7 +865,7 @@ def server_run_session(request):
                 for t in ss.task_obj.all():
                     for s in ss.server_obj.all():
                         print(ss.title,t.title,s.hostname)
-                        # ServerTask.objects.create(server_obj=s,task=t,secsession_obj=ss)
+                        ServerTask.objects.create(server_obj=s,task=t,secsession_obj=ss)
 
             result = {"code": 0, "message": "执行任务会话成功!"}
         except Exception as e:
@@ -853,7 +889,7 @@ def server_random_runs(request):
                 for t in ss.task_obj.all():
                     s = random.choice(ss.server_obj.all())
                     print(ss.title, t.title, s.hostname)
-                    # ServerTask.objects.create(server_obj=s,task=t,secsession_obj=ss)
+                    ServerTask.objects.create(server_obj=s,task=t,secsession_obj=ss)
 
             result = {"code": 0, "message": "随机执行任务会话成功!"}
         except Exception as e:

@@ -83,7 +83,7 @@
 {#                                </div>#}
 
                                 <div class="col-sm-1">
-                                    <a href="#" data-toggle="modal" data-target="#AddModal" class="btn btn-warning">
+                                    <a href="#" data-toggle="modal" data-target="#AddModal" class="btn btn-warning add-btn">
                                         <i class="fa fa-plus"></i> 创建子会话
                                     </a>
                                 </div>
@@ -126,11 +126,11 @@
 
                                                 <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=2" class="btn btn-primary m-r-sm">完成任务: {{ m.fst }}</a>
 
-                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=3" class="btn btn-info m-r-sm">执行中: {{ m.pst }}</a>
+                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=5" class="btn btn-info m-r-sm">执行中: {{ m.pst }}</a>
 
-                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=4" class="btn btn-danger m-r-sm">执行错误: {{ m.est }}</a>
+                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=3" class="btn btn-danger m-r-sm">执行错误: {{ m.est }}</a>
 
-                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=5" class="btn btn-warning m-r-sm">已删除: {{ m.dst }}</a>
+                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=4" class="btn btn-warning m-r-sm">已删除: {{ m.dst }}</a>
 
                                             </td>
         {#                                            <td>#}
@@ -258,7 +258,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">所属会话:</label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="fs" id="">
+                                <select class="form-control" name="fs" id="fs_id">
                                     {% for fs in fs_queryset %}
                                         <option value="{{ fs.id }}">{{ fs.title }}</option>
                                     {% endfor %}
@@ -472,6 +472,11 @@
         }
     </script>
 
+    <script>
+        $(".add-btn").click(function () {
+            $("#fs_id [value=" + {{ fs_id }} +"]").prop('selected',true);
+        })
+    </script>
 
     <script>
         $("table").on("click",".edit-btn",function () {

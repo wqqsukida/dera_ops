@@ -53,7 +53,7 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h5>主机概况</h5>
@@ -80,10 +80,37 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>任务概况</h5>
+                        <h5>主机任务概况</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="graph_flot.html#">选项1</a>
+                                </li>
+                                <li><a href="graph_flot.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="stask_pie" style="height: 600px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>SSD任务概况</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -169,10 +196,10 @@
                 ]
             };
             host.setOption(host_option);
-            var task=echarts.init(document.getElementById("task_pie"));
-            var task_option={
+            var task = echarts.init(document.getElementById("task_pie"));
+            var task_option = {
                     title:{
-                        text:"推送任务执行概况",
+                        text:"SSD任务执行概况",
                         subtext:"来自CMDB",x:"center"
                     },
                     tooltip:{
@@ -207,7 +234,46 @@
                             ]
                         }]
             };
-            task.setOption(task_option)
+            task.setOption(task_option);
+            var stask = echarts.init(document.getElementById("stask_pie"));
+            var stask_option = {
+                    title:{
+                        text:"主机任务执行概况",
+                        subtext:"来自CMDB",x:"center"
+                    },
+                    tooltip:{
+                        trigger:"item",
+                        formatter:"{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend:{
+                        orient:"vertical",
+                        x:"left",
+                        data:["新建任务","执行完成","执行错误","已删除","推送执行中"]
+                    },
+                    calculable:!0,
+                    series:[
+                        {
+                            name:"执行情况",
+                            type:"pie",
+                            radius:"55%",
+                            center:["50%","60%"],
+                            data:[
+                                {value:{{ stask_new }},name:"新建任务"},
+                                {value:{{ stask_finished }},name:"执行完成"},
+                                {value:{{ stask_error }},name:"执行错误"},
+                                {value:{{ stask_deleted }},name:"已删除"},
+                                {value:{{ stask_pushing }},name:"推送执行中"}
+                                ],
+                            color:[
+                                '#6df5f7',
+                                '#b2f08d',
+                                '#f29899',
+                                '#fce773',
+                                '#51c3f0',
+                            ]
+                        }]
+            };
+            stask.setOption(stask_option);
         })
     </script>
 

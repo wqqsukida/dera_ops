@@ -142,6 +142,7 @@ VALID_URL= [
     '^/logout/',
     '^/api/server/',
     '^/api/task/',
+    '^/api/stask/',
     # '^/cmdb/asset_list/',
 ]
 

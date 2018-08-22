@@ -26,10 +26,19 @@
     <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
     <link href="/static/css/gstyle.css" rel="stylesheet">
     <style>
-        .task-btn {
-
+        .alert-btn{
+            margin: 2.5px;
+            font-weight: 600;
             display: inline-block;
-            margin: 0.5px;
+            padding: 10px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .alert-primary{
+            color: #257675;
+            background-color: #c0edf0;
+            border-color: #85e9e6
         }
     </style>
 </head>
@@ -119,26 +128,26 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <h4 class="task-btn font-bold">
-                                                    新建任务: <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=1" class="btn btn-success m-r-sm">{{ s.nst }}</a>
-                                                </h4>
-                                                <h4 class="task-btn font-bold">
-                                                    完成任务: <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=2" class="btn btn-primary m-r-sm">{{ s.fst }}</a>
-                                                </h4>
-                                                <h4 class="task-btn font-bold">
-                                                    执行中: <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=3" class="btn btn-info m-r-sm">{{ s.pst }}</a>
-                                                </h4>
-                                                <h4 class="task-btn font-bold">
-                                                    执行错误: <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=4" class="btn btn-danger m-r-sm">{{ s.est }}</a>
-                                                </h4>
-                                                <h4 class="task-btn font-bold">
-                                                    已删除: <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=5" class="btn btn-warning m-r-sm">{{ s.dst }}</a>
-                                                </h4>
+
+                                                <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=1" class="alert-btn alert-info">新建任务: {{ s.nst }}</a>
+
+
+                                                <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=2" class="alert-btn alert-success">完成任务: {{ s.fst }}</a>
+
+
+                                                <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=5" class="alert-btn alert-primary">执行中: {{ s.pst }}</a>
+
+
+                                                <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=3" class="alert-btn alert-danger">执行错误: {{ s.est }}</a>
+
+
+                                                <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=4" class="alert-btn alert-warning">已删除: {{ s.dst }}</a>
+
                                             </td>
                                             <td>{{ s.create_date|date:'Y-m-d H:i:s' }}</td>
                                             <td>{{ s.content }}</td>
                                             <td class="tooltip-demo" style="font-size: 20px">
-                                                <a data-toggle="tooltip" data-placement="bottom" class="edit-btn" sid={{ s.id }}  data-toggle="modal" data-target="#EditModal" title="更新会话" style="margin-right: 15px">
+                                                <a data-toggle="modal" data-placement="bottom" class="edit-btn" sid={{ s.id }} data-target="#EditModal" title="更新会话" style="margin-right: 15px">
                                                     <i class="fa fa-wrench"></i>
                                                 </a>
                                                 <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_del_session?sid={{ s.id }}&page={{ page }}" class="del_confirm" title="删除会话" style="margin-right: 15px">

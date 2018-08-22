@@ -85,7 +85,7 @@ def server(request):
             server_dict['basic']['data']['manage_ip'] = clien_ip
         manager = PluginManger()
         response = manager.exec(server_dict)
-        ####################################推送任务请求########################################
+        ####################################添加推送ssd任务请求######################################
         hostname = server_dict['basic']['data']['hostname']
         server_obj = models.Server.objects.filter(hostname=hostname).first()
         task_query_list = models.SSDTask.objects.filter(ssd_obj__server_obj=server_obj,status=1)
@@ -98,7 +98,18 @@ def server(request):
 
         response.update({'task':task_list})
         task_query_list.update(status=5) # 改变任务的状态：新建任务->推送执行中
-        ######################################################################################
+        ####################################添加推送主机任务请求######################################
+        server_task_query_list = models.ServerTask.objects.filter(server_obj=server_obj,status=1)
+        server_task_list = []
+        if server_task_query_list:
+            for st in server_task_query_list:
+                server_task_list.append({'stask_id':st.id,
+                                         'stask_title':st.task.title,
+                                         'stask_content':st.task.content
+                                         })
+        response.update({'stask':server_task_list})
+        server_task_query_list.update(status=5) # 改变任务的状态：新建任务->推送执行中
+        ###########################################################################################
         print('[{0}]:{1}'.format(clien_ip,response))
         return HttpResponse(json.dumps(response))
 
@@ -115,6 +126,25 @@ def task(request):
                        task_res=res.get('task_res'))
         else:
             models.SSDTask.objects.filter(id=res.get('task_id')).\
+                update(status = 3 , finished_date = datetime.datetime.now())
+
+        return HttpResponse('finish task')
+    elif request.method == "GET":
+        return HttpResponse('Error api method!')
+
+@csrf_exempt
+@api_auth
+def stask(request):
+    if request.method == "POST":
+        res = json.loads(request.body.decode('utf-8'))    #结果必须为字典形式
+        print(res)
+        # for res in res_list:
+        if res.get('stask_res'):
+            models.ServerTask.objects.filter(id=res.get('stask_id')).\
+                update(status = 2 , finished_date = datetime.datetime.now(),
+                       task_res=res.get('stask_res'))
+        else:
+            models.ServerTask.objects.filter(id=res.get('stask_id')).\
                 update(status = 3 , finished_date = datetime.datetime.now())
 
         return HttpResponse('finish task')

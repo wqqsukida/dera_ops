@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^server_edit_session', views.server_edit_session),  # 修改主机任务会话
     url(r'^server_del_session', views.server_del_session),  # 删除主机任务会话
     url(r'^server_run_session', views.server_run_session),  # 执行主机任务会话
+    url(r'^server_random_runsecs', views.server_random_runsecs),  # 随机执行主机子任务会话
     url(r'^server_random_runs', views.server_random_runs),  # 随机执行主机任务会话
 
     url(r'^server_task_secsession', views.server_task_secsession),  # 主机子任务会话列表
@@ -44,7 +45,6 @@ urlpatterns = [
     url(r'^server_edit_secsession', views.server_edit_secsession),  # 修改主机子任务会话
     url(r'^server_del_secsession', views.server_del_secsession),  # 删除主机子任务会话
     url(r'^server_run_secsession', views.server_run_secsession),  # 执行主机子任务会话
-    url(r'^server_random_runsecs', views.server_random_runsecs),  # 随机执行主机子任务会话
 
     url(r'^server_taskmethod_list', views.server_taskmethod_list),  # 主机任务项
     url(r'^server_taskmethod_add', views.server_taskmethod_add),  # 添加主机任务项
