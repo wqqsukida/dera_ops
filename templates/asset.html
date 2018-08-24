@@ -608,7 +608,7 @@
                         $("#mod_os_platform").val(arg.os_platform);
                         $("#mod_os_version").val(arg.os_version);
 
-                        $("#mod_server_status_id [value=" + arg.server_status_id + "]").attr('selected',true);
+                        $("#mod_server_status_id [value=" + arg.server_status_id + "]").prop('selected',true);
                         $("#mod_idc [value=" + arg.idc_id + "]").attr('selected',true);
                         $.each(arg.tags,function (k,v) {
                             $("#mod_tags [value=" + v + "]").prop("selected",true);

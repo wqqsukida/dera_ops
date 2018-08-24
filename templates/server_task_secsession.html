@@ -43,12 +43,19 @@
                 </button>
                 执行成功:<strong>{{ result.message }}</strong>
             </div>
-        {% else %}
+        {% elif result.code == 1 %}
             <div class="alert alert-danger alert-dismissable" style="text-align: center">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 执行失败:<strong>{{ result.message }}</strong>
+            </div>
+        {% elif result.code == 2 %}
+            <div class="alert alert-warning alert-dismissable" style="text-align: center">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                暂停执行:<strong>{{ result.message }}</strong>
             </div>
         {% endif %}
     {% endif %}
@@ -130,7 +137,7 @@
 
                                                 <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=3" class="btn btn-danger m-r-sm">执行错误: {{ m.est }}</a>
 
-                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=4" class="btn btn-warning m-r-sm">已删除: {{ m.dst }}</a>
+                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=4" class="btn btn-warning m-r-sm">已暂停: {{ m.dst }}</a>
 
                                             </td>
         {#                                            <td>#}
@@ -152,12 +159,20 @@
                                                 <a href="/cmdb/server_del_secsession?mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="del_confirm" title="删除会话" style="margin-right: 15px">
                                                     <i class="fa fa-trash-o"></i>
                                                 </a>
-                                                <a href="/cmdb/server_run_secsession?mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="执行会话" style="margin-right: 15px">
-                                                    <i class="fa fa-caret-square-o-right"></i>
-                                                </a>
+                                                {% if m.nst %}
+                                                    <a href="/cmdb/server_run_secsession?status=pause&mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="暂停会话" style="margin-right: 15px;color: orange">
+                                                        <i class="fa fa-pause"></i>
+                                                    </a>
+                                                {% else %}
+                                                    <a href="/cmdb/server_run_secsession?status=run&mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="执行会话" style="margin-right: 15px">
+                                                        <i class="fa fa-caret-square-o-right"></i>
+                                                    </a>
+                                                {% endif %}
+                                                {% if not m.nst %}
                                                 <a href="/cmdb/server_random_runsecs?sid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="随机执行">
                                                     <i class="fa fa-random"></i>
                                                 </a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}

@@ -248,7 +248,7 @@
                     legend:{
                         orient:"vertical",
                         x:"left",
-                        data:["新建任务","执行完成","执行错误","已删除","推送执行中"]
+                        data:["新建任务","执行完成","执行错误","已暂停","推送执行中"]
                     },
                     calculable:!0,
                     series:[
@@ -261,7 +261,7 @@
                                 {value:{{ stask_new }},name:"新建任务"},
                                 {value:{{ stask_finished }},name:"执行完成"},
                                 {value:{{ stask_error }},name:"执行错误"},
-                                {value:{{ stask_deleted }},name:"已删除"},
+                                {value:{{ stask_deleted }},name:"已暂停"},
                                 {value:{{ stask_pushing }},name:"推送执行中"}
                                 ],
                             color:[

@@ -280,7 +280,7 @@ class ServerTask(models.Model):
         (1, '新建任务'),
         (2, '执行完成'),
         (3, '执行错误'),
-        (4, '已删除'),
+        (4, '已暂停'),
         (5, '推送执行中')
     )
     status = models.IntegerField('任务状态',choices=task_status_choices,default='1')
@@ -296,6 +296,7 @@ class TaskSession(models.Model):
     title = models.CharField('会话名称', max_length=32,null=False,blank=False)
     content = models.TextField('会话描述',null=True,blank=True)
     create_date = models.DateTimeField('会话创建时间', auto_now_add=True)
+    role = models.ForeignKey(verbose_name='所属用户组',to=rbac_model.Role,null=True, blank=True)
 
     def nst(self):
         count = 0

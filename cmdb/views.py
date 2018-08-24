@@ -509,10 +509,10 @@ def server_task_status(request):
                                                    Q(server_obj__hostname__contains=search_q) |
                                                    Q(secsession_obj__title__contains=search_q)
                                                    )).order_by('-create_date')
-        # # 权限处理
-        # user_dict = request.session.get('is_login', None)
-        # if not UserProfile.objects.get(name=user_dict['user']).is_admin:
-        #     queryset = queryset.filter(server_obj__business_unit__roles__userprofile__name=user_dict['user'])
+        # 权限处理
+        user_dict = request.session.get('is_login', None)
+        if not UserProfile.objects.get(name=user_dict['user']).is_admin:
+            queryset = queryset.filter(server_obj__business_unit__roles__userprofile__name=user_dict['user'])
         # 加载分页器
         task_list, page_html = init_paginaion(request, queryset)
 
@@ -549,13 +549,13 @@ def server_task_secsession(request):
         model_list, page_html = init_paginaion(request, queryset)
 
         server_queryset = Server.objects.all()
-        # # 权限处理:添加子任务会话时只能指定当前用户属组下的主机
-        # user_dict = request.session.get('is_login', None)
-        # if not UserProfile.objects.get(name=user_dict['user']).is_admin:
-        #     server_queryset = Server.objects.filter(business_unit__roles__userprofile__name=user_dict['user'])
+        # 权限处理:添加子任务会话时只能指定当前用户属组下的主机
+        user_dict = request.session.get('is_login', None)
+        if not UserProfile.objects.get(name=user_dict['user']).is_admin:
+            server_queryset = Server.objects.filter(business_unit__roles__userprofile__name=user_dict['user'])
 
         task_queryset = TaskMethod.objects.all()
-        fs_queryset = TaskSession.objects.all()
+        fs_queryset = TaskSession.objects.filter(id=fs_id)
 
         page = request.GET.get('page')
 
@@ -570,26 +570,36 @@ def server_run_secsession(request):
     if request.method == "GET":
         sid = request.GET.get("mid")
         s_obj = Task_SecSession.objects.get(id=sid)
+        status = request.GET.get("status")
 
         fs_id = request.GET.get("fs_id")
         page = request.GET.get("page")
-        # # 权限处理
-        # user_dict = request.session.get('is_login', None)
-        # if UserProfile.objects.get(name=user_dict['user']).is_admin:
-        #     server_obj = s_obj.server_obj.all()
-        # else:
-        #     server_obj = s_obj.server_obj.filter(business_unit__roles__userprofile__name=user_dict['user'])
-        # if server_obj:
-        try:
-            for t in s_obj.task_obj.all():
-                for s in s_obj.server_obj.all():
-                    ServerTask.objects.create(server_obj=s,task=t,secsession_obj=s_obj)
-            result = {"code": 0, "message": "子任务会话执行成功 !"}
 
-        except Exception as e:
-            result = {"code": 1, "message": str(e)}
-        # else:
-        #     result = {"code": 1, "message": "你没有权限执行该会话下的任务!"}
+
+        if status == "pause" :
+            ServerTask.objects.filter(secsession_obj=s_obj,status=1).update(
+                status=4,finished_date=datetime.datetime.now())
+            result = {"code": 2, "message": "子任务会话已被暂停执行 !"}
+        else:
+            # 权限处理
+            user_dict = request.session.get('is_login', None)
+            if UserProfile.objects.get(name=user_dict['user']).is_admin:
+                server_objs = s_obj.server_obj.all()
+            else:
+                server_objs = s_obj.server_obj.filter(
+                    business_unit__roles__userprofile__name=user_dict['user'])
+            # 创建任务
+            if server_objs:
+                try:
+                    for t in s_obj.task_obj.all():
+                        for s in server_objs:
+                            ServerTask.objects.create(server_obj=s,task=t,
+                                                      secsession_obj=s_obj)
+                    result = {"code": 0, "message": "子任务会话执行成功 !"}
+                except Exception as e:
+                    result = {"code": 1, "message": str(e)}
+            else:
+                result = {"code": 1, "message": "你没有权限执行该会话下的任务!"}
 
         return HttpResponseRedirect('/cmdb/server_task_secsession?status={0}&message={1}&page={2}&sid={3}'.
                             format(result.get("code", ""),
@@ -608,15 +618,26 @@ def server_random_runsecs(request):
 
         fs_id = request.GET.get("fs_id")
         page = request.GET.get("page")
-        try:
-            for t in s_obj.task_obj.all():
-                s = random.choice(s_obj.server_obj.all())
-                # print(s.hostname,t.title)
-                ServerTask.objects.create(server_obj=s,task=t,secsession_obj=s_obj)
-            result = {"code": 0, "message": "随机执行成功 !"}
 
-        except Exception as e:
-            result = {"code": 1, "message": str(e)}
+        # 权限处理
+        user_dict = request.session.get('is_login', None)
+        if UserProfile.objects.get(name=user_dict['user']).is_admin:
+            server_objs = s_obj.server_obj.all()
+        else:
+            server_objs = s_obj.server_obj.filter(business_unit__roles__userprofile__name=user_dict['user'])
+
+        # 创建任务
+        if server_objs:
+            try:
+                for t in s_obj.task_obj.all():
+                    s = random.choice(server_objs)
+                    # print(s.hostname,t.title)
+                    ServerTask.objects.create(server_obj=s,task=t,secsession_obj=s_obj)
+                result = {"code": 0, "message": "随机执行成功 !"}
+            except Exception as e:
+                result = {"code": 1, "message": str(e)}
+        else:
+            result = {"code": 1, "message": "你没有权限执行该会话下的任务!"}
 
         return HttpResponseRedirect('/cmdb/server_task_secsession?status={0}&message={1}&page={2}&sid={3}'.
                             format(result.get("code", ""),
@@ -671,6 +692,10 @@ def server_edit_secsession(request):
         m_dict.pop('create_date')
 
         as_list = Server.objects.all()
+        # 权限处理
+        user_dict = request.session.get('is_login', None)
+        if not UserProfile.objects.get(name=user_dict['user']).is_admin:
+            as_list = Server.objects.filter(business_unit__roles__userprofile__name=user_dict['user'])
         ms_list = m_obj.first().server_obj.all()
 
         as_id = {(s.id,s.hostname) for s in as_list}
@@ -845,6 +870,12 @@ def server_task_session(request):
             result = {"code": int(status), "message": message}
 
         queryset = TaskSession.objects.all()
+        role_queryset = Role.objects.all()
+        # 权限处理
+        user_dict = request.session.get('is_login', None)
+        if not UserProfile.objects.get(name=user_dict['user']).is_admin:
+            queryset = TaskSession.objects.filter(role__userprofile__name=user_dict['user'])
+            role_queryset = Role.objects.filter(userprofile__name=user_dict['user'])
         #加载分页器
         session_list, page_html = init_paginaion(request, queryset)
 
@@ -856,20 +887,27 @@ def server_run_session(request):
     if request.method == "GET":
         sid = request.GET.get("sid")
         s_obj = TaskSession.objects.get(id=sid)
+        status = request.GET.get("status")
 
         page = request.GET.get("page")
 
         ss_list = s_obj.task_secsession_set.all()
-        try:
+        if status == "pause":
+            result = {"code": 2, "message": "任务会话已被暂停执行!"}
             for ss in ss_list:
-                for t in ss.task_obj.all():
-                    for s in ss.server_obj.all():
-                        print(ss.title,t.title,s.hostname)
-                        ServerTask.objects.create(server_obj=s,task=t,secsession_obj=ss)
+                ServerTask.objects.filter(secsession_obj=ss,status=1).update(
+                    status=4,finished_date=datetime.datetime.now())
+        else:
+            try:
+                for ss in ss_list:
+                    for t in ss.task_obj.all():
+                        for s in ss.server_obj.all():
+                            print(ss.title,t.title,s.hostname)
+                            ServerTask.objects.create(server_obj=s,task=t,secsession_obj=ss)
 
-            result = {"code": 0, "message": "执行任务会话成功!"}
-        except Exception as e:
-            result = {"code": 1, "message": str(e)}
+                result = {"code": 0, "message": "执行任务会话成功!"}
+            except Exception as e:
+                result = {"code": 1, "message": str(e)}
 
         return HttpResponseRedirect('/cmdb/server_task_session?status={0}&message={1}&page={2}'.
                                     format(result.get("code", ""),
@@ -910,11 +948,12 @@ def server_create_session(request):
     if request.method == "POST":
         title = request.POST.get("title")
         content = request.POST.get("content")
+        rid = request.POST.get("rid")
 
         page = request.POST.get("page")
         if title:
             try:
-                new_ts = TaskSession.objects.create(title=title, content=content)
+                new_ts = TaskSession.objects.create(title=title, content=content, role_id=rid)
                 result = {"code": 0, "message": "任务会话创建成功!"}
             except Exception as e:
                 result = {"code": 1, "message": str(e)}
@@ -945,12 +984,14 @@ def server_edit_session(request):
         sid = request.POST.get("id")
         title = request.POST.get("title",None)
         content = request.POST.get("content",None)
+        rid = request.POST.get("rid",None)
 
         page = request.POST.get("page")
 
         form_data = {
             'title':title,
             'content':content,
+            'role_id':rid,
         }
         s_obj = TaskSession.objects.get(id=sid)
         try:
