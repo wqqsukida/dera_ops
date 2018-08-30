@@ -87,6 +87,8 @@ class Server(models.Model):
 
     latest_date = models.DateTimeField(null=True,blank=True)
 
+    def run_task_count(self):
+        return self.server_task.filter(status=5).count()
 
     class Meta:
         verbose_name_plural = "服务器表"

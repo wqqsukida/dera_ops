@@ -26,9 +26,19 @@
     <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
     <link href="/static/css/gstyle.css" rel="stylesheet">
     <style>
-        .task-btn {
+        .alert-btn{
+            margin: 2.5px;
+            font-weight: 600;
             display: inline-block;
-            margin: 0.5px;
+            padding: 10px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .alert-primary{
+            color: #257675;
+            background-color: #c0edf0;
+            border-color: #85e9e6
         }
     </style>
 </head>
@@ -122,22 +132,22 @@
                                 <tbody>
                                     {% for m in model_list %}
                                         <tr>
-                                            <td>
-                                                <a title="查看任务项" class="btn-sm btn-white" href="/cmdb/server_task_status?ssid={{ m.id }}">
+                                            <td class="tooltip-demo">
+                                                <a data-toggle="tooltip" data-placement="bottom" title="查看任务项" class="btn-sm btn-white" href="/cmdb/server_task_status///{{ m.id }}//">
                                                     {{ m.title }}
                                                 </a>
                                             </td>
                                             <td>
 
-                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=1" class="btn btn-success m-r-sm">新建任务: {{ m.nst }}</a>
+                                                <a href="/cmdb/server_task_status///{{ m.id }}/1/" class="alert-btn alert-info">新建任务: {{ m.nst }}</a>
 
-                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=2" class="btn btn-primary m-r-sm">完成任务: {{ m.fst }}</a>
+                                                <a href="/cmdb/server_task_status///{{ m.id }}/2/" class="alert-btn alert-success">完成任务: {{ m.fst }}</a>
 
-                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=5" class="btn btn-info m-r-sm">执行中: {{ m.pst }}</a>
+                                                <a href="/cmdb/server_task_status///{{ m.id }}/5/" class="alert-btn alert-primary">执行中: {{ m.pst }}</a>
 
-                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=3" class="btn btn-danger m-r-sm">执行错误: {{ m.est }}</a>
+                                                <a href="/cmdb/server_task_status///{{ m.id }}/3/" class="alert-btn alert-danger">执行错误: {{ m.est }}</a>
 
-                                                <a href="/cmdb/server_task_status?ssid={{ m.id }}&sts_id=4" class="btn btn-warning m-r-sm">已暂停: {{ m.dst }}</a>
+                                                <a href="/cmdb/server_task_status///{{ m.id }}/4/" class="alert-btn alert-warning">已暂停: {{ m.dst }}</a>
 
                                             </td>
         {#                                            <td>#}
@@ -152,24 +162,24 @@
         {#                                            </td>#}
                                             <td>{{ m.create_date|date:'Y-m-d H:i:s' }}</td>
                                             <td>{{ m.content }}</td>
-                                            <td style="font-size: 20px">
+                                            <td class="tooltip-demo" style="font-size: 20px">
                                                 <a class="edit-btn" mid={{ m.id }}  data-toggle="modal" data-target="#EditModal" title="更新会话" style="margin-right: 15px">
                                                     <i class="fa fa-wrench"></i>
                                                 </a>
-                                                <a href="/cmdb/server_del_secsession?mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="del_confirm" title="删除会话" style="margin-right: 15px">
+                                                <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_del_secsession?mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="del_confirm" title="删除会话" style="margin-right: 15px">
                                                     <i class="fa fa-trash-o"></i>
                                                 </a>
                                                 {% if m.nst %}
-                                                    <a href="/cmdb/server_run_secsession?status=pause&mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="暂停会话" style="margin-right: 15px;color: orange">
+                                                    <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_run_secsession?status=pause&mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="暂停会话" style="margin-right: 15px;color: orange">
                                                         <i class="fa fa-pause"></i>
                                                     </a>
                                                 {% else %}
-                                                    <a href="/cmdb/server_run_secsession?status=run&mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="执行会话" style="margin-right: 15px">
+                                                    <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_run_secsession?status=run&mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="执行会话" style="margin-right: 15px">
                                                         <i class="fa fa-caret-square-o-right"></i>
                                                     </a>
                                                 {% endif %}
                                                 {% if not m.nst %}
-                                                <a href="/cmdb/server_random_runsecs?sid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="随机执行">
+                                                <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_random_runsecs?sid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="随机执行">
                                                     <i class="fa fa-random"></i>
                                                 </a>
                                                 {% endif %}
@@ -216,9 +226,10 @@
                             <label class="col-sm-2 control-label">主机项：</label>
                             <div class="col-sm-4">
 {#                                <h4 style="color:red">源菜单:</h4>#}
-                                <select class="form-control"   id="server_from" multiple size="10">
+                                <select class="form-control" id="server_from" multiple size="10">
                                     {% for s in server_queryset %}
-                                        <option value="{{ s.id }}">{{ s.hostname }}</option>
+                                        <option value="{{ s.id }}" title="当前任务:{{ s.run_task_count }}">
+                                            {{ s.hostname }}</option>
                                     {% endfor %}
                                 </select>
                             </div>

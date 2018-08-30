@@ -136,19 +136,19 @@
                                             </td>
                                             <td>
 
-                                                <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=1" class="alert-btn alert-info">新建任务: {{ s.nst }}</a>
+                                                <a href="/cmdb/server_task_status//{{ s.id }}//1/" class="alert-btn alert-info">新建任务: {{ s.nst }}</a>
 
 
-                                                <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=2" class="alert-btn alert-success">完成任务: {{ s.fst }}</a>
+                                                <a href="/cmdb/server_task_status//{{ s.id }}//2/" class="alert-btn alert-success">完成任务: {{ s.fst }}</a>
 
 
-                                                <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=5" class="alert-btn alert-primary">执行中: {{ s.pst }}</a>
+                                                <a href="/cmdb/server_task_status//{{ s.id }}//5/" class="alert-btn alert-primary">执行中: {{ s.pst }}</a>
 
 
-                                                <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=3" class="alert-btn alert-danger">执行错误: {{ s.est }}</a>
+                                                <a href="/cmdb/server_task_status//{{ s.id }}//3/" class="alert-btn alert-danger">执行错误: {{ s.est }}</a>
 
 
-                                                <a href="/cmdb/server_task_status?fsid={{ s.id }}&sts_id=4" class="alert-btn alert-warning">已暂停: {{ s.dst }}</a>
+                                                <a href="/cmdb/server_task_status//{{ s.id }}//4/" class="alert-btn alert-warning">已暂停: {{ s.dst }}</a>
 
                                             </td>
                                             <td>{{ s.create_date|date:'Y-m-d H:i:s' }}</td>

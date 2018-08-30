@@ -80,7 +80,7 @@
                                 </div>
                                 <div class="col-sm-5"></div>
                                 <div class="col-sm-3 ">
-                                    <input type="text" name="q" value="{{ cl.q_value }}" class="form-control"  placeholder="请输入关键字进行搜索或导出" />
+                                    <input type="text" name="q" value="{{ search_q }}" class="form-control"  placeholder="请输入关键字进行搜索或导出" />
                                 </div>
                                 <div class="col-sm-1">
                                     <button type="submit" value="搜索" class="btn btn-primary" />
@@ -181,8 +181,8 @@
                                             <td>
                                                 <input type="checkbox"  class="i-checks" name="input_chk" value="{{ asset.id }}">
                                             </td>
-                                            <td>
-                                                <a title="主机详情" class="btn-white btn-sm" href="/cmdb/asset_detail?id={{ asset.id }}">
+                                            <td class="tooltip-demo">
+                                                <a data-toggle="tooltip" data-placement="right" title="主机详情" class="btn-white btn-sm" href="/cmdb/asset_detail?id={{ asset.id }}">
                                                     {{ asset.hostname }}
                                                 </a>
                                             </td>
@@ -222,14 +222,14 @@
                                             <td>{{ asset.create_at }}</td>
                                             <td>{{ asset.latest_date }}</td>
                                             <td>{{ asset.cabinet_num }}</td>
-                                            <td style="font-size: 20px">
+                                            <td class="tooltip-demo" style="font-size: 20px">
                                                 <a class="mod-asset-btn" title="更新主机" sid="{{ asset.id }}" data-toggle="modal" data-target="#UpdateModal">
                                                     <i class="fa fa-cog"></i>
                                                 </a>
-                                                <a href="/cmdb/asset_del?server_id={{ asset.id }}&page={{ page }}" title="删除主机" class="del_confirm" style="margin-left: 15px">
+                                                <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/asset_del?server_id={{ asset.id }}&page={{ page }}" title="删除主机" class="del_confirm" style="margin-left: 15px">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
-                                                <a href="/cmdb/server_task_status?sid={{ asset.id }}" title="任务列表" style="margin-left: 15px">
+                                                <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status/{{ asset.id }}////" title="任务列表" style="margin-left: 15px">
                                                     <i class="fa fa-cubes"></i>
                                                 </a>
                                             </td>

@@ -458,57 +458,70 @@ def t1(request):
     return render(request,'t1.html')
 #========================================================================#
 #==========主机任务状态视图===========
-def server_task_status(request):
+def server_task_status(request,sid="",ssid="",sts_id="",fsid=""):
     '''
     任务执行列表
     :param request:
     :return:
     '''
     if request.method == "GET":
-        server_id = request.GET.get("sid")
-        secsession_id = request.GET.get("ssid")
-        st_status_id = request.GET.get("sts_id")
-        fsid = request.GET.get("fsid")
+        # 通知栏
+        status = request.GET.get("status", "")
+        message = request.GET.get("message", "")
+        if status.isdigit():
+            result = {"code":int(status),"message":message}
+
+        # server_id = request.GET.get("sid")
+        # secsession_id = request.GET.get("ssid")
+        # st_status_id = request.GET.get("sts_id")
+        # fsid = request.GET.get("fsid")
+        server_id=sid
+        secsession_id=ssid
+        st_status_id=sts_id
+
         search_q = request.GET.get("q","")
+        page = request.GET.get('page')
+        q_query = Q(Q(task__title__contains=search_q)|
+                    Q(task__content__contains=search_q)|
+                    Q(server_obj__hostname__contains=search_q)|
+                    Q(secsession_obj__title__contains=search_q)
+                    )
+
         if server_id: #从主机列表访问
             server_obj = Server.objects.get(id=server_id)
             queryset = ServerTask.objects.filter(server_obj=server_obj).order_by('-create_date')
         elif secsession_id: #从任务会话列表访问
             ss_obj = Task_SecSession.objects.get(id=secsession_id)
             if st_status_id == '1':
-                queryset = ServerTask.objects.filter(status=1,secsession_obj=ss_obj).order_by('-create_date')
+                queryset = ServerTask.objects.filter(q_query,status=1,secsession_obj=ss_obj).order_by('-create_date')
             elif st_status_id == '2':
-                queryset = ServerTask.objects.filter(status=2,secsession_obj=ss_obj).order_by('-create_date')
+                queryset = ServerTask.objects.filter(q_query,status=2,secsession_obj=ss_obj).order_by('-create_date')
             elif st_status_id == '3':
-                queryset = ServerTask.objects.filter(status=3,secsession_obj=ss_obj).order_by('-create_date')
+                queryset = ServerTask.objects.filter(q_query,status=3,secsession_obj=ss_obj).order_by('-create_date')
             elif st_status_id == '4':
-                queryset = ServerTask.objects.filter(status=4,secsession_obj=ss_obj).order_by('-create_date')
+                queryset = ServerTask.objects.filter(q_query,status=4,secsession_obj=ss_obj).order_by('-create_date')
             elif st_status_id == '5':
-                queryset = ServerTask.objects.filter(status=5,secsession_obj=ss_obj).order_by('-create_date')
+                queryset = ServerTask.objects.filter(q_query,status=5,secsession_obj=ss_obj).order_by('-create_date')
             else:
-                queryset = ServerTask.objects.filter(secsession_obj=ss_obj).order_by('-create_date')
+                queryset = ServerTask.objects.filter(q_query,secsession_obj=ss_obj).order_by('-create_date')
         elif fsid:
             fs_obj =  TaskSession.objects.filter(id=fsid)
             ss_objs = fs_obj.values('task_secsession__id')
             ssid_list = [t['task_secsession__id'] for t in ss_objs]
             if st_status_id == '1':
-                queryset = ServerTask.objects.filter(status=1,secsession_obj_id__in=ssid_list).order_by('-create_date')
+                queryset = ServerTask.objects.filter(q_query,status=1,secsession_obj_id__in=ssid_list).order_by('-create_date')
             elif st_status_id == '2':
-                queryset = ServerTask.objects.filter(status=2,secsession_obj_id__in=ssid_list).order_by('-create_date')
+                queryset = ServerTask.objects.filter(q_query,status=2,secsession_obj_id__in=ssid_list).order_by('-create_date')
             elif st_status_id == '3':
-                queryset = ServerTask.objects.filter(status=3,secsession_obj_id__in=ssid_list).order_by('-create_date')
+                queryset = ServerTask.objects.filter(q_query,status=3,secsession_obj_id__in=ssid_list).order_by('-create_date')
             elif st_status_id == '4':
-                queryset = ServerTask.objects.filter(status=4,secsession_obj_id__in=ssid_list).order_by('-create_date')
+                queryset = ServerTask.objects.filter(q_query,status=4,secsession_obj_id__in=ssid_list).order_by('-create_date')
             elif st_status_id == '5':
-                queryset = ServerTask.objects.filter(status=5,secsession_obj_id__in=ssid_list).order_by('-create_date')
+                queryset = ServerTask.objects.filter(q_query,status=5,secsession_obj_id__in=ssid_list).order_by('-create_date')
             else:
-                queryset = ServerTask.objects.filter(secsession_obj_id__in=ssid_list).order_by('-create_date')
+                queryset = ServerTask.objects.filter(q_query,secsession_obj_id__in=ssid_list).order_by('-create_date')
         else:
-            queryset = ServerTask.objects.filter(Q(Q(task__title__contains=search_q) |
-                                                   Q(task__content__contains=search_q) |
-                                                   Q(server_obj__hostname__contains=search_q) |
-                                                   Q(secsession_obj__title__contains=search_q)
-                                                   )).order_by('-create_date')
+            queryset = ServerTask.objects.filter(q_query).order_by('-create_date')
         # 权限处理
         user_dict = request.session.get('is_login', None)
         if not UserProfile.objects.get(name=user_dict['user']).is_admin:
@@ -527,6 +540,30 @@ def server_task_status(request):
             res = ast.literal_eval(t_res)  # 字符串转换字典
 
         return HttpResponse(json.dumps(res))
+
+def server_task_reload(request):
+    if request.method == "GET":
+        tid = request.GET.get("tid")
+
+        fsid = request.GET.get("fsid","")
+        ssid = request.GET.get("ssid","")
+        sts_id = request.GET.get("sts_id","")
+        page = request.GET.get("page","")
+        server_id = request.GET.get("sid","")
+
+        try:
+            ServerTask.objects.filter(id=tid).update(status=1,finished_date=None)
+            result = {"code":0, "message":"任务恢复成功!"}
+        except Exception as e:
+            result = {"code": 1, "message": str(e)}
+        return HttpResponseRedirect('/cmdb/server_task_status/{0}/{1}/{2}/{3}/'
+                                    '?status={4}&message={5}&page={6}'.
+                                    format(server_id,fsid,ssid,sts_id,
+                                           result.get("code", ""),
+                                           result.get("message", ""),
+                                           page,
+                                           ))
+
 #==========子任务会话视图=============
 def server_task_secsession(request):
     '''
@@ -574,7 +611,6 @@ def server_run_secsession(request):
 
         fs_id = request.GET.get("fs_id")
         page = request.GET.get("page")
-
 
         if status == "pause" :
             ServerTask.objects.filter(secsession_obj=s_obj,status=1).update(
