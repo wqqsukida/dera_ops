@@ -87,7 +87,7 @@
 
                     <div class="ibox-content">
                         <div class="col-sm-12 m-b-xs" style="padding-bottom: 10px;">
-                            <form method="get">
+                            <form method="get" action="#">
 {#                                <div class="col-sm-1"> <!--添加-->#}
 {#                                    <a class="btn btn-info" href="#" data-toggle="modal" data-target="#AddModal">+ 添加</a>#}
 {#                                </div>#}
@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="col-sm-8"></div>
                                 <div class="col-sm-2">
-                                    <input type="text" name="q"  class="form-control"  placeholder="" />
+                                    <input type="text" name="q"  class="form-control"  value="{{ search_q }}" placeholder="请输入关键字进行搜索" />
                                 </div>
                                 <div class="col-sm-1">
                                     <button type="submit" value="搜索" class="btn btn-primary" />
@@ -111,6 +111,7 @@
                              <table class="table table-striped table-bordered table-hover dataTables-example" data-page-size="20" style="table-layout: fixed">
                                  <thead>
                                     <tr>
+                                        <th>task_id</th>
                                         <th>task_title</th>
                                         <th width="30%">task_content</th>
                                         <th>create_date</th>
@@ -124,6 +125,7 @@
                                  <tbody>
                                     {% for task in task_list %}
                                         <tr>
+                                            <td>{{ task.id }}</td>
                                             <td>{{ task.task.title }}</td>
                                             <td class="text-ellipsis">{{ task.task.content }}</td>
                                             <td>{{ task.create_date | date:'Y-m-d H:i:s'}}</td>
@@ -148,10 +150,29 @@
                                                 {% endif %}
                                             </td>
                                             <td style="font-size: 20px">
-                                                <a class="get_task_res" style="margin-left: 20px" task_id="{{ task.id }}" title="查看任务结果" data-toggle="modal" data-target="#TaskModal">
+                                                <a class="get_task_res" style="margin-right: 20px" task_id="{{ task.id }}" title="查看任务结果" data-toggle="modal" data-target="#TaskModal">
                                                     <i class="fa fa-map"></i>
                                                 </a>
-
+                                                {% if task.status == 4 %}
+                                                    <a title="恢复执行任务"
+                                                       {% if fsid %}
+                                                       href="/cmdb/server_task_reload?tid={{ task.id }}&page={{ page }}&fsid={{ fsid }}&sts_id={{ st_status_id }}"
+                                                       {% elif secsession_id %}
+                                                       href="/cmdb/server_task_reload?tid={{ task.id }}&page={{ page }}&ssid={{ secsession_id }}&sts_id={{ st_status_id }}"
+                                                       {% elif server_id %}
+                                                       href="/cmdb/server_task_reload?tid={{ task.id }}&page={{ page }}&sid={{ server_id }}"
+                                                       {% else %}
+                                                       href="/cmdb/server_task_reload?tid={{ task.id }}&page={{ page }}"
+                                                       {% endif %}
+                                                       style="color: green"
+                                                    >
+                                                        <i class="fa fa-undo"></i>
+                                                    </a>
+                                                {% elif task.status == 3 %}
+                                                    <a title="删除任务">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}

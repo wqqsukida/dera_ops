@@ -31,7 +31,8 @@ urlpatterns = [
     url(r'^ssd_push_task', views.ssd_push_task), #SSD创建任务
     url(r'^ssd_task_list', views.ssd_task_list), #SSD任务列表
 
-    url(r'^server_task_status', views.server_task_status),  # 主机任务状态列表
+    url(r'^server_task_status/(?P<sid>\d*)/(?P<fsid>\d*)/(?P<ssid>\d*)/(?P<sts_id>\d*)/$', views.server_task_status),  # 主机任务状态列表
+    url(r'^server_task_reload', views.server_task_reload),  # 恢复执行暂停任务
     url(r'^server_task_session', views.server_task_session),  # 主机任务会话列表
     url(r'^server_create_session', views.server_create_session),  # 创建主机任务会话
     url(r'^server_edit_session', views.server_edit_session),  # 修改主机任务会话

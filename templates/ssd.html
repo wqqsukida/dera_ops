@@ -130,16 +130,16 @@
                                             <td>{{ ssd.format}}</td>
                                             <td>{{ ssd.fw_rev}}</td>
                                             <td><a class="btn-info btn-sm">{{ ssd.server_obj.hostname}}</a></td>
-                                            <td style="font-size: 20px">
-                                                <a href="/cmdb/ssd_smartlog?ssd_id={{ ssd.id }}" title="Smart_Log" >
+                                            <td class="tooltip-demo" style="font-size: 20px">
+                                                <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/ssd_smartlog?ssd_id={{ ssd.id }}" title="Smart_Log" >
                                                     <i class="fa fa-bar-chart-o"></i>
                                                 </a>
 
-                                                <a class="create_task_modal" style="margin-left: 20px" ssd_id="{{ ssd.id }}" title="Push_Task" data-toggle="modal" data-target="#TaskModal">
+                                                <a data-toggle="tooltip" data-placement="bottom" class="create_task_modal" style="margin-left: 20px" ssd_id="{{ ssd.id }}" title="Push_Task" data-toggle="modal" data-target="#TaskModal">
                                                     <i class="fa fa-upload"></i>
                                                 </a>
 
-                                                <a href="/cmdb/ssd_task_list?ssd_id={{ ssd.id }}" style="margin-left: 20px" title="Task_List">
+                                                <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/ssd_task_list?ssd_id={{ ssd.id }}" style="margin-left: 20px" title="Task_List">
                                                     <i class="fa fa-cubes"></i>
                                                 </a>
 

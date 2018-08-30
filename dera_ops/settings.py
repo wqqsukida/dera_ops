@@ -130,7 +130,7 @@ STATIC_URL = '/static/'
 #     os.path.join(BASE_DIR, 'static'),
 # )
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
-############################ 权限管理相关 ###########################
+############################ 权限管理相关 ################################
 PERMISSION_MENU_KEY = "%&^%hdgddadsa&^ddadasd"
 PERMISSION_URL_DICT_KEY = "lgdjfsjsgvsctewtg"
 
@@ -146,7 +146,7 @@ VALID_URL= [
     # '^/cmdb/asset_list/',
 ]
 
-####################### 采集插件 #######################################
+####################### 采集插件 ########################################
 API_TOKEN = "7d6766a6s5f76safas657889hj78kf90"
 
 PLUGIN_ITEMS = {
@@ -166,3 +166,14 @@ SMART_LOG_LIMIT_TIME = 1    #数据库保留smart_log天数
 
 PER_PAGE = 10    #每页显示数据数
 PAGER_PAGE_COUNT = 11    #页面上最多显示页码数
+
+##################### session配置 ######################################
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # 引擎（默认）
+SESSION_COOKIE_NAME = "sessionid"  # Session的cookie保存在浏览器上时的key，即：sessionid=随机字符串（默认）
+SESSION_COOKIE_PATH = "/"  # Session的cookie保存的路径（默认）
+SESSION_COOKIE_DOMAIN = None  # Session的cookie保存的域名（默认）
+SESSION_COOKIE_SECURE = False  # 是否Https传输cookie（默认）
+SESSION_COOKIE_HTTPONLY = True  # 是否Session的cookie只支持http传输（默认）
+SESSION_COOKIE_AGE = 3600  # Session的cookie失效日期（1小时）（默认1209600 2周）
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # 是否关闭浏览器使得Session过期（默认False）
+SESSION_SAVE_EVERY_REQUEST = True  # 是否每次请求都保存Session，默认修改之后才保存（默认False）
