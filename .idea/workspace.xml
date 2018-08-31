@@ -4,19 +4,16 @@
     <bookmark url="file://$PROJECT_DIR$/templates/asset_detail.html" line="194" mnemonic="5" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47e6c2be-8a09-4c2a-9ff7-3aa60dbb48bd" name="Default" comment="20180824更新&#10;1.任务会话根据用户组进行权限区分&#10;2.添加任务会话暂停状态，当前任务会话若存在新建任务，无法重复执行；&#10;&#10;(cherry picked from commit 0cc42d09fa2d0abf41026b446c97cf97ed5da7b2)">
+    <list default="true" id="47e6c2be-8a09-4c2a-9ff7-3aa60dbb48bd" name="Default" comment="20180830更新&#10;1.添加子会话暂停功能：暂停下发该会话下所有的“新建任务”&#10;2.添加任务恢复：将状态为“暂停”的任务恢复为“新建任务”&#10;3.修改所有页面跳转：点击功能建后回跳转到之前的页面，不再返回功能页首页&#10;4.修改用户session的一些设置&#10;5.修改所有任务状态页面url请求方式">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/2e211d7a-8ef4-435d-ab5a-e1bb6757142e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2e211d7a-8ef4-435d-ab5a-e1bb6757142e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmdb/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cmdb/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmdb/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cmdb/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmdb/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cmdb/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dera_ops/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dera_ops/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/server_task.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/server_task.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/server_task_secsession.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/server_task_secsession.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/server_task_session.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/server_task_session.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ssd.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ssd.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/server_taskmethod.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/server_taskmethod.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/pagination.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/pagination.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,6 +47,17 @@
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="dera_ops@localhost" type="feb32156:DbDataSourceImpl" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="dera_ops@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="dera_ops@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="dera_ops: schema" type="c314c289:MysqlImplModel$Schema" />
+      </path>
     </expand>
     <select />
   </component>
@@ -61,11 +69,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cmdb/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-101">
-              <caret line="524" column="14" lean-forward="true" selection-start-line="524" selection-start-column="14" selection-end-line="524" selection-end-column="14" />
+            <state relative-caret-position="160">
+              <caret line="581" column="57" selection-start-line="581" selection-start-column="57" selection-end-line="581" selection-end-column="57" />
               <folding>
                 <element signature="e#0#65#0" expanded="true" />
               </folding>
@@ -73,14 +81,48 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmdb/urls.py">
+      <file leaf-file-name="server_task.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/server_task.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="33" column="76" selection-start-line="33" selection-start-column="76" selection-end-line="33" selection-end-column="76" />
+            <state relative-caret-position="-4">
+              <caret line="117" column="30" lean-forward="true" selection-start-line="117" selection-start-column="30" selection-end-line="117" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmdb/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="158">
+              <caret line="281" column="14" lean-forward="true" selection-start-line="281" selection-start-column="14" selection-end-line="281" selection-end-column="14" />
               <folding>
-                <element signature="e#645#677#0" expanded="true" />
+                <element signature="e#0#28#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="server_task_secsession.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/server_task_secsession.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="290">
+              <caret line="185" column="59" lean-forward="true" selection-start-line="185" selection-start-column="59" selection-end-line="185" selection-end-column="59" />
+              <folding>
+                <element signature="n#style#0;n#th#4;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#2;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#3;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#4;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="server_task_session.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/server_task_session.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="172">
+              <caret line="121" column="45" selection-start-line="121" selection-start-column="45" selection-end-line="121" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -97,9 +139,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>index_v3</find>
-      <find>host_pie</find>
-      <find>checkbox</find>
       <find>setattr</find>
       <find>form-horizontal</find>
       <find>settings</find>
@@ -115,7 +154,6 @@
       <find>task-btn</find>
       <find>text_ellipsis</find>
       <find>server_random</find>
-      <find>current_session</find>
       <find>QueryDict</find>
       <find>task run</find>
       <find>id=&quot;fs_id&quot;</find>
@@ -127,6 +165,10 @@
       <find>href</find>
       <find>init_paginaion</find>
       <find>server_task_status</find>
+      <find>status-a</find>
+      <find>alert-btn</find>
+      <find>fs_queryset</find>
+      <find>current_session</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -164,7 +206,6 @@
         <option value="$PROJECT_DIR$/templates/server_task_model.html" />
         <option value="$PROJECT_DIR$/templates/roles.html" />
         <option value="$PROJECT_DIR$/cmdb/task_module/task_view.py" />
-        <option value="$PROJECT_DIR$/templates/server_taskmethod.html" />
         <option value="$PROJECT_DIR$/templates/ssd_task.html" />
         <option value="$PROJECT_DIR$/api/urls.py" />
         <option value="$PROJECT_DIR$/api/views.py" />
@@ -175,17 +216,18 @@
         <option value="$PROJECT_DIR$/dera_ops/settings.py" />
         <option value="$PROJECT_DIR$/templates/ssd.html" />
         <option value="$PROJECT_DIR$/templates/login_v2.html" />
-        <option value="$PROJECT_DIR$/cmdb/models.py" />
         <option value="$PROJECT_DIR$/utils/123.py" />
         <option value="$PROJECT_DIR$/utils/dylan.py" />
-        <option value="$PROJECT_DIR$/utils/pagination.py" />
-        <option value="$PROJECT_DIR$/templates/server_task.html" />
-        <option value="$PROJECT_DIR$/cmdb/urls.py" />
-        <option value="$PROJECT_DIR$/templates/server_task_secsession.html" />
         <option value="$PROJECT_DIR$/templates/asset.html" />
-        <option value="$PROJECT_DIR$/templates/server_task_session.html" />
-        <option value="$PROJECT_DIR$/templates/index.html" />
+        <option value="$PROJECT_DIR$/utils/pagination.py" />
+        <option value="$PROJECT_DIR$/cmdb/urls.py" />
         <option value="$PROJECT_DIR$/cmdb/views.py" />
+        <option value="$PROJECT_DIR$/templates/index.html" />
+        <option value="$PROJECT_DIR$/templates/server_task.html" />
+        <option value="$PROJECT_DIR$/templates/server_taskmethod.html" />
+        <option value="$PROJECT_DIR$/cmdb/models.py" />
+        <option value="$PROJECT_DIR$/templates/server_task_secsession.html" />
+        <option value="$PROJECT_DIR$/templates/server_task_session.html" />
       </list>
     </option>
   </component>
@@ -227,6 +269,11 @@
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
@@ -546,7 +593,21 @@
       <option name="project" value="LOCAL" />
       <updated>1535094503628</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="20180830更新&#10;1.添加子会话暂停功能：暂停下发该会话下所有的“新建任务”&#10;2.添加任务恢复：将状态为“暂停”的任务恢复为“新建任务”&#10;3.修改所有页面跳转：点击功能建后回跳转到之前的页面，不再返回功能页首页&#10;4.修改用户session的一些设置&#10;5.修改所有任务状态页面url请求方式">
+      <created>1535612177415</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1535612177415</updated>
+    </task>
+    <task id="LOCAL-00019" summary="20180830更新&#10;1.添加子会话暂停功能：暂停下发该会话下所有的“新建任务”&#10;2.添加任务恢复：将状态为“暂停”的任务恢复为“新建任务”&#10;3.修改所有页面跳转：点击功能建后回跳转到之前的页面，不再返回功能页首页&#10;4.修改用户session的一些设置&#10;5.修改所有任务状态页面url请求方式">
+      <created>1535612296620</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1535612296620</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TodoView">
@@ -560,17 +621,19 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="28" width="1922" height="1019" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49893048" weight="0.32936978" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.50213903" side_tool="true" weight="0.32104638" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49786097" weight="0.31866825" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="10" sideWeight="0.4983957" visible="true" weight="0.32699168" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49786097" visible="true" weight="0.32461354" />
+      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4983957" weight="0.32699168" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.49946523" weight="0.43995243" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4983957" weight="0.39952436" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49916804" visible="true" weight="0.15614973" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.15026738" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.12459893" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936978" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32994652" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
@@ -582,7 +645,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Database Console" order="7" weight="0.32936978" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32936978" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -631,7 +693,8 @@
     <MESSAGE value="20180816更新&#10;1.修改原有任务表名称，区分ssd_task和server_task；添加任务会话表，包括会话表和子会话表&#10;2.主机子任务会话：多个主机和多个任务项绑定&#10;3.主机任务会话：包含了多个子任务会话&#10;4.任务状态：可以通过子会话列表或者主机列表查询所属的任务执行状态&#10;5.页面跳转：针对一些资源的增删改后，会跳转回原来的分页&#10;6.添加了随机执行任务：会话下的任务随机选择对应的主机执行，每个任务之执行一次" />
     <MESSAGE value="20180822更新&#10;1.添加下发主机任务、处理主机任务结果的方法&#10;2.添加搜索功能：主机管理和主机任务管理&#10;3.主机任务管理待接入权限系统" />
     <MESSAGE value="20180824更新&#10;1.任务会话根据用户组进行权限区分&#10;2.添加任务会话暂停状态，当前任务会话若存在新建任务，无法重复执行；" />
-    <option name="LAST_COMMIT_MESSAGE" value="20180824更新&#10;1.任务会话根据用户组进行权限区分&#10;2.添加任务会话暂停状态，当前任务会话若存在新建任务，无法重复执行；" />
+    <MESSAGE value="20180830更新&#10;1.添加子会话暂停功能：暂停下发该会话下所有的“新建任务”&#10;2.添加任务恢复：将状态为“暂停”的任务恢复为“新建任务”&#10;3.修改所有页面跳转：点击功能建后回跳转到之前的页面，不再返回功能页首页&#10;4.修改用户session的一些设置&#10;5.修改所有任务状态页面url请求方式" />
+    <option name="LAST_COMMIT_MESSAGE" value="20180830更新&#10;1.添加子会话暂停功能：暂停下发该会话下所有的“新建任务”&#10;2.添加任务恢复：将状态为“暂停”的任务恢复为“新建任务”&#10;3.修改所有页面跳转：点击功能建后回跳转到之前的页面，不再返回功能页首页&#10;4.修改用户session的一些设置&#10;5.修改所有任务状态页面url请求方式" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -639,38 +702,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/utils/fangshe.py" />
-    <entry file="file://$PROJECT_DIR$/utils/fangshe1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="29" column="22" lean-forward="true" selection-start-line="29" selection-start-column="22" selection-end-line="29" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_tasksession">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rbac/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-198">
-          <caret line="27" column="6" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/tests.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index_v1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="256" column="39" lean-forward="true" selection-start-line="256" selection-start-column="39" selection-end-line="256" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="305">
@@ -804,13 +835,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/bs64.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="14" selection-end-line="6" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/dylan.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -821,37 +845,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/pagination.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="108" column="13" lean-forward="true" selection-start-line="108" selection-start-column="13" selection-end-line="108" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="91" selection-start-line="91" selection-end-line="91" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rbac/middlewares/rbac.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
           <caret line="36" column="20" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dera_ops/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="143" column="15" selection-start-line="143" selection-start-column="11" selection-end-line="143" selection-end-column="15" />
         </state>
       </provider>
     </entry>
@@ -869,50 +866,135 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/server_task_secsession.html">
+    <entry file="file://$PROJECT_DIR$/utils/pagination.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="149" column="81" selection-start-line="149" selection-start-column="63" selection-end-line="149" selection-end-column="81" />
+        <state relative-caret-position="809">
+          <caret line="97" column="48" lean-forward="true" selection-start-line="97" selection-start-column="48" selection-end-line="97" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/server_task_session.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="138" column="81" selection-start-line="138" selection-start-column="63" selection-end-line="138" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="122" column="88" lean-forward="true" selection-start-line="122" selection-start-column="88" selection-end-line="122" selection-end-column="88" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/server_task.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="281" column="34" lean-forward="true" selection-start-line="281" selection-start-column="27" selection-end-line="281" selection-end-column="45" />
+    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_idc">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmdb/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="33" column="76" selection-start-line="33" selection-start-column="76" selection-end-line="33" selection-end-column="76" />
+        <state relative-caret-position="193">
+          <caret line="39" column="66" lean-forward="true" selection-start-line="39" selection-start-column="66" selection-end-line="39" selection-end-column="66" />
           <folding>
             <element signature="e#645#677#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/dera_ops/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="150" lean-forward="true" selection-start-line="150" selection-end-line="150" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/roles.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2772" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/bs64.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="14" selection-end-line="6" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/t1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-330" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/kaisa_jiemi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cmdb/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-101">
-          <caret line="524" column="14" lean-forward="true" selection-start-line="524" selection-start-column="14" selection-end-line="524" selection-end-column="14" />
+        <state relative-caret-position="160">
+          <caret line="581" column="57" selection-start-line="581" selection-start-column="57" selection-end-line="581" selection-end-column="57" />
           <folding>
             <element signature="e#0#65#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="119" column="91" selection-start-line="119" selection-start-column="91" selection-end-line="119" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ssd_smartlog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="57" column="96" lean-forward="true" selection-start-line="57" selection-start-column="96" selection-end-line="57" selection-end-column="96" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/server_taskmethod.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="92" column="43" selection-start-line="92" selection-start-column="43" selection-end-line="92" selection-end-column="43" />
+          <folding>
+            <element signature="n#style#0;n#td#3;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/server_task.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4">
+          <caret line="117" column="30" lean-forward="true" selection-start-line="117" selection-start-column="30" selection-end-line="117" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="281" column="14" lean-forward="true" selection-start-line="281" selection-start-column="14" selection-end-line="281" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/server_task_session.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="121" column="45" selection-start-line="121" selection-start-column="45" selection-end-line="121" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/server_task_secsession.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="185" column="59" lean-forward="true" selection-start-line="185" selection-start-column="59" selection-end-line="185" selection-end-column="59" />
+          <folding>
+            <element signature="n#style#0;n#th#4;n#tr#0;n#thead#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#2;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#3;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#4;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

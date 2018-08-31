@@ -279,11 +279,11 @@ class ServerTask(models.Model):
     server_obj = models.ForeignKey(to='Server',related_name='server_task')
     task = models.ForeignKey(to='TaskMethod')
     task_status_choices = (
-        (1, '新建任务'),
+        (1, '新任务'),
         (2, '执行完成'),
-        (3, '执行错误'),
-        (4, '已暂停'),
-        (5, '推送执行中')
+        (3, '执行失败'),
+        (4, '执行暂停'),
+        (5, '执行中')
     )
     status = models.IntegerField('任务状态',choices=task_status_choices,default='1')
     create_date = models.DateTimeField('任务创建时间',auto_now_add=True)
@@ -299,6 +299,9 @@ class TaskSession(models.Model):
     content = models.TextField('会话描述',null=True,blank=True)
     create_date = models.DateTimeField('会话创建时间', auto_now_add=True)
     role = models.ForeignKey(verbose_name='所属用户组',to=rbac_model.Role,null=True, blank=True)
+
+    def ast(self):
+        return self.nst() + self.fst() + self.est() + self.dst() + self.pst()
 
     def nst(self):
         count = 0
@@ -350,6 +353,9 @@ class Task_SecSession(models.Model):
     content = models.TextField('子会话描述',null=True,blank=True)
     create_date = models.DateTimeField('子会话创建时间', auto_now_add=True)
     father_session = models.ForeignKey(to='TaskSession',null=True, blank=True)
+
+    def ast(self):
+        return self.servertask_set.count()
 
     def nst(self):
         return self.servertask_set.filter(status=1).count()

@@ -572,14 +572,14 @@ def server_task_secsession(request):
     :return:
     '''
     if request.method == "GET":
-        fs_id = request.GET.get("sid")
+        fs_id = request.GET.get("sid","")
         status = request.GET.get("status", "")
         message = request.GET.get("message", "")
         if status.isdigit():
             result = {"code":int(status),"message":message}
         if fs_id:
             queryset = Task_SecSession.objects.filter(father_session_id=fs_id)
-            current_session = TaskSession.objects.get(id=fs_id)
+            current_session = TaskSession.objects.filter(id=fs_id)
         else:
             queryset = Task_SecSession.objects.all()
         # 加载分页器
@@ -592,7 +592,6 @@ def server_task_secsession(request):
             server_queryset = Server.objects.filter(business_unit__roles__userprofile__name=user_dict['user'])
 
         task_queryset = TaskMethod.objects.all()
-        fs_queryset = TaskSession.objects.filter(id=fs_id)
 
         page = request.GET.get('page')
 
@@ -605,11 +604,11 @@ def server_run_secsession(request):
     :return:
     '''
     if request.method == "GET":
-        sid = request.GET.get("mid")
+        sid = request.GET.get("mid","")
         s_obj = Task_SecSession.objects.get(id=sid)
         status = request.GET.get("status")
 
-        fs_id = request.GET.get("fs_id")
+        fs_id = request.GET.get("fs_id","")
         page = request.GET.get("page")
 
         if status == "pause" :
@@ -649,10 +648,10 @@ def server_random_runsecs(request):
     :return:
     '''
     if request.method == "GET":
-        sid = request.GET.get("sid")
+        sid = request.GET.get("sid","")
         s_obj = Task_SecSession.objects.get(id=sid)
 
-        fs_id = request.GET.get("fs_id")
+        fs_id = request.GET.get("fs_id","")
         page = request.GET.get("page")
 
         # 权限处理

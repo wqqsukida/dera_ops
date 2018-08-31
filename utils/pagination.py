@@ -86,8 +86,11 @@ class Pagination(object):
                     pager_end = self.current_page + self.half_pager_page_count
 
         page_list = []
-        self.query_params['page'] = 1
-        first = '<li><a href="%s?%s">首页</a></li>' % (self.base_url, self.query_params.urlencode(),)
+        if self.current_page <= 1:
+            first = '<li><a href="#">首页</a></li>'
+        else:
+            self.query_params['page'] = 1
+            first = '<li><a href="%s?%s">首页</a></li>' % (self.base_url, self.query_params.urlencode(),)
         page_list.append(first)
         if self.current_page <= 1:
             prev = '<li><a href="#">上一页</a></li>'
@@ -111,8 +114,11 @@ class Pagination(object):
             nex = '<li><a href="%s?%s">下一页</a></li>' % (self.base_url, self.query_params.urlencode(),)
         page_list.append(nex)
 
-        self.query_params['page'] = self.pager_count
-        last = '<li><a href="%s?%s">尾页</a></li>'% (self.base_url,self.query_params.urlencode(),)
+        if self.current_page >= self.pager_count:
+            last = '<li><a href="#">尾页</a></li>'
+        else:
+            self.query_params['page'] = self.pager_count
+            last = '<li><a href="%s?%s">尾页</a></li>'% (self.base_url,self.query_params.urlencode(),)
         page_list.append(last)
 
         page_str = "".join(page_list)
