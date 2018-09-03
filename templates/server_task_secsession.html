@@ -25,6 +25,7 @@
     <link href="/static/css/animate.min.css" rel="stylesheet">
     <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
     <link href="/static/css/gstyle.css" rel="stylesheet">
+    <link href="/static/css/plugins/switchery/switchery.css" rel="stylesheet">
     <style>
         .alert-btn{
             margin: 2.5px;
@@ -165,22 +166,23 @@
                                                 <a class="edit-btn" mid={{ m.id }}  data-toggle="modal" data-target="#EditModal" title="更新会话" style="margin-right: 15px">
                                                     <i class="fa fa-wrench"></i>
                                                 </a>
-                                                <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_del_secsession?mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="del_confirm" title="删除会话" style="margin-right: 15px">
-                                                    <i class="fa fa-trash-o"></i>
-                                                </a>
                                                 {% if m.nst %}
                                                     <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_run_secsession?status=pause&mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="暂停会话" style="margin-right: 15px;color: orange">
                                                         <i class="fa fa-pause"></i>
                                                     </a>
                                                 {% else %}
-                                                    <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_run_secsession?status=run&mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="执行会话" style="margin-right: 15px">
-                                                        <i class="fa fa-caret-square-o-right"></i>
+                                                    <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_del_secsession?mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="del_confirm" title="删除会话" style="margin-right: 15px">
+                                                        <i class="fa fa-trash-o"></i>
                                                     </a>
-                                                {% endif %}
-                                                {% if not m.nst %}
-                                                <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_random_runsecs?sid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="随机执行" style="margin-right: 15px">
-                                                    <i class="fa fa-random"></i>
-                                                </a>
+                                                    {% if not m.is_random %}
+                                                        <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_run_secsession?status=run&mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="执行会话" style="margin-right: 15px">
+                                                            <i class="fa fa-caret-square-o-right"></i>
+                                                        </a>
+                                                    {% else %}
+                                                        <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_random_runsecs?sid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="随机执行" style="margin-right: 15px">
+                                                            <i class="fa fa-random"></i>
+                                                        </a>
+                                                    {% endif %}
                                                 {% endif %}
                                                 |
                                                 <a title="新任务" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/1/" class="alert-btn alert-info">{{ m.nst }}</a>
@@ -304,6 +306,21 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否随机执行：</label>
+                            <div class="col-sm-9" style="padding:15px 30px">
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input name="is_random" type="checkbox" class="onoffswitch-checkbox" id="is_random">
+                                        <label class="onoffswitch-label" for="is_random">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <hr width="100%" />
                         <div class="col-sm-12">
                             <div class="col-sm-5"> </div>
@@ -414,6 +431,22 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否随机执行：</label>
+                            <div class="col-sm-9" style="padding:15px 30px">
+{#                                <input type="checkbox" name="is_random" id="mod_is_random">#}
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input name="is_random" type="checkbox" class="onoffswitch-checkbox" id="mod_is_random">
+                                        <label class="onoffswitch-label" for="mod_is_random">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <hr width="100%" />
                         <div class="col-sm-12">
                             <div class="col-sm-5"> </div>
@@ -436,6 +469,8 @@
     <script src="/static/js/plugins/layer/layer.min.js"></script>
     <!-- 自定义js -->
     <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <!-- Switchery -->
+    <script src="/static/js/plugins/switchery/switchery.js"></script>
 
 
 
@@ -520,6 +555,7 @@
             $("#mod_task_from").empty();
             $("#mod_task_to").empty();
             $("#mod_fs option").prop("selected",false);
+            $("#mod_is_random").prop("checked",false);
 
             $.ajax({
                 url: "/cmdb/server_edit_secsession",
@@ -532,6 +568,9 @@
                         $("#mod_id").val(arg.id);
                         $("#mod_title").val(arg.title);
                         $("#mod_content").val(arg.content);
+                        if(arg.is_random){
+                            $("#mod_is_random").prop("checked",true)
+                        }
 
                         $.each(arg.sfrom_list,function (k,v) {
                             $("#mod_server_from").append("<option value="+v[0]+">"+v[1]+"</options>")

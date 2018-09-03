@@ -691,6 +691,9 @@ def server_create_secsession(request):
         sid_list = request.POST.getlist("sids")
         tid_list = request.POST.getlist("tids")
         content = request.POST.get("content")
+        is_random = request.POST.get("is_random")
+        is_random = True if is_random == 'on' else False
+
         father_session_id = request.POST.get("fs") #要修改的fs_id
 
         fs_id = request.POST.get("fs_id") #当前页面的fs_id
@@ -698,7 +701,8 @@ def server_create_secsession(request):
         if title:
             try:
                 new_ts = Task_SecSession.objects.create(title=title,content=content,
-                                                        father_session_id=father_session_id)
+                                                        father_session_id=father_session_id,
+                                                        is_random=is_random)
                 s_objs = Server.objects.filter(id__in=sid_list)
                 t_objs = TaskMethod.objects.filter(id__in=tid_list)
                 new_ts.server_obj.add(*s_objs)
@@ -762,6 +766,8 @@ def server_edit_secsession(request):
         mid = request.POST.get("id")
         title = request.POST.get("title",None)
         content = request.POST.get("content",None)
+        is_random = request.POST.get("is_random",None)
+        is_random = True if is_random == 'on' else False
         server_obj = request.POST.getlist("sids",None)
         task_obj = request.POST.getlist("tids",None)
         fs = request.POST.get("fs")
@@ -774,6 +780,7 @@ def server_edit_secsession(request):
             'server_obj':server_obj,
             'task_obj':task_obj,
             'content':content,
+            'is_random':is_random,
             'father_session_id':fs
         }
 
@@ -891,7 +898,7 @@ def server_taskmethod_del(request):
         return HttpResponseRedirect('/cmdb/server_taskmethod_list?status={0}&message={1}'.
                                     format(result.get("code", ""),
                                            result.get("message", "")))
-#==========任务会话视图===============
+#==========任务计划视图===============
 def server_task_session(request):
     '''
     服务器任务会话列表
@@ -928,19 +935,25 @@ def server_run_session(request):
 
         ss_list = s_obj.task_secsession_set.all()
         if status == "pause":
-            result = {"code": 2, "message": "任务会话已被暂停执行!"}
+            result = {"code": 2, "message": "任务计划已被暂停执行!"}
             for ss in ss_list:
                 ServerTask.objects.filter(secsession_obj=ss,status=1).update(
                     status=4,finished_date=datetime.datetime.now())
         else:
             try:
                 for ss in ss_list:
-                    for t in ss.task_obj.all():
-                        for s in ss.server_obj.all():
-                            print(ss.title,t.title,s.hostname)
-                            ServerTask.objects.create(server_obj=s,task=t,secsession_obj=ss)
+                    if ss.is_random:    #随机执行会话
+                        for t in ss.task_obj.all():
+                            s = random.choice(ss.server_obj.all())
+                            print(ss.title, t.title, s.hostname)
+                            ServerTask.objects.create(server_obj=s, task=t, secsession_obj=ss)
+                    else:   #正常执行会话
+                        for t in ss.task_obj.all():
+                            for s in ss.server_obj.all():
+                                print(ss.title,t.title,s.hostname)
+                                ServerTask.objects.create(server_obj=s,task=t,secsession_obj=ss)
 
-                result = {"code": 0, "message": "执行任务会话成功!"}
+                result = {"code": 0, "message": "执行任务计划成功!"}
             except Exception as e:
                 result = {"code": 1, "message": str(e)}
 
@@ -964,7 +977,7 @@ def server_random_runs(request):
                     print(ss.title, t.title, s.hostname)
                     ServerTask.objects.create(server_obj=s,task=t,secsession_obj=ss)
 
-            result = {"code": 0, "message": "随机执行任务会话成功!"}
+            result = {"code": 0, "message": "随机执行任务计划成功!"}
         except Exception as e:
             result = {"code": 1, "message": str(e)}
 
@@ -989,11 +1002,11 @@ def server_create_session(request):
         if title:
             try:
                 new_ts = TaskSession.objects.create(title=title, content=content, role_id=rid)
-                result = {"code": 0, "message": "任务会话创建成功!"}
+                result = {"code": 0, "message": "任务计划创建成功!"}
             except Exception as e:
                 result = {"code": 1, "message": str(e)}
         else:
-            result = {"code": 1, "message": "必须指定会话名称!"}
+            result = {"code": 1, "message": "必须指定计划名称!"}
         return HttpResponseRedirect('/cmdb/server_task_session?status={0}&message={1}&page={2}'.
                                     format(result.get("code", ""),
                                            result.get("message", ""),
@@ -1033,7 +1046,7 @@ def server_edit_session(request):
             for k ,v in form_data.items():
                 setattr(s_obj,k,v)
                 s_obj.save()
-            result = {"code": 0, "message": "任务会话更新成功！"}
+            result = {"code": 0, "message": "任务计划更新成功！"}
         except Exception as e:
             print(e)
             result = {"code": 1, "message": str(e)}
@@ -1055,7 +1068,7 @@ def server_del_session(request):
         page = request.GET.get("page")
         try:
             TaskSession.objects.get(id=sid).delete()
-            result = {"code": 0, "message": "任务会话删除成功!"}
+            result = {"code": 0, "message": "任务计划删除成功!"}
         except Exception as e:
             result = {"code": 1, "message": str(e)}
         return HttpResponseRedirect('/cmdb/server_task_session?status={0}&message={1}&page={2}'.

@@ -353,6 +353,7 @@ class Task_SecSession(models.Model):
     content = models.TextField('子会话描述',null=True,blank=True)
     create_date = models.DateTimeField('子会话创建时间', auto_now_add=True)
     father_session = models.ForeignKey(to='TaskSession',null=True, blank=True)
+    is_random = models.BooleanField('是否随机执行',default=False)
 
     def ast(self):
         return self.servertask_set.count()
