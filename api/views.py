@@ -97,7 +97,9 @@ def server(request):
                                   'task_id':task.id})
 
         response.update({'task':task_list})
-        task_query_list.update(status=5) # 改变任务的状态：新建任务->推送执行中
+        # 改变任务的状态：新建任务->推送执行中
+        #              创建时间->推送时间
+        task_query_list.update(status=5,create_date=datetime.datetime.now())
         ####################################添加推送主机任务请求######################################
         server_task_query_list = models.ServerTask.objects.filter(server_obj=server_obj,status=1)
         server_task_list = []
@@ -108,7 +110,9 @@ def server(request):
                                          'stask_content':st.task.content
                                          })
         response.update({'stask':server_task_list})
-        server_task_query_list.update(status=5) # 改变任务的状态：新建任务->推送执行中
+        # 改变任务的状态：新建任务->推送执行中
+        #              创建时间->推送时间
+        server_task_query_list.update(status=5,create_date=datetime.datetime.now())
         ###########################################################################################
         print('[{0}]:{1}'.format(clien_ip,response))
         return HttpResponse(json.dumps(response))
@@ -117,16 +121,20 @@ def server(request):
 @api_auth
 def task(request):
     if request.method == "POST":
+        fd = datetime.datetime.now()
         res = json.loads(request.body.decode('utf-8'))    #结果必须为字典形式
         print(res)
+        t_obj = models.SSDTask.objects.filter(id=res.get('task_id'))
+        cd = t_obj.first().create_date
+        rt = fd - cd  # 计算出实际运行时间
         # for res in res_list:
         if res.get('task_res'):
-            models.SSDTask.objects.filter(id=res.get('task_id')).\
-                update(status = 2 , finished_date = datetime.datetime.now(),
-                       task_res=res.get('task_res'))
+            t_obj.update(status = 2 , finished_date = fd,
+                          run_time = rt ,
+                          task_res=res.get('task_res'))
         else:
-            models.SSDTask.objects.filter(id=res.get('task_id')).\
-                update(status = 3 , finished_date = datetime.datetime.now())
+            t_obj.update(status = 3 , finished_date = fd,
+                          run_time = rt)
 
         return HttpResponse('finish task')
     elif request.method == "GET":
@@ -136,16 +144,20 @@ def task(request):
 @api_auth
 def stask(request):
     if request.method == "POST":
+        fd = datetime.datetime.now()
         res = json.loads(request.body.decode('utf-8'))    #结果必须为字典形式
         print(res)
+        st_obj = models.ServerTask.objects.filter(id=res.get('stask_id'))
+        cd = st_obj.first().create_date
+        rt = fd - cd  # 计算出实际运行时间
         # for res in res_list:
         if res.get('stask_res'):
-            models.ServerTask.objects.filter(id=res.get('stask_id')).\
-                update(status = 2 , finished_date = datetime.datetime.now(),
-                       task_res=res.get('stask_res'))
+            st_obj.update(status = 2 , finished_date = fd,
+                          run_time = rt ,
+                          task_res=res.get('stask_res'))
         else:
-            models.ServerTask.objects.filter(id=res.get('stask_id')).\
-                update(status = 3 , finished_date = datetime.datetime.now())
+            st_obj.update(status = 3 , finished_date = fd,
+                          run_time = rt)
 
         return HttpResponse('finish task')
     elif request.method == "GET":

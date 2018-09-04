@@ -262,6 +262,7 @@ class SSDTask(models.Model):
     status = models.IntegerField('任务状态',choices=task_status_choices,default='1')
     create_date = models.DateTimeField('任务创建时间',auto_now_add=True)
     finished_date = models.DateTimeField('任务完成时间',null=True,blank=True)
+    run_time = models.CharField('执行总计时间',max_length=32,null=True,blank=True)
     task_res = models.TextField('任务结果',null=True,blank=True)
 
 class TaskMethod(models.Model):
@@ -288,6 +289,7 @@ class ServerTask(models.Model):
     status = models.IntegerField('任务状态',choices=task_status_choices,default='1')
     create_date = models.DateTimeField('任务创建时间',auto_now_add=True)
     finished_date = models.DateTimeField('任务完成时间',null=True,blank=True)
+    run_time = models.CharField('执行总计时间',max_length=32,null=True,blank=True)
     task_res = models.TextField('任务结果',null=True,blank=True)
     secsession_obj = models.ForeignKey(to='Task_SecSession',null=True, blank=True)
 

@@ -82,6 +82,7 @@
                                         <th>task_content</th>
                                         <th>create_date</th>
                                         <th>finished_date</th>
+                                        <th>run_time</th>
                                         <th>status</th>
                                         <th>task_res</th>
                                     </tr>
@@ -92,6 +93,12 @@
                                             <td>{{ task.content}}</td>
                                             <td>{{ task.create_date | date:'Y-m-d H:i:s'}}</td>
                                             <td>{{ task.finished_date | date:'Y-m-d H:i:s'}}</td>
+                                            <td>
+                                                <a class="btn-sm btn-success" style="font-size: 16px">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    {{ task.run_time }}
+                                                </a>
+                                            </td>
                                             <td>
                                                 {% if task.status == 1 %}
                                                     <a class="btn-sm btn-success">{{ task.get_status_display }}</a>

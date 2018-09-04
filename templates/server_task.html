@@ -97,7 +97,7 @@
 
                     <div class="ibox-content">
                         <div class="col-sm-12 m-b-xs" style="padding-bottom: 10px;">
-                            <form method="get" action="#">
+                            <form method="get" action="">
 {#                                <div class="col-sm-1"> <!--添加-->#}
 {#                                    <a class="btn btn-info" href="#" data-toggle="modal" data-target="#AddModal">+ 添加</a>#}
 {#                                </div>#}
@@ -122,12 +122,13 @@
                                  <thead>
                                     <tr>
                                         <th>task_id</th>
-                                        <th>task_title</th>
-                                        <th width="30%">task_content</th>
-                                        <th>create_date</th>
-                                        <th>finished_date</th>
-                                        <th>task_secsession</th>
+                                        <th>task_plan</th>
+                                        <th>task_session</th>
                                         <th>run_server</th>
+                                        <th>task_model</th>
+                                        <th>task_content</th>
+                                        <th>create_date</th>
+                                        <th>run_time</th>
                                         <th>status</th>
                                         <th>task_res</th>
                                     </tr>
@@ -136,15 +137,25 @@
                                     {% for task in task_list %}
                                         <tr>
                                             <td>{{ task.id }}</td>
-                                            <td>{{ task.task.title }}</td>
-                                            <td>{{ task.task.content }}</td>
-                                            <td>{{ task.create_date | date:'Y-m-d H:i:s'}}</td>
-                                            <td>{{ task.finished_date | date:'Y-m-d H:i:s'}}</td>
+                                            <td>{{ task.secsession_obj.father_session.title }}</td>
                                             <td>
                                                 {{ task.secsession_obj.title }}
                                             </td>
                                             <td>
                                                 <a class="btn-sm btn-white">{{ task.server_obj.hostname }}</a>
+                                            </td>
+                                            <td>{{ task.task.title }}</td>
+                                            <td>
+                                                <a class="btn btn-success get_task_content" data-toggle="modal" data-target="#TaskModal" tm_id={{ task.task.id }} >
+                                                    Task_Content...
+                                                </a>
+                                            </td>
+                                            <td>{{ task.create_date | date:'Y-m-d H:i:s'}}</td>
+                                            <td>
+                                                <a class="btn-sm btn-success" style="font-size: 16px">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    {{ task.run_time }}
+                                                </a>
                                             </td>
                                             <td>
                                                 {% if task.status == 1 %}
@@ -207,7 +218,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">任务执行结果</h4>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
                 </div>
                 <div class="panel-body">
                     <pre id="get-res" style="overflow: auto; height: 380px; line-height: 20px;">
@@ -288,6 +299,7 @@
         $("table").on("click",".get_task_res",function (){
             task_id = $(this).attr('task_id');
             $("#get-res").empty();
+            $("#myModalLabel").text('任务执行结果');
             $.ajax({
                 url:'/cmdb/server_task_status/////',
                 type:'POST',
@@ -299,6 +311,27 @@
                         $.each(arg,function (k,v) {
                             $("#get-res").append(k+" : "+"\n"+v+"\n")
                         });
+                    }
+                    else{
+
+                    }
+                }
+            })
+        });
+
+        $("table").on("click",".get_task_content",function (){
+            tm_id = $(this).attr('tm_id');
+            $("#get-res").empty();
+            $("#myModalLabel").text('任务内容');
+            $.ajax({
+                url:'/cmdb/server_taskmethod_list',
+                type:'POST',
+                headers:{"X-CSRFToken": $.cookie('csrftoken')},
+                data:{tm_id:tm_id},
+                dataType:'JSON',
+                success:function (arg) {
+                    if(arg){
+                            $("#get-res").append(arg)
                     }
                     else{
 

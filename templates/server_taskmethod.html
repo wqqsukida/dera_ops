@@ -100,7 +100,11 @@
                                     {% for task in task_list %}
                                         <tr>
                                             <td>{{ task.title }}</td>
-                                            <td>{{ task.content }}</td>
+                                            <td>
+                                                <a class="btn btn-success get_task_content" data-toggle="modal" data-target="#TaskModal" tm_id={{ task.id }} >
+                                                    Task_Content...
+                                                </a>
+                                            </td>
                                             <td>{{ task.create_date|date:'Y-m-d H:i:s'}}</td>
 
                                             <td style="font-size: 20px">
@@ -229,7 +233,21 @@
             </div>
         </div>
     </div>
+    <div class="modal inmodal" id="TaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="TaskModalLabel"></h4>
+                </div>
+                <div class="panel-body">
+                    <pre id="get-res" style="overflow: auto; height: 380px; line-height: 20px;">
 
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- 全局js -->
     <script src="/static/js/jquery.min.js?v=2.1.4"></script>
     <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
@@ -337,6 +355,27 @@
                         $("#mod_id").val(arg.id);
                         $("#mod_title").val(arg.title);
                         $("#mod_content").val(arg.content);
+                    }
+                }
+            })
+        });
+
+        $("table").on("click",".get_task_content",function (){
+            tm_id = $(this).attr('tm_id');
+            $("#get-res").empty();
+            $("#TaskModalLabel").text('任务内容');
+            $.ajax({
+                url:'/cmdb/server_taskmethod_list',
+                type:'POST',
+                headers:{"X-CSRFToken": $.cookie('csrftoken')},
+                data:{tm_id:tm_id},
+                dataType:'JSON',
+                success:function (arg) {
+                    if(arg){
+                            $("#get-res").append(arg)
+                    }
+                    else{
+
                     }
                 }
             })

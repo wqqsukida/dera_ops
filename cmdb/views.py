@@ -479,12 +479,13 @@ def server_task_status(request,sid="",ssid="",sts_id="",fsid=""):
         secsession_id=ssid
         st_status_id=sts_id
 
-        search_q = request.GET.get("q","")
+        search_q = request.GET.get("q","").strip()
         page = request.GET.get('page')
         q_query = Q(Q(task__title__contains=search_q)|
                     Q(task__content__contains=search_q)|
                     Q(server_obj__hostname__contains=search_q)|
-                    Q(secsession_obj__title__contains=search_q)
+                    Q(secsession_obj__title__contains=search_q)|
+                    Q(secsession_obj__father_session__title__contains=search_q)
                     )
 
         if server_id: #从主机列表访问
@@ -838,6 +839,13 @@ def server_taskmethod_list(request):
 
 
         return render(request,'server_taskmethod.html',locals())
+
+    elif request.method == "POST":
+        tm_id = request.POST.get("tm_id")
+        tm_content = TaskMethod.objects.get(id=tm_id).content
+
+        return HttpResponse(json.dumps(tm_content))
+
 
 def server_taskmethod_add(request):
     result = {}
