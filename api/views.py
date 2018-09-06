@@ -11,6 +11,7 @@ from .plugins import PluginManger
 from utils.md5 import encrypt
 from django.conf import settings
 import time
+import os
 
 key = settings.API_TOKEN
 # redis,Memcache
@@ -107,7 +108,9 @@ def server(request):
             for st in server_task_query_list:
                 server_task_list.append({'stask_id':st.id,
                                          'stask_title':st.task.title,
-                                         'stask_content':st.task.content
+                                         'stask_content':st.task.content,
+                                         'stask_hasfile':st.task.has_file,
+                                         'stask_file_url':st.task.file_url,
                                          })
         response.update({'stask':server_task_list})
         # 改变任务的状态：新建任务->推送执行中
@@ -157,8 +160,32 @@ def stask(request):
                           task_res=res.get('stask_res'))
         else:
             st_obj.update(status = 3 , finished_date = fd,
-                          run_time = rt)
+                          run_time = rt ,
+                          task_res=res.get('error_msg'))
 
         return HttpResponse('finish task')
     elif request.method == "GET":
         return HttpResponse('Error api method!')
+
+@csrf_exempt
+# @api_auth
+def task_file_headler(request):
+    if request.method == "POST":
+        file_obj = request.FILES.get('task_file')
+        stask_id = request.POST.get('stask_id')
+        hostname = request.POST.get('hostname')
+        date = datetime.datetime.now().strftime("%Y-%m-%d")
+        file_path = os.path.join(settings.BASE_DIR,'tmp',hostname,date)
+        if not os.path.exists(file_path):
+            os.makedirs(file_path)
+
+        file_name = os.path.join(file_path,file_obj.name)
+        f = open(file_name,'wb')
+        for c in file_obj.chunks():
+            f.write(c)
+        f.close()
+
+        models.ServerTask.objects.filter(id=stask_id).update(server_file_url=file_name)
+
+        print('Upload--->', file_name)
+    return HttpResponse('Upload file success!')

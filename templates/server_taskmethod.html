@@ -28,6 +28,7 @@
 
     <link href="/static/css/plugins/codemirror/codemirror.css" rel="stylesheet">
     <link href="/static/css/plugins/codemirror/ambiance.css" rel="stylesheet">
+    <link href="/static/css/plugins/switchery/switchery.css" rel="stylesheet">
     <style>
         .text-ellipsis{
             overflow: hidden;
@@ -100,10 +101,16 @@
                                     {% for task in task_list %}
                                         <tr>
                                             <td>{{ task.title }}</td>
-                                            <td>
+                                            <td style="font-size: 20px">
                                                 <a class="btn btn-success get_task_content" data-toggle="modal" data-target="#TaskModal" tm_id={{ task.id }} >
                                                     Task_Content...
                                                 </a>
+                                                &nbsp;
+                                                {% if task.has_file %}
+                                                    <i class="fa fa-exclamation-circle"> : {{ task.has_file }}</i>
+                                                    &nbsp;
+                                                    <i class="fa fa-folder-open"></i> : {{ task.file_url }}
+                                                {% endif %}
                                             </td>
                                             <td>{{ task.create_date|date:'Y-m-d H:i:s'}}</td>
 
@@ -172,6 +179,28 @@
 {#                                <textarea  class="form-control" name="content" id="add_content" rows="10"></textarea>#}
 {#                            </div>#}
 {#                        </div>#}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否生成文件：</label>
+                            <div class="col-sm-5" style="padding:8px 30px">
+{#                                <input name="has_file" id="add_has_file" type="checkbox">#}
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input name="has_file" type="checkbox" class="onoffswitch-checkbox" id="add_has_file">
+                                        <label class="onoffswitch-label" for="add_has_file">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group file-url-div hide">
+                            <label class="col-sm-2 control-label">文件路径：</label>
+                            <div class="col-sm-5">
+                                <input name="file_url" class="form-control" id="add_file_url" type="text">
+                            </div>
+                        </div>
 
                         <hr width="100%" />
                         <div class="col-sm-12">
@@ -222,6 +251,28 @@
 {#                            </div>#}
 {#                        </div>#}
 
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否生成文件：</label>
+                            <div class="col-sm-5" style="padding:8px 30px">
+{#                                <input name="has_file" id="mod_has_file" type="checkbox">#}
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input name="has_file" type="checkbox" class="onoffswitch-checkbox" id="mod_has_file">
+                                        <label class="onoffswitch-label" for="mod_has_file">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group file-url-div2 hide">
+                            <label class="col-sm-2 control-label">文件路径：</label>
+                            <div class="col-sm-5">
+                                <input name="file_url" class="form-control" id="mod_file_url" type="text">
+                            </div>
+                        </div>
 
                         <hr width="100%" />
                         <div class="col-sm-12">
@@ -266,6 +317,8 @@
 {#    <script src="/static/js/plugins/codemirror/mode/javascript/javascript.js"></script>#}
     <!-- 自定义js -->
     <script src="/static/js/content.min.js?v=1.0.0"></script>
+        <!-- Switchery -->
+    <script src="/static/js/plugins/switchery/switchery.js"></script>
 
     <script>
         /*
@@ -344,6 +397,10 @@
             $("#mod_id").val("");
             $("#mod_title").val("");
             $("#mod_content").val("");
+            $("#mod_has_file").prop("checked",false);
+            $(".file-url-div2").addClass("hide");
+            $("#mod_file_url").val("");
+
             $.ajax({
                 url: "/cmdb/server_taskmethod_edit",
                 type: "GET",
@@ -355,6 +412,13 @@
                         $("#mod_id").val(arg.id);
                         $("#mod_title").val(arg.title);
                         $("#mod_content").val(arg.content);
+                        if(arg.has_file){
+                            $("#mod_has_file").prop("checked",true);
+                            $(".file-url-div2").removeClass("hide");
+                            $("#mod_file_url").val(arg.file_url)
+                        }else{
+
+                        }
                     }
                 }
             })
@@ -379,6 +443,24 @@
                     }
                 }
             })
+        });
+
+        $("#add_has_file").change(function () {
+            if ($(this).prop('checked')){
+                $(".file-url-div").removeClass("hide");
+            }else{
+                $("#add_file_url").val("");
+                $(".file-url-div").addClass("hide")
+            }
+        });
+
+        $("#mod_has_file").change(function () {
+            if ($(this).prop('checked')){
+                $(".file-url-div2").removeClass("hide");
+            }else{
+                $("#mod_file_url").val("");
+                $(".file-url-div2").addClass("hide")
+            }
         })
     </script>
 

@@ -33,6 +33,7 @@ urlpatterns = [
 
     url(r'^server_task_status/(?P<sid>\d*)/(?P<fsid>\d*)/(?P<ssid>\d*)/(?P<sts_id>\d*)/$', views.server_task_status),  # 主机任务状态列表
     url(r'^server_task_reload', views.server_task_reload),  # 恢复执行暂停任务
+    url(r'^server_task_download', views.server_task_download),  # 下载任务文件
     url(r'^server_task_session', views.server_task_session),  # 主机任务会话列表
     url(r'^server_create_session', views.server_create_session),  # 创建主机任务会话
     url(r'^server_edit_session', views.server_edit_session),  # 修改主机任务会话

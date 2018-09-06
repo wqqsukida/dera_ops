@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect,HttpResponseRedirect
 from django.shortcuts import HttpResponse
+from django.http import FileResponse
 from rbac.models import *
 from rbac.service.init_permission import init_permission
 import copy
@@ -150,12 +151,16 @@ def asset_list(request):
             queryset = Server.objects.filter(Q(Q(hostname__contains=search_q) |
                                                Q(sn__contains=search_q) |
                                                Q(manage_ip__contains=search_q) |
+                                               Q(os_platform__contains=search_q) |
+                                               Q(idc__name__contains=search_q) |
                                                Q(business_unit__name__contains=search_q) |
                                                Q(tags__name__contains=search_q))).distinct()
         else:
             queryset = Server.objects.filter(Q(Q(hostname__contains=search_q) |
                                                Q(sn__contains=search_q) |
                                                Q(manage_ip__contains=search_q) |
+                                               Q(os_platform__contains=search_q) |
+                                               Q(idc__name__contains=search_q) |
                                                Q(business_unit__name__contains=search_q) |
                                                Q(tags__name__contains=search_q)),
                        business_unit__roles__userprofile__name=user_dict['user']).distinct()
@@ -565,6 +570,22 @@ def server_task_reload(request):
                                            page,
                                            ))
 
+def server_task_download(request):
+    if request.method == "GET":
+        tid = request.GET.get("tid")
+
+        try:
+            t_obj = ServerTask.objects.get(id=tid)
+            server_file_url = t_obj.server_file_url
+            file_name = server_file_url.rsplit('/',1)[-1]
+            file = open(server_file_url,'rb')
+            rep = FileResponse(file)
+            rep['Content-type'] = 'application/octet-stream'
+            rep['Content-Disposition'] = 'attachment;filename=%s'%file_name
+            return rep
+        except Exception as e:
+            print(str(e))
+            return HttpResponse('DownLoad Error!')
 #==========子任务会话视图=============
 def server_task_secsession(request):
     '''
@@ -852,9 +873,12 @@ def server_taskmethod_add(request):
     if request.method == "POST":
         title = request.POST.get("title")
         content = request.POST.get("content")
+        has_file = request.POST.get("has_file")
+        file_url = request.POST.get("file_url")
         if title:
             try:
-                TaskMethod.objects.create(title=title,content=content)
+                TaskMethod.objects.create(title=title,content=content,file_url=file_url,
+                                          has_file=True if has_file == 'on' else False,)
                 result = {"code": 0, "message": "任务项创建成功!"}
             except Exception as e:
                 result = {"code": 1, "message": str(e)}
@@ -877,9 +901,13 @@ def server_taskmethod_edit(request):
         tid = request.POST.get("id")
         title = request.POST.get("title",None)
         content = request.POST.get("content",None)
+        has_file = request.POST.get("has_file")
+        file_url = request.POST.get("file_url")
         form_data = {
             'title':title,
-            'content':content
+            'content':content,
+            'has_file':True if has_file == 'on' else False,
+            'file_url':file_url
         }
         t_obj = TaskMethod.objects.get(id=tid)
         try:

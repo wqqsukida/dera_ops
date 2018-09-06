@@ -272,6 +272,8 @@ class TaskMethod(models.Model):
     title = models.CharField('任务名称', max_length=32)
     content = models.TextField('任务内容')
     create_date = models.DateTimeField('任务创建时间', auto_now_add=True)
+    has_file = models.BooleanField(default=False)
+    file_url = models.CharField('客户端生成文件路径', max_length=256,null=True,blank=True)
 
 class ServerTask(models.Model):
     '''
@@ -292,6 +294,7 @@ class ServerTask(models.Model):
     run_time = models.CharField('执行总计时间',max_length=32,null=True,blank=True)
     task_res = models.TextField('任务结果',null=True,blank=True)
     secsession_obj = models.ForeignKey(to='Task_SecSession',null=True, blank=True)
+    server_file_url = models.CharField('服务端存放文件路径', max_length=256,null=True,blank=True)
 
 class TaskSession(models.Model):
     '''
