@@ -3,14 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="47e6c2be-8a09-4c2a-9ff7-3aa60dbb48bd" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmdb/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cmdb/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmdb/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cmdb/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmdb/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cmdb/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dera_ops/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dera_ops/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/server_task.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/server_task.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/server_taskmethod.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/server_taskmethod.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/server_task_secsession.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/server_task_secsession.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/server_task_session.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/server_task_session.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -65,42 +62,45 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/views.py">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmdb/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="159" column="56" lean-forward="true" selection-start-line="159" selection-start-column="56" selection-end-line="159" selection-end-column="56" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="311">
+              <caret line="43" column="70" lean-forward="true" selection-start-line="43" selection-start-column="70" selection-end-line="43" selection-end-column="70" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="server_task_session.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/server_task_session.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="310">
+              <caret line="186" column="130" lean-forward="true" selection-start-line="186" selection-start-column="130" selection-end-line="186" selection-end-column="130" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cmdb/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-33">
-              <caret line="883" column="55" lean-forward="true" selection-start-line="883" selection-start-column="55" selection-end-line="883" selection-end-column="55" />
+            <state relative-caret-position="538">
+              <caret line="1098" column="48" selection-start-line="1098" selection-start-column="48" selection-end-line="1098" selection-end-column="48" />
               <folding>
                 <element signature="e#0#66#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="server_taskmethod.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/server_taskmethod.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="109" column="86" selection-start-line="109" selection-start-column="86" selection-end-line="109" selection-end-column="86" />
-              <folding>
-                <element signature="n#style#0;n#td#1;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#5253#5259#0#HTML" expanded="true" />
-                <element signature="e#5500#5506#0#HTML" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#div#5;n#body#0;n#html#0;n#!!top" />
+                <element signature="e#24672#25792#0" />
+                <element signature="e#25834#27595#0" />
+                <element signature="e#27637#29019#0" />
+                <element signature="e#29064#30659#0" />
+                <element signature="e#30702#33407#0" />
+                <element signature="e#33449#34167#0" />
+                <element signature="e#34242#34900#0" />
+                <element signature="e#34943#35620#0" />
+                <element signature="e#35663#36712#0" />
+                <element signature="e#36754#37251#0" />
+                <element signature="e#37323#38207#0" />
+                <element signature="e#38246#39899#0" />
+                <element signature="e#39938#40858#0" />
+                <element signature="e#41848#43122#0" />
               </folding>
             </state>
           </provider>
@@ -194,19 +194,19 @@
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/cmdb/templatetags/123.py" />
         <option value="$PROJECT_DIR$/cmdb/templatetags/123456.py" />
-        <option value="$PROJECT_DIR$/templates/server_task_secsession.html" />
         <option value="$PROJECT_DIR$/cmdb/templatetags/mytags.py" />
         <option value="$PROJECT_DIR$/templates/ssd_task.html" />
-        <option value="$PROJECT_DIR$/templates/server_task_session.html" />
         <option value="$PROJECT_DIR$/templates/ssd.html" />
-        <option value="$PROJECT_DIR$/api/urls.py" />
         <option value="$PROJECT_DIR$/dera_ops/settings.py" />
         <option value="$PROJECT_DIR$/cmdb/models.py" />
-        <option value="$PROJECT_DIR$/api/views.py" />
         <option value="$PROJECT_DIR$/templates/server_task.html" />
-        <option value="$PROJECT_DIR$/cmdb/urls.py" />
-        <option value="$PROJECT_DIR$/cmdb/views.py" />
         <option value="$PROJECT_DIR$/templates/server_taskmethod.html" />
+        <option value="$PROJECT_DIR$/api/views.py" />
+        <option value="$PROJECT_DIR$/api/urls.py" />
+        <option value="$PROJECT_DIR$/templates/server_task_secsession.html" />
+        <option value="$PROJECT_DIR$/cmdb/urls.py" />
+        <option value="$PROJECT_DIR$/templates/server_task_session.html" />
+        <option value="$PROJECT_DIR$/cmdb/views.py" />
       </list>
     </option>
   </component>
@@ -220,8 +220,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="455" />
-    <option name="y" value="115" />
+    <option name="x" value="71" />
+    <option name="y" value="84" />
     <option name="width" value="1366" />
     <option name="height" value="764" />
   </component>
@@ -251,12 +251,55 @@
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="cmdb" type="462c0819:PsiDirectoryNode" />
+              <item name="templatetags" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+              <item name="c6.com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+              <item name="docker_server9" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+              <item name="docker_server9" type="462c0819:PsiDirectoryNode" />
+              <item name="2018-09-07" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+              <item name="docker_server12" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="tmp" type="462c0819:PsiDirectoryNode" />
+              <item name="docker_server12" type="462c0819:PsiDirectoryNode" />
+              <item name="2018-09-07" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -270,7 +313,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL&#10;MariaDB" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/code/s16autohost/s5day91/auto_client" />
+    <property name="last_opened_file_path" value="$USER_HOME$/pro01/wcrm" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
@@ -609,7 +652,14 @@
       <option name="project" value="LOCAL" />
       <updated>1536049191253</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="20180906更新&#10;1.添加接收文件上传接口&#10;2.任务模板增加“是否生成文件”，“文件路径”字段，用于client保存上传文件&#10;3.主机任务现在执行失败会返回错误信息&#10;4.上传到server的文件会按照主机、日期生成目录和随机文件名，通过该路径可下载文件">
+      <created>1536227972962</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1536227972962</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView">
@@ -629,10 +679,10 @@
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5026738" side_tool="true" weight="0.29964328" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" x="1" y="404" width="1918" height="284" id="Version Control" order="10" sideWeight="0.4983957" weight="0.34958383" />
-      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.49946523" weight="0.43995243" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4973262" visible="true" weight="0.32699168" />
+      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.49946523" weight="0.28894174" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4973262" visible="true" weight="0.32699168" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.4973262" weight="0.29964328" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49916804" visible="true" weight="0.15828878" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49916804" visible="true" weight="0.15828878" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" visible="true" weight="0.12780748" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936978" />
@@ -699,7 +749,8 @@
     <MESSAGE value="20180831更新&#10;1.修改部分任务会话页面展示" />
     <MESSAGE value="20180903更新&#10;1.将&quot;任务会话&quot;菜单改为&quot;任务计划&quot;;&quot;任务子会话&quot;改为&quot;任务会话&quot;&#10;2.修改任务计划，任务会话菜单显示方式&#10;2.更改任务会话随机执行方式:创建时定义是否为随机会话&#10;3.任务计划执行时会区分其下会话的的种类(是否为随机)" />
     <MESSAGE value="20180904更新&#10;1.(包括ssd_task和server_task)成功执行的任务现在可以显示执行总时间&#10;2.主机任务列表添加显示所属任务计划字段并加入搜索&#10;3.主机任务列表现在通过点击Task_Content显示任务内容" />
-    <option name="LAST_COMMIT_MESSAGE" value="20180904更新&#10;1.(包括ssd_task和server_task)成功执行的任务现在可以显示执行总时间&#10;2.主机任务列表添加显示所属任务计划字段并加入搜索&#10;3.主机任务列表现在通过点击Task_Content显示任务内容" />
+    <MESSAGE value="20180906更新&#10;1.添加接收文件上传接口&#10;2.任务模板增加“是否生成文件”，“文件路径”字段，用于client保存上传文件&#10;3.主机任务现在执行失败会返回错误信息&#10;4.上传到server的文件会按照主机、日期生成目录和随机文件名，通过该路径可下载文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="20180906更新&#10;1.添加接收文件上传接口&#10;2.任务模板增加“是否生成文件”，“文件路径”字段，用于client保存上传文件&#10;3.主机任务现在执行失败会返回错误信息&#10;4.上传到server的文件会按照主机、日期生成目录和随机文件名，通过该路径可下载文件" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -707,12 +758,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/static/img/index_4.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/img/loading-upload.gif">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/img/locked.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -826,27 +871,6 @@
     <entry file="file://$PROJECT_DIR$/cmdb/templatetags/123456.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_task_secsession">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/templatetags/mytags.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/server_task_session.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="156" column="52" selection-start-line="156" selection-start-column="52" selection-end-line="156" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/ssd_task.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-132">
@@ -872,13 +896,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="75" selection-start-column="10" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="21" column="34" lean-forward="true" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -911,13 +928,6 @@
     <entry file="file://$PROJECT_DIR$/tmp/c6.com/2018-09-06/sda_short_test.txt_82409bba-b17d-11e8-ac03-408d5c646c3e">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="35" column="72" selection-start-line="35" selection-start-column="72" selection-end-line="35" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_servertask">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -935,47 +945,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="298" column="32" selection-start-line="298" selection-start-column="32" selection-end-line="298" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="159" column="56" lean-forward="true" selection-start-line="159" selection-start-column="56" selection-end-line="159" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-33">
-          <caret line="883" column="55" lean-forward="true" selection-start-line="883" selection-start-column="55" selection-end-line="883" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#66#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_taskmethod">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/server_task_secsession.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="471" column="7" lean-forward="true" selection-start-line="471" selection-end-line="472" selection-end-column="69" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#5;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -990,6 +963,109 @@
             <element signature="n#style#0;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#3;n#form#0;n#div#1;n#div#0;n#div#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#div#5;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/md5.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/templatetags/mytags.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1344">
+          <caret line="180" lean-forward="true" selection-start-line="180" selection-end-line="180" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#1870#4671#0" />
+            <element signature="e#4719#5473#0" />
+            <element signature="e#5522#6286#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="21" column="34" lean-forward="true" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
+          <folding>
+            <element signature="e#645#677#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/server_task_secsession.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="206" column="10" selection-start-line="206" selection-end-line="208" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="43" column="70" lean-forward="true" selection-start-line="43" selection-start-column="70" selection-end-line="43" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/server_task_session.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="186" column="130" lean-forward="true" selection-start-line="186" selection-start-column="130" selection-end-line="186" selection-end-column="130" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_tasksession">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_task_secsession">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="364" lean-forward="true" selection-start-line="364" selection-end-line="364" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="538">
+          <caret line="1098" column="48" selection-start-line="1098" selection-start-column="48" selection-end-line="1098" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#66#0" expanded="true" />
+            <element signature="e#24672#25792#0" />
+            <element signature="e#25834#27595#0" />
+            <element signature="e#27637#29019#0" />
+            <element signature="e#29064#30659#0" />
+            <element signature="e#30702#33407#0" />
+            <element signature="e#33449#34167#0" />
+            <element signature="e#34242#34900#0" />
+            <element signature="e#34943#35620#0" />
+            <element signature="e#35663#36712#0" />
+            <element signature="e#36754#37251#0" />
+            <element signature="e#37323#38207#0" />
+            <element signature="e#38246#39899#0" />
+            <element signature="e#39938#40858#0" />
+            <element signature="e#41848#43122#0" />
           </folding>
         </state>
       </provider>

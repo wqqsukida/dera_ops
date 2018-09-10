@@ -135,10 +135,15 @@
                                         <th>会话名</th>
         {#                                        <th>任务项</th>#}
         {#                                        <th>主机项</th>#}
-                                        <th>任务总数</th>
+                                        <th width="5%">任务总数</th>
+                                        <th width="5%">新任务</th>
+                                        <th width="5%">执行完成</th>
+                                        <th width="5%">执行中</th>
+                                        <th width="5%">执行失败</th>
+                                        <th width="5%">暂停执行</th>
                                         <th>创建时间</th>
                                         <th>会话描述</th>
-                                        <th style="text-align: center">操作(更新/删除/执行 | 任务详情)</th>
+                                        <th style="text-align: center">操作(更新/删除/执行/复制)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -150,6 +155,21 @@
                                                 </a>
                                             </td>
                                             <td><a href="/cmdb/server_task_status///{{ m.id }}//" class="alert-btn alert-white">{{ m.servertask_set.count }}</a></td>
+                                            <td>
+                                                <a title="新任务" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/1/" class="alert-btn alert-info">{{ m.nst }}</a>
+                                            </td>
+                                            <td>
+                                                <a title="执行完成" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/2/" class="alert-btn alert-success">{{ m.fst }}</a>
+                                            </td>
+                                            <td>
+                                                <a title="执行中" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/5/" class="alert-btn alert-primary">{{ m.pst }}</a>
+                                            </td>
+                                            <td>
+                                                <a title="执行失败" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/3/" class="alert-btn alert-danger">{{ m.est }}</a>
+                                            </td>
+                                            <td>
+                                                <a title="执行暂停" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/4/" class="alert-btn alert-warning">{{ m.dst }}</a>
+                                            </td>
         {#                                            <td>#}
         {#                                                {% for t in m.task_obj.values %}#}
         {#                                                    <a class="btn-sm btn-primary task-btn">{{ t.title }}</a>#}
@@ -184,12 +204,9 @@
                                                         </a>
                                                     {% endif %}
                                                 {% endif %}
-                                                |
-                                                <a title="新任务" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/1/" class="alert-btn alert-info">{{ m.nst }}</a>
-                                                <a title="执行完成" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/2/" class="alert-btn alert-success">{{ m.fst }}</a>
-                                                <a title="执行中" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/5/" class="alert-btn alert-primary">{{ m.pst }}</a>
-                                                <a title="执行失败" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/3/" class="alert-btn alert-danger">{{ m.est }}</a>
-                                                <a title="执行暂停" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/4/" class="alert-btn alert-warning">{{ m.dst }}</a>
+                                                <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_copy_secsession?ssid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="复制会话" style="margin-right: 15px">
+                                                    <i class="fa fa-copy"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     {% endfor %}

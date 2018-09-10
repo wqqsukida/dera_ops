@@ -168,7 +168,7 @@ def stask(request):
         return HttpResponse('Error api method!')
 
 @csrf_exempt
-# @api_auth
+@api_auth
 def task_file_headler(request):
     if request.method == "POST":
         file_obj = request.FILES.get('task_file')

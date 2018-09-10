@@ -586,10 +586,10 @@ def server_task_download(request):
         except Exception as e:
             print(str(e))
             return HttpResponse('DownLoad Error!')
-#==========子任务会话视图=============
+#==========任务会话视图=============
 def server_task_secsession(request):
     '''
-    服务器子任务会话列表
+    服务器任务会话列表
     :param request:
     :return:
     '''
@@ -608,7 +608,7 @@ def server_task_secsession(request):
         model_list, page_html = init_paginaion(request, queryset)
 
         server_queryset = Server.objects.all()
-        # 权限处理:添加子任务会话时只能指定当前用户属组下的主机
+        # 权限处理:添加任务会话时只能指定当前用户属组下的主机
         user_dict = request.session.get('is_login', None)
         if not UserProfile.objects.get(name=user_dict['user']).is_admin:
             server_queryset = Server.objects.filter(business_unit__roles__userprofile__name=user_dict['user'])
@@ -621,7 +621,7 @@ def server_task_secsession(request):
 
 def server_run_secsession(request):
     '''
-    单独执行子任务会话
+    单独执行任务会话
     :param request:
     :return:
     '''
@@ -652,7 +652,7 @@ def server_run_secsession(request):
                         for s in server_objs:
                             ServerTask.objects.create(server_obj=s,task=t,
                                                       secsession_obj=s_obj)
-                    result = {"code": 0, "message": "子任务会话执行成功 !"}
+                    result = {"code": 0, "message": "任务会话执行成功 !"}
                 except Exception as e:
                     result = {"code": 1, "message": str(e)}
             else:
@@ -665,7 +665,7 @@ def server_run_secsession(request):
 
 def server_random_runsecs(request):
     '''
-    随机执行子任务会话里的任务
+    随机执行任务会话里的任务
     :param request:
     :return:
     '''
@@ -703,7 +703,7 @@ def server_random_runsecs(request):
 
 def server_create_secsession(request):
     '''
-    创建子任务会话
+    创建任务会话
     :param request:
     :return:
     '''
@@ -729,19 +729,46 @@ def server_create_secsession(request):
                 t_objs = TaskMethod.objects.filter(id__in=tid_list)
                 new_ts.server_obj.add(*s_objs)
                 new_ts.task_obj.add(*t_objs)
-                result = {"code": 0, "message": "子任务会话创建成功!"}
+                result = {"code": 0, "message": "任务会话创建成功!"}
             except Exception as e:
                 result = {"code": 1, "message": str(e)}
         else:
-            result = {"code": 1, "message": "必须指定子会话名称!"}
+            result = {"code": 1, "message": "必须指定会话名称!"}
         return HttpResponseRedirect('/cmdb/server_task_secsession?status={0}&message={1}&page={2}&sid={3}'.
                                     format(result.get("code", ""),
                                            result.get("message", ""),
                                            page, fs_id))
 
+def server_copy_secsession(request):
+    '''
+    复制当前任务会话
+    :param request:
+    :return:
+    '''
+    if request.method == "GET":
+        ssid = request.GET.get('ssid',None)
+        fs_id = request.GET.get("fs_id")
+        page = request.GET.get("page")
+        try:
+            old_ss = Task_SecSession.objects.filter(id=ssid)
+            task_objs = old_ss.first().task_obj.all()
+            server_objs = old_ss.first().server_obj.all()
+            old_val = old_ss.values('is_random', 'title', 'father_session_id', 'content').first()
+            new_ss = Task_SecSession.objects.create(**old_val)
+            new_ss.task_obj.add(*task_objs)
+            new_ss.server_obj.add(*server_objs)
+            result = {"code": 0, "message": "任务会话复制成功!"}
+        except Exception as e:
+            result = {"code": 1, "message": str(e)}
+        return HttpResponseRedirect('/cmdb/server_task_secsession?status={0}&message={1}&page={2}&sid={3}'.
+                                    format(result.get("code", ""),
+                                           result.get("message", ""),
+                                           page, fs_id))
+
+
 def server_edit_secsession(request):
     '''
-    修改子任务会话
+    修改任务会话
     :param request:
     :return:
     '''
@@ -811,7 +838,7 @@ def server_edit_secsession(request):
             for k ,v in form_data.items():
                 setattr(m_obj,k,v)
                 m_obj.save()
-            result = {"code": 0, "message": "子任务会话更新成功！"}
+            result = {"code": 0, "message": "任务会话更新成功！"}
         except Exception as e:
             print(e)
             result = {"code": 1, "message": str(e)}
@@ -823,7 +850,7 @@ def server_edit_secsession(request):
 
 def server_del_secsession(request):
     '''
-    删除子任务会话
+    删除任务会话
     :param request:
     :return:
     '''
@@ -834,7 +861,7 @@ def server_del_secsession(request):
         page = request.GET.get("page")
         try:
             Task_SecSession.objects.get(id=mid).delete()
-            result = {"code": 0, "message": "子任务会话删除成功!"}
+            result = {"code": 0, "message": "任务会话删除成功!"}
         except Exception as e:
             result = {"code": 1, "message": str(e)}
         return HttpResponseRedirect('/cmdb/server_task_secsession?status={0}&message={1}&page={2}&sid={3}'.
@@ -1043,6 +1070,32 @@ def server_create_session(request):
                 result = {"code": 1, "message": str(e)}
         else:
             result = {"code": 1, "message": "必须指定计划名称!"}
+        return HttpResponseRedirect('/cmdb/server_task_session?status={0}&message={1}&page={2}'.
+                                    format(result.get("code", ""),
+                                           result.get("message", ""),
+                                           page))
+
+def server_copy_session(request):
+    if request.method == "GET":
+        sid = request.GET.get('sid', None)
+        page = request.GET.get("page")
+        try:
+            old_obj = TaskSession.objects.filter(id=sid)
+            old_val = old_obj.values('title','content','role_id').first()
+            old_ss_objs_query_list = old_obj.first().task_secsession_set.all()
+            old_ss_vals_list = old_obj.first().task_secsession_set.values('is_random', 'title', 'content')
+            new_obj = TaskSession.objects.create(**old_val) # 新计划
+            for ss_obj,ss_val in zip(old_ss_objs_query_list,old_ss_vals_list):
+                task_objs = ss_obj.task_obj.all()
+                server_objs = ss_obj.server_obj.all()
+
+                new_ss = Task_SecSession.objects.create(**ss_val,father_session_id=new_obj.id)
+                new_ss.task_obj.add(*task_objs)
+                new_ss.server_obj.add(*server_objs)
+
+            result = {"code": 0, "message": "任务计划复制成功!"}
+        except Exception as e:
+            result = {"code": 1, "message": str(e)}
         return HttpResponseRedirect('/cmdb/server_task_session?status={0}&message={1}&page={2}'.
                                     format(result.get("code", ""),
                                            result.get("message", ""),
