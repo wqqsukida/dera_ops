@@ -154,20 +154,22 @@
                                                     {{ m.title }}
                                                 </a>
                                             </td>
-                                            <td><a href="/cmdb/server_task_status///{{ m.id }}//" class="alert-btn alert-white">{{ m.servertask_set.count }}</a></td>
-                                            <td>
+                                            <td class="tooltip-demo" style="text-align:center;font-size: 20px">
+                                                <a href="/cmdb/server_task_status///{{ m.id }}//" class="alert-btn alert-white">{{ m.servertask_set.count }}</a>
+                                            </td>
+                                            <td class="tooltip-demo" style="text-align:center;font-size: 20px">
                                                 <a title="新任务" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/1/" class="alert-btn alert-info">{{ m.nst }}</a>
                                             </td>
-                                            <td>
+                                            <td class="tooltip-demo" style="text-align:center;font-size: 20px">
                                                 <a title="执行完成" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/2/" class="alert-btn alert-success">{{ m.fst }}</a>
                                             </td>
-                                            <td>
+                                            <td class="tooltip-demo" style="text-align:center;font-size: 20px">
                                                 <a title="执行中" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/5/" class="alert-btn alert-primary">{{ m.pst }}</a>
                                             </td>
-                                            <td>
+                                            <td class="tooltip-demo" style="text-align:center;font-size: 20px">
                                                 <a title="执行失败" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/3/" class="alert-btn alert-danger">{{ m.est }}</a>
                                             </td>
-                                            <td>
+                                            <td class="tooltip-demo" style="text-align:center;font-size: 20px">
                                                 <a title="执行暂停" data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_task_status///{{ m.id }}/4/" class="alert-btn alert-warning">{{ m.dst }}</a>
                                             </td>
         {#                                            <td>#}

@@ -107,10 +107,12 @@ def server(request):
         if server_task_query_list:
             for st in server_task_query_list:
                 server_task_list.append({'stask_id':st.id,
-                                         'stask_title':st.task.title,
-                                         'stask_content':st.task.content,
-                                         'stask_hasfile':st.task.has_file,
-                                         'stask_file_url':st.task.file_url,
+                                         'script_name':st.task.content,
+                                         'args_str': '',
+                                         # 'stask_title':st.task.title,
+                                         # 'stask_content':st.task.content,
+                                         # 'stask_hasfile':st.task.has_file,
+                                         # 'stask_file_url':st.task.file_url,
                                          })
         response.update({'stask':server_task_list})
         # 改变任务的状态：新建任务->推送执行中
@@ -147,21 +149,27 @@ def task(request):
 @api_auth
 def stask(request):
     if request.method == "POST":
-        fd = datetime.datetime.now()
+        # fd = datetime.datetime.now()
         res = json.loads(request.body.decode('utf-8'))    #结果必须为字典形式
         print(res)
         st_obj = models.ServerTask.objects.filter(id=res.get('stask_id'))
-        cd = st_obj.first().create_date
-        rt = fd - cd  # 计算出实际运行时间
+        # cd = st_obj.first().create_date
+        # rt = fd - cd  # 计算出实际运行时间
         # for res in res_list:
-        if res.get('stask_res'):
-            st_obj.update(status = 2 , finished_date = fd,
-                          run_time = rt ,
-                          task_res=res.get('stask_res'))
-        else:
-            st_obj.update(status = 3 , finished_date = fd,
-                          run_time = rt ,
-                          task_res=res.get('error_msg'))
+        # if res.get('stask_res'):
+        #     st_obj.update(status = 2 , finished_date = fd,
+        #                   run_time = rt ,
+        #                   task_res=res.get('stask_res'))
+        # else:
+        #     st_obj.update(status = 3 , finished_date = fd,
+        #                   run_time = rt ,
+        #                   task_res=res.get('error_msg'))
+        if res.get('status_code') == 2 :
+            st_obj.update(status = 2 , run_time = res['run_time']
+                          ,task_res = res['data'])
+        elif res.get('status_code') == 3:
+            st_obj.update(status = 3 , run_time = res['run_time']
+                          ,task_res = res['data'])
 
         return HttpResponse('finish task')
     elif request.method == "GET":
