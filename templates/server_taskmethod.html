@@ -141,7 +141,7 @@
     </div>
 
     <div class="modal inmodal" id="AddModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
@@ -153,24 +153,27 @@
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">任务名称：</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-9">
                                 <input name="title" class="form-control" type="text">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">任务内容：</label>
-                            <div class="col-sm-9">
-                                <textarea  class="form-control" name="content" id="add_content" rows="10"></textarea>
-                            </div>
+                            <label class="col-sm-2 control-label">任务脚本名称：</label>
 {#                            <div class="col-sm-9">#}
-{#                            <select class="form-control">#}
-{#                                <option value="java">java</option>#}
-{#                                <option value="python">python</option>#}
-{#                                <option value="shell">shell</option>#}
-{#                                <option value="javascript">javascript</option>#}
-{#                            </select>#}
+{#                                <textarea  class="form-control" name="content" id="add_content" rows="10"></textarea>#}
 {#                            </div>#}
+                            <div class="col-sm-9">
+                                <select class="form-control" name="content" id="add_content">
+                                    <option value="ls">ls</option>
+                                    <option value="hostname">hostname</option>
+                                    <option value="pwd">pwd</option>
+                                    <option value="dd">dd</option>
+                                    <option value="dd6m">dd6m</option>
+                                    <option value="dd8m">dd8m</option>
+                                    <option value="dd10m">dd10m</option>
+                                </select>
+                            </div>
                         </div>
 
 {#                        <div class="form-group">#}
@@ -179,28 +182,27 @@
 {#                                <textarea  class="form-control" name="content" id="add_content" rows="10"></textarea>#}
 {#                            </div>#}
 {#                        </div>#}
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">是否生成文件：</label>
-                            <div class="col-sm-5" style="padding:8px 30px">
-{#                                <input name="has_file" id="add_has_file" type="checkbox">#}
-                                <div class="switch">
-                                    <div class="onoffswitch">
-                                        <input name="has_file" type="checkbox" class="onoffswitch-checkbox" id="add_has_file">
-                                        <label class="onoffswitch-label" for="add_has_file">
-                                            <span class="onoffswitch-inner"></span>
-                                            <span class="onoffswitch-switch"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group file-url-div hide">
-                            <label class="col-sm-2 control-label">文件路径：</label>
-                            <div class="col-sm-5">
-                                <input name="file_url" class="form-control" id="add_file_url" type="text">
-                            </div>
-                        </div>
+{#                        <div class="form-group">#}
+{#                            <label class="col-sm-2 control-label">是否生成文件：</label>#}
+{#                            <div class="col-sm-5" style="padding:8px 30px">#}
+{#                                <div class="switch">#}
+{#                                    <div class="onoffswitch">#}
+{#                                        <input name="has_file" type="checkbox" class="onoffswitch-checkbox" id="add_has_file">#}
+{#                                        <label class="onoffswitch-label" for="add_has_file">#}
+{#                                            <span class="onoffswitch-inner"></span>#}
+{#                                            <span class="onoffswitch-switch"></span>#}
+{#                                        </label>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group file-url-div hide">#}
+{#                            <label class="col-sm-2 control-label">文件路径：</label>#}
+{#                            <div class="col-sm-5">#}
+{#                                <input name="file_url" class="form-control" id="add_file_url" type="text">#}
+{#                            </div>#}
+{#                        </div>#}
 
                         <hr width="100%" />
                         <div class="col-sm-12">
@@ -213,7 +215,7 @@
         </div>
     </div>
     <div class="modal inmodal" id="UpdateModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
@@ -225,14 +227,14 @@
 
                         <div class="form-group hide">
                             <label class="col-sm-2 control-label">ID：</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-9">
                                 <input name="id" class="form-control" id="mod_id" type="text">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">任务名称：</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-9">
                                 <input name="title" class="form-control" id="mod_title" type="text">
                             </div>
                         </div>
@@ -240,7 +242,16 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">任务内容：</label>
                             <div class="col-sm-9">
-                                <textarea  class="form-control" name="content" id="mod_content" rows="10"></textarea>
+{#                                <textarea  class="form-control" name="content" id="mod_content" rows="10"></textarea>#}
+                                <select class="form-control" name="content" id="mod_content">
+                                    <option value="ls">ls</option>
+                                    <option value="hostname">hostname</option>
+                                    <option value="pwd">pwd</option>
+                                    <option value="dd">dd</option>
+                                    <option value="dd6m">dd6m</option>
+                                    <option value="dd8m">dd8m</option>
+                                    <option value="dd10m">dd10m</option>
+                                </select>
                             </div>
                         </div>
 
@@ -251,28 +262,27 @@
 {#                            </div>#}
 {#                        </div>#}
 
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">是否生成文件：</label>
-                            <div class="col-sm-5" style="padding:8px 30px">
-{#                                <input name="has_file" id="mod_has_file" type="checkbox">#}
-                                <div class="switch">
-                                    <div class="onoffswitch">
-                                        <input name="has_file" type="checkbox" class="onoffswitch-checkbox" id="mod_has_file">
-                                        <label class="onoffswitch-label" for="mod_has_file">
-                                            <span class="onoffswitch-inner"></span>
-                                            <span class="onoffswitch-switch"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group file-url-div2 hide">
-                            <label class="col-sm-2 control-label">文件路径：</label>
-                            <div class="col-sm-5">
-                                <input name="file_url" class="form-control" id="mod_file_url" type="text">
-                            </div>
-                        </div>
+{#                        <div class="form-group">#}
+{#                            <label class="col-sm-2 control-label">是否生成文件：</label>#}
+{#                            <div class="col-sm-5" style="padding:8px 30px">#}
+{#                                <div class="switch">#}
+{#                                    <div class="onoffswitch">#}
+{#                                        <input name="has_file" type="checkbox" class="onoffswitch-checkbox" id="mod_has_file">#}
+{#                                        <label class="onoffswitch-label" for="mod_has_file">#}
+{#                                            <span class="onoffswitch-inner"></span>#}
+{#                                            <span class="onoffswitch-switch"></span>#}
+{#                                        </label>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group file-url-div2 hide">#}
+{#                            <label class="col-sm-2 control-label">文件路径：</label>#}
+{#                            <div class="col-sm-5">#}
+{#                                <input name="file_url" class="form-control" id="mod_file_url" type="text">#}
+{#                            </div>#}
+{#                        </div>#}
 
                         <hr width="100%" />
                         <div class="col-sm-12">
@@ -396,10 +406,10 @@
             tid = $(this).attr('tid');
             $("#mod_id").val("");
             $("#mod_title").val("");
-            $("#mod_content").val("");
-            $("#mod_has_file").prop("checked",false);
-            $(".file-url-div2").addClass("hide");
-            $("#mod_file_url").val("");
+            $("#mod_content option").prop("selected",false);
+            //$("#mod_has_file").prop("checked",false);
+            //$(".file-url-div2").addClass("hide");
+            //$("#mod_file_url").val("");
 
             $.ajax({
                 url: "/cmdb/server_taskmethod_edit",
@@ -411,14 +421,13 @@
                         //console.log(arg);
                         $("#mod_id").val(arg.id);
                         $("#mod_title").val(arg.title);
-                        $("#mod_content").val(arg.content);
-                        if(arg.has_file){
-                            $("#mod_has_file").prop("checked",true);
-                            $(".file-url-div2").removeClass("hide");
-                            $("#mod_file_url").val(arg.file_url)
-                        }else{
-
-                        }
+                        //$("#mod_content").val(arg.content);
+                        $("#mod_content [value=" + arg.content + "]").prop("selected",true);
+                        //if(arg.has_file){
+                            //$("#mod_has_file").prop("checked",true);
+                            //$(".file-url-div2").removeClass("hide");
+                            //$("#mod_file_url").val(arg.file_url)
+                        //}
                     }
                 }
             })
@@ -444,7 +453,7 @@
                 }
             })
         });
-
+        //add has_file check-box js
         $("#add_has_file").change(function () {
             if ($(this).prop('checked')){
                 $(".file-url-div").removeClass("hide");
@@ -453,7 +462,7 @@
                 $(".file-url-div").addClass("hide")
             }
         });
-
+        //edit has_file check-box js
         $("#mod_has_file").change(function () {
             if ($(this).prop('checked')){
                 $(".file-url-div2").removeClass("hide");
