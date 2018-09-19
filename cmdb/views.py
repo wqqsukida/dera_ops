@@ -7,6 +7,7 @@ import copy
 import json
 import random
 import datetime
+import os
 from utils.md5 import encrypt
 from django.forms import Form,fields,widgets
 from .models import *
@@ -14,6 +15,7 @@ from django.db.models import Q
 from django.urls import reverse
 from utils.pagination import Pagination
 from django.http.request import QueryDict
+from django.conf import settings
 
 #========================================================================#
 def init_paginaion(request,queryset):
@@ -882,6 +884,7 @@ def server_taskmethod_list(request):
             result = {"code":int(status),"message":message}
 
         queryset = TaskMethod.objects.all()
+        script_query = TaskScript.objects.all()
         # 加载分页器
         task_list, page_html = init_paginaion(request, queryset)
 
@@ -900,17 +903,17 @@ def server_taskmethod_add(request):
     if request.method == "POST":
         title = request.POST.get("title")
         content = request.POST.get("content")
-        has_file = request.POST.get("has_file")
-        file_url = request.POST.get("file_url")
+        # has_file = request.POST.get("has_file")
+        # file_url = request.POST.get("file_url")
+        ts_id = request.POST.get("ts_id")
         if title:
             try:
-                TaskMethod.objects.create(title=title,content=content,file_url=file_url,
-                                          has_file=True if has_file == 'on' else False,)
-                result = {"code": 0, "message": "任务项创建成功!"}
+                TaskMethod.objects.create(title=title,content=content,task_script_id=ts_id)
+                result = {"code": 0, "message": "任务模板创建成功!"}
             except Exception as e:
                 result = {"code": 1, "message": str(e)}
         else:
-            result = {"code": 1, "message": "必须指定任务名称!"}
+            result = {"code": 1, "message": "必须指定任务模板名称!"}
     return HttpResponseRedirect('/cmdb/server_taskmethod_list?status={0}&message={1}'.
                                 format(result.get("code", ""),
                                        result.get("message", "")))
@@ -928,16 +931,20 @@ def server_taskmethod_edit(request):
         tid = request.POST.get("id")
         title = request.POST.get("title",None)
         content = request.POST.get("content",None)
-        has_file = request.POST.get("has_file")
-        file_url = request.POST.get("file_url")
-        form_data = {
-            'title':title,
-            'content':content,
-            'has_file':True if has_file == 'on' else False,
-            'file_url':file_url
-        }
-        t_obj = TaskMethod.objects.get(id=tid)
+        # has_file = request.POST.get("has_file")
+        # file_url = request.POST.get("file_url")
+        ts_id = request.POST.get("ts_id",None)
         try:
+            ts_obj = TaskScript.objects.get(id=ts_id)
+            t_obj = TaskMethod.objects.get(id=tid)
+            form_data = {
+                'title':title,
+                'content':content,
+                'task_script':ts_obj,
+                # 'has_file':True if has_file == 'on' else False,
+                # 'file_url':file_url
+            }
+
             for k ,v in form_data.items():
                 setattr(t_obj,k,v)
                 t_obj.save()
@@ -961,6 +968,25 @@ def server_taskmethod_del(request):
         return HttpResponseRedirect('/cmdb/server_taskmethod_list?status={0}&message={1}'.
                                     format(result.get("code", ""),
                                            result.get("message", "")))
+
+def server_taskmethod_upload(request):
+    if request.method == "POST" :
+        file_obj = request.FILES.get('task_script')
+
+        file_path = os.path.join(settings.BASE_DIR,'task_script',file_obj.name)
+        f = open(file_path,'wb')
+        for c in file_obj.chunks():
+            f.write(c)
+        f.close()
+        try :
+            TaskScript.objects.create(name=file_obj.name,script_path=file_path)
+            result = {"code": 0, "message": "任务脚本上传成功!"}
+        except Exception as e:
+            result = {"code": 1, "message": str(e)}
+        return HttpResponseRedirect('/cmdb/server_taskmethod_list?status={0}&message={1}'.
+                                    format(result.get("code", ""),
+                                           result.get("message", "")))
+
 #==========任务计划视图===============
 def server_task_session(request):
     '''

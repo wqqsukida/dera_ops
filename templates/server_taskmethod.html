@@ -75,7 +75,14 @@
                                         <i class="fa fa-plus"></i> 创建任务项
                                     </a>
                                 </div>
-                                <div class="col-sm-8"></div>
+
+                                <div class="col-sm-1">
+                                    <a data-toggle="modal" data-target="#UploadModal" type="button" class="btn btn-primary">
+                                        <i class="fa fa-upload"></i> 上传任务脚本
+                                    </a>
+                                </div>
+
+                                <div class="col-sm-7"></div>
                                 <div class="col-sm-2 ">
                                     <input type="text" name="q"  class="form-control"  placeholder="" />
                                 </div>
@@ -92,7 +99,7 @@
                                  <thead>
                                     <tr>
                                         <th>任务名</th>
-                                        <th width="50%">任务详细</th>
+                                        <th width="50%">任务描述</th>
                                         <th>创建时间</th>
                                         <th>操作</th>
                                     </tr>
@@ -160,19 +167,20 @@
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">任务脚本名称：</label>
-{#                            <div class="col-sm-9">#}
-{#                                <textarea  class="form-control" name="content" id="add_content" rows="10"></textarea>#}
-{#                            </div>#}
                             <div class="col-sm-9">
-                                <select class="form-control" name="content" id="add_content">
-                                    <option value="ls">ls</option>
-                                    <option value="hostname">hostname</option>
-                                    <option value="pwd">pwd</option>
-                                    <option value="dd">dd</option>
-                                    <option value="dd6m">dd6m</option>
-                                    <option value="dd8m">dd8m</option>
-                                    <option value="dd10m">dd10m</option>
+                                <select class="form-control" name="ts_id" id="add_tsid">
+                                    {% for task_script in script_query %}
+                                        <option value="{{ task_script.id }}">{{ task_script.name }}</option>
+                                    {% endfor %}
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">任务描述：</label>
+                            <div class="col-sm-9">
+                                <textarea  class="form-control" name="content" id="add_content" rows="5">
+                                </textarea>
                             </div>
                         </div>
 
@@ -240,18 +248,21 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">任务内容：</label>
+                            <label class="col-sm-2 control-label">任务脚本名称：</label>
                             <div class="col-sm-9">
-{#                                <textarea  class="form-control" name="content" id="mod_content" rows="10"></textarea>#}
-                                <select class="form-control" name="content" id="mod_content">
-                                    <option value="ls">ls</option>
-                                    <option value="hostname">hostname</option>
-                                    <option value="pwd">pwd</option>
-                                    <option value="dd">dd</option>
-                                    <option value="dd6m">dd6m</option>
-                                    <option value="dd8m">dd8m</option>
-                                    <option value="dd10m">dd10m</option>
+                                <select class="form-control" name="ts_id" id="mod_tsid">
+                                    {% for task_script in script_query %}
+                                        <option value="{{ task_script.id }}">{{ task_script.name }}</option>
+                                    {% endfor %}
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">任务描述：</label>
+                            <div class="col-sm-9">
+                                <textarea  class="form-control" name="content" id="mod_content" rows="5">
+                                </textarea>
                             </div>
                         </div>
 
@@ -294,6 +305,36 @@
             </div>
         </div>
     </div>
+
+    <div class="modal inmodal" id="UploadModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">上传任务脚本</h4>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal m-t" id="signupForm" action="/cmdb/server_taskmethod_upload" role="form" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-group" id="file-pretty">
+                            <label class="col-sm-1 control-label"></label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" name="task_script">
+                            </div>
+                        </div>
+
+                        <hr width="100%" />
+                        <div class="col-sm-12">
+                            <div class="col-sm-5"> </div>
+                            <button type="submit" class="btn btn-primary js_confirm">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal inmodal" id="TaskModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -327,8 +368,14 @@
 {#    <script src="/static/js/plugins/codemirror/mode/javascript/javascript.js"></script>#}
     <!-- 自定义js -->
     <script src="/static/js/content.min.js?v=1.0.0"></script>
-        <!-- Switchery -->
+    <!-- Switchery -->
     <script src="/static/js/plugins/switchery/switchery.js"></script>
+    <!-- Prettyfile -->
+    <script src="/static/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+
+    <script>
+        $('#file-pretty input[type="file"]').prettyFile();
+    </script>
 
     <script>
         /*
@@ -406,7 +453,8 @@
             tid = $(this).attr('tid');
             $("#mod_id").val("");
             $("#mod_title").val("");
-            $("#mod_content option").prop("selected",false);
+            $("#mod_content").val("");
+            $("#mod_tsid option").prop("selected",false);
             //$("#mod_has_file").prop("checked",false);
             //$(".file-url-div2").addClass("hide");
             //$("#mod_file_url").val("");
@@ -421,8 +469,8 @@
                         //console.log(arg);
                         $("#mod_id").val(arg.id);
                         $("#mod_title").val(arg.title);
-                        //$("#mod_content").val(arg.content);
-                        $("#mod_content [value=" + arg.content + "]").prop("selected",true);
+                        $("#mod_content").val(arg.content);
+                        $("#mod_tsid [value=" + arg.task_script_id + "]").prop("selected",true);
                         //if(arg.has_file){
                             //$("#mod_has_file").prop("checked",true);
                             //$(".file-url-div2").removeClass("hide");

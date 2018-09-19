@@ -270,10 +270,11 @@ class TaskMethod(models.Model):
     主机任务模板
     '''
     title = models.CharField('任务名称', max_length=32)
-    content = models.TextField('任务内容')
+    content = models.TextField('任务描述')
     create_date = models.DateTimeField('任务创建时间', auto_now_add=True)
-    has_file = models.BooleanField(default=False)
-    file_url = models.CharField('客户端生成文件路径', max_length=256,null=True,blank=True)
+    # has_file = models.BooleanField(default=False)
+    # file_url = models.CharField('客户端生成文件路径', max_length=256,null=True,blank=True)
+    task_script = models.ForeignKey(to='TaskScript')
 
 class ServerTask(models.Model):
     '''
@@ -377,3 +378,11 @@ class Task_SecSession(models.Model):
 
     def pst(self):
         return self.servertask_set.filter(status=5).count()
+
+
+class TaskScript(models.Model):
+    '''
+    任务脚本表
+    '''
+    name = models.CharField('脚本名称', max_length=64,unique=True)
+    script_path = models.CharField('脚本路径', max_length=256)

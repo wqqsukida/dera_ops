@@ -107,7 +107,7 @@ def server(request):
         if server_task_query_list:
             for st in server_task_query_list:
                 server_task_list.append({'stask_id':st.id,
-                                         'script_name':st.task.content,
+                                         'script_name':st.task.task_script.name,
                                          'args_str': '',
                                          # 'stask_title':st.task.title,
                                          # 'stask_content':st.task.content,

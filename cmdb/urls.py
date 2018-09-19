@@ -54,6 +54,7 @@ urlpatterns = [
     url(r'^server_taskmethod_add', views.server_taskmethod_add),  # 添加主机任务项
     url(r'^server_taskmethod_edit', views.server_taskmethod_edit),  # 修改主机任务项
     url(r'^server_taskmethod_del', views.server_taskmethod_del),  # 删除主机任务项
+    url(r'^server_taskmethod_upload', views.server_taskmethod_upload),  # 上传任务脚本
 
     url(r'^t1', views.t1),
 ]
