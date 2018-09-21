@@ -54,7 +54,7 @@
                     <div class="ibox-title">
                         <ol class="breadcrumb">
                               <li><a href="/index_v3"><span class="g_nav_font">首页</span></a></li>
-                              <li class="active">任务项</li>
+                              <li class="active">任务模板</li>
                             <div class="ibox-tools">
                                 <a onclick="refresh()">
                                     <i class="fa fa-refresh"></i>
@@ -72,7 +72,7 @@
 
                                 <div class="col-sm-1">
                                     <a data-toggle="modal" data-target="#AddModal" type="button" class="btn btn-warning">
-                                        <i class="fa fa-plus"></i> 创建任务项
+                                        <i class="fa fa-plus"></i> 创建任务模板
                                     </a>
                                 </div>
 
@@ -99,7 +99,8 @@
                                  <thead>
                                     <tr>
                                         <th>任务名</th>
-                                        <th width="50%">任务描述</th>
+                                        <th>任务描述</th>
+                                        <th>脚本内容</th>
                                         <th>创建时间</th>
                                         <th>操作</th>
                                     </tr>
@@ -108,24 +109,25 @@
                                     {% for task in task_list %}
                                         <tr>
                                             <td>{{ task.title }}</td>
+                                            <td>{{ task.content }}</td>
                                             <td style="font-size: 20px">
-                                                <a class="btn btn-success get_task_content" data-toggle="modal" data-target="#TaskModal" tm_id={{ task.id }} >
-                                                    Task_Content...
+                                                <a class="btn btn-success get_script_content" data-toggle="modal" data-target="#TaskModal" tm_id={{ task.id }} >
+                                                    Get_Script_Content...
                                                 </a>
                                                 &nbsp;
-                                                {% if task.has_file %}
-                                                    <i class="fa fa-exclamation-circle"> : {{ task.has_file }}</i>
-                                                    &nbsp;
-                                                    <i class="fa fa-folder-open"></i> : {{ task.file_url }}
-                                                {% endif %}
+{#                                                {% if task.has_file %}#}
+{#                                                    <i class="fa fa-exclamation-circle"> : {{ task.has_file }}</i>#}
+{#                                                    &nbsp;#}
+{#                                                    <i class="fa fa-folder-open"></i> : {{ task.file_url }}#}
+{#                                                {% endif %}#}
                                             </td>
                                             <td>{{ task.create_date|date:'Y-m-d H:i:s'}}</td>
 
                                             <td style="font-size: 20px">
-                                                <a class="update-btn" tid="{{ task.id }}" style="margin-right: 15px" data-toggle="modal" data-target="#UpdateModal" title="更新任务项" >
+                                                <a class="update-btn" tid="{{ task.id }}" style="margin-right: 15px" data-toggle="modal" data-target="#UpdateModal" title="更新任务模板" >
                                                     <i class="fa fa-cog"></i>
                                                 </a>
-                                                <a class="del_confirm" href="/cmdb/server_taskmethod_del?tid={{ task.id }}" style="margin-right: 15px" title="删除任务项" >
+                                                <a class="del_confirm" href="/cmdb/server_taskmethod_del?tid={{ task.id }}" style="margin-right: 15px" title="删除任务模板" >
                                                     <i class="fa fa-trash-o"></i>
                                                 </a>
                                             </td>
@@ -152,7 +154,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">添加任务项</h4>
+                    <h4 class="modal-title" id="myModalLabel">添加任务模板</h4>
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal m-t" id="signupForm" action="/cmdb/server_taskmethod_add" role="form" method="post" enctype="multipart/form-data">
@@ -227,7 +229,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close close_monitor_modal" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">更新任务项</h4>
+                    <h4 class="modal-title" id="myModalLabel">更新任务模板</h4>
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal m-t" id="signupForm" action="/cmdb/server_taskmethod_edit" role="form" method="post" enctype="multipart/form-data">
@@ -321,6 +323,10 @@
                             <label class="col-sm-1 control-label"></label>
                             <div class="col-sm-10">
                                 <input type="file" class="form-control" name="task_script">
+                                <span class="help-block m-b-none">
+                                    <i class="fa fa-info-circle"></i>
+                                    <font color="#8b0000">请将脚本内生成的文件路径定义为"/tmp/task_file",否则client无法找到</font>
+                                </span>
                             </div>
                         </div>
 
@@ -481,10 +487,10 @@
             })
         });
 
-        $("table").on("click",".get_task_content",function (){
+        $("table").on("click",".get_script_content",function (){
             tm_id = $(this).attr('tm_id');
             $("#get-res").empty();
-            $("#TaskModalLabel").text('任务内容');
+            $("#TaskModalLabel").text('脚本内容');
             $.ajax({
                 url:'/cmdb/server_taskmethod_list',
                 type:'POST',

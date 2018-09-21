@@ -81,5 +81,17 @@
         })
     });
 
+    $(function () {
+        document.onkeydown = keyDownSerach;
+        function keyDownSerach(e){
+            var theEvent = e || window.event;
+            var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+            if(code == 13){
+                $("#login_btn").click();
+            }
+
+        }
+    })
+
 </script>
 </html>

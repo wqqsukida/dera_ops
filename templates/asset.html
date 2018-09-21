@@ -106,6 +106,7 @@
                                         <option value="2">修改标签</option>
                                         <option value="3">修改主机状态</option>
                                         <option value="4">执行主机任务</option>
+                                        <option value="5">下发任务脚本</option>
                                     </select>
                                 </div>
 
@@ -138,6 +139,14 @@
                                         <option value="2">在线</option>
                                         <option value="3">离线</option>
                                         <option value="4">下架</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <select class="form-control" name="task_script" id="">
+                                        {% for script in taskscript_list %}
+                                            <option value="{{ script.id }}">{{ script.name }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                                 -->
@@ -693,13 +702,18 @@
                 '            <option value="{{ tm.id }}">{{ tm.title }}</option>\n'+
                 '        {% endfor %}\n' +
             '    </select>';
+        el5 = '                                    <select class="form-control" name="task_script_id" id="">\n' +
+            '                                        {% for script in taskscript_list %}\n'+
+                '                                            <option value="{{ script.id }}">{{ script.name }}</option>\n'
+                +
+                '                                        {% endfor %}\n' +
+            '                                    </select>';
 
         $("#chose-action").on('change',function () {
             $("#add-action").empty();
             if($(this).val() == 1){
                 $("#add-action").append(el1);
                 init_ms()
-
             }
             else if($(this).val() == 2){
                 $("#add-action").append(el2);
@@ -711,6 +725,9 @@
             else if($(this).val() == 4){
                 $("#add-action").append(el4);
                 init_ms();
+            }
+            else if($(this).val() == 5){
+                $("#add-action").append(el5);
             }
         }
         )

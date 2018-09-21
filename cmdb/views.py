@@ -16,6 +16,7 @@ from django.urls import reverse
 from utils.pagination import Pagination
 from django.http.request import QueryDict
 from django.conf import settings
+from utils.remote_client import Remote
 
 #========================================================================#
 def init_paginaion(request,queryset):
@@ -171,6 +172,7 @@ def asset_list(request):
         tag_list = Tag.objects.all()
         business_list = BusinessUnit.objects.all()
         taskmethod_list = TaskMethod.objects.all()
+        taskscript_list = TaskScript.objects.all()
         # 加载分页器
         queryset, page_html = init_paginaion(request, queryset)
 
@@ -186,6 +188,7 @@ def asset_run_tasks(request):
         tags = request.POST.getlist("tags",None)
         business_unit = request.POST.getlist("business_units",None)
         taskmethods = request.POST.getlist("taskmethods",None)
+        task_script_id = request.POST.get("task_script_id",None)
         if server_objs:
             try:
                 if server_status_id:
@@ -220,6 +223,25 @@ def asset_run_tasks(request):
 
                     code = 0
                     msg="成功执行主机任务！"
+                elif task_script_id:
+                    ts_obj = TaskScript.objects.get(id=task_script_id)
+                    local_file = ts_obj.script_path
+                    remote_file = '/usr/local/src/auto_client/task_handler/script/%s'%ts_obj.name
+                    error_server_list = []
+                    for server in server_objs.values('manage_ip','hostname'):
+                        try:
+                            print(" send {1} to {0}:{2} ".format(server.get("manage_ip"), local_file, remote_file))
+                            rc = Remote(server.get('manage_ip'),username="root",password="test")
+                            rc.scp(local_file,remote_file)
+                        except Exception as e:
+                            error_server_list.append(server.get("hostname"))
+
+                    if error_server_list:
+                        code = 1
+                        msg = "%s下发脚本失败！"%str(error_server_list)
+                    else:
+                        code = 0
+                        msg = "成功下发任务脚本！"
                 else:
                     code = 1
                     msg = "没有可执行的任务！"
@@ -893,9 +915,11 @@ def server_taskmethod_list(request):
 
     elif request.method == "POST":
         tm_id = request.POST.get("tm_id")
-        tm_content = TaskMethod.objects.get(id=tm_id).content
-
-        return HttpResponse(json.dumps(tm_content))
+        script_id = TaskMethod.objects.get(id=tm_id).task_script_id
+        script_path = TaskScript.objects.get(id=script_id).script_path
+        with open(script_path,'r') as f:
+            script_content = f.read()
+        return HttpResponse(json.dumps(script_content))
 
 
 def server_taskmethod_add(request):
