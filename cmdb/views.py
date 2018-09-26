@@ -609,7 +609,7 @@ def server_task_download(request):
             return rep
         except Exception as e:
             print(str(e))
-            return HttpResponse('DownLoad Error!')
+            return HttpResponse('DownLoad Error!(%s)'%str(e))
 #==========任务会话视图=============
 def server_task_secsession(request):
     '''

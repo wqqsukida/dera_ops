@@ -102,24 +102,32 @@ def server(request):
         #              创建时间->推送时间
         task_query_list.update(status=5,create_date=datetime.datetime.now())
         ####################################添加推送主机任务请求######################################
-        server_task_query_list = models.ServerTask.objects.filter(server_obj=server_obj,status=1)
-        server_task_list = []
-        if server_task_query_list:
-            for st in server_task_query_list:
-                server_task_list.append({'stask_id':st.id,
-                                         'script_name':st.task.task_script.name,
-                                         'args_str': '',
-                                         # 'stask_title':st.task.title,
-                                         # 'stask_content':st.task.content,
-                                         # 'stask_hasfile':st.task.has_file,
-                                         # 'stask_file_url':st.task.file_url,
-                                         })
-        response.update({'stask':server_task_list})
-        # 改变任务的状态：新建任务->推送执行中
-        #              创建时间->推送时间
-        server_task_query_list.update(status=5,create_date=datetime.datetime.now())
+        # server_task_query_list = models.ServerTask.objects.filter(server_obj=server_obj,status=1).\
+        #     order_by('create_date')
+        # st = server_task_query_list.first()    # 只推送一个任务
+        # if st:
+        #     response.update({'stask':{'stask_id':st.id,
+        #                                'script_name':st.task.task_script.name,
+        #                                'args_str':''},
+        #                               })
+        #     models.ServerTask.objects.filter(id=st.id).update(status=5,create_date=datetime.datetime.now())
+        # server_task_list = []
+        # if server_task_query_list:
+        #     for st in server_task_query_list:
+        #         server_task_list.append({'stask_id':st.id,
+        #                                  'script_name':st.task.task_script.name,
+        #                                  'args_str': '',
+        #                                  # 'stask_title':st.task.title,
+        #                                  # 'stask_content':st.task.content,
+        #                                  # 'stask_hasfile':st.task.has_file,
+        #                                  # 'stask_file_url':st.task.file_url,
+        #                                  })
+        # response.update({'stask':server_task_list})
+        # # 改变任务的状态：新建任务->推送执行中
+        # #              创建时间->推送时间
+        # server_task_query_list.update(status=5,create_date=datetime.datetime.now())
         ###########################################################################################
-        print('[{0}]:{1}'.format(clien_ip,response))
+        print('Response to[{0}]:{1}'.format(clien_ip,response))
         return HttpResponse(json.dumps(response))
 
 @csrf_exempt
@@ -150,28 +158,43 @@ def task(request):
 def stask(request):
     if request.method == "POST":
         # fd = datetime.datetime.now()
-        res = json.loads(request.body.decode('utf-8'))    #结果必须为字典形式
-        print(res)
-        st_obj = models.ServerTask.objects.filter(id=res.get('stask_id'))
-        # cd = st_obj.first().create_date
-        # rt = fd - cd  # 计算出实际运行时间
-        # for res in res_list:
-        # if res.get('stask_res'):
-        #     st_obj.update(status = 2 , finished_date = fd,
-        #                   run_time = rt ,
-        #                   task_res=res.get('stask_res'))
-        # else:
-        #     st_obj.update(status = 3 , finished_date = fd,
-        #                   run_time = rt ,
-        #                   task_res=res.get('error_msg'))
-        if res.get('status_code') == 2 :
-            st_obj.update(status = 2 , run_time = res['run_time']
-                          ,task_res = res['data'])
-        elif res.get('status_code') == 3:
-            st_obj.update(status = 3 , run_time = res['run_time']
-                          ,task_res = res['data'])
+        # 获取客户端ip
+        if request.META.get('HTTP_X_FORWARDED_FOR'):
+            clien_ip = request.META['HTTP_X_FORWARDED_FOR']
+        else:
+            clien_ip = request.META['REMOTE_ADDR']
 
-        return HttpResponse('finish task')
+        rep = json.loads(request.body.decode('utf-8'))    #结果必须为字典形式
+        res = rep.get("res")
+        if res:
+            for st_res in res:
+                st_obj = models.ServerTask.objects.filter(id=st_res.get('stask_id'))
+                if st_res.get('status_code') == 2 :
+                    st_obj.update(status = 2 , run_time = st_res['run_time']
+                                  ,task_res = st_res['data'])
+                elif st_res.get('status_code') == 3:
+                    st_obj.update(status = 3 , run_time = st_res['run_time']
+                                  ,task_res = st_res['data'])
+
+        ####################################添加推送主机任务请求######################################
+        hostname = rep.get("hostname")
+        response = {}
+        server_obj = models.Server.objects.filter(hostname=hostname).first()
+        server_task_query_list = models.ServerTask.objects.filter(server_obj=server_obj,status=1).\
+            order_by('create_date')
+        server_runing_task = models.ServerTask.objects.filter(server_obj=server_obj,status=5)
+        st = server_task_query_list.first()    # 只推送一个任务
+        if st and not server_runing_task:
+            '''
+            存在可推送任务且当前主机没有执行中的任务
+            '''
+            response.update({'stask':{'stask_id':st.id,
+                                       'script_name':st.task.task_script.name,
+                                       'args_str':''},
+                                      })
+            models.ServerTask.objects.filter(id=st.id).update(status=5,create_date=datetime.datetime.now())
+        print('Response to[{0}]:{1}'.format(clien_ip, response))
+        return HttpResponse(json.dumps(response))
     elif request.method == "GET":
         return HttpResponse('Error api method!')
 
