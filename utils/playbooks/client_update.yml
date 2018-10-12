@@ -1,0 +1,5 @@
+---
+# client_update.yml
+- hosts: all
+  roles:
+  - client_update

@@ -1,0 +1,10 @@
+- name: copy auto_client.tar.gz to remote host
+  copy: src=auto_client.tar.gz dest=/usr/local/src/auto_client.tar.gz
+  tags: cppkg
+- name: tar auto_client.tar.gz
+  shell: cd /usr/local/src;tar -xf auto_client.tar.gz
+- name: copy cert.txt
+  template: src=cert.txt dest=/usr/local/src/auto_client/conf/cert.txt
+- name: copy run_client.sh
+  copy: src=/opt/run_client.sh dest=/opt/run_client.sh
+  notify: restart client

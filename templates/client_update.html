@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_data_tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:01 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 数据表格</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="../static/favicon.ico">
+    <link href="/static/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/static/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="/static/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+{#    <link href="/static/css/plugins/footable/footable.core.css" rel="stylesheet">#}
+    <link href="/static/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="/static/css/animate.min.css" rel="stylesheet">
+    <link href="/static/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="/static/css/gstyle.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <!--通知消息处-->
+    {% if result  %}
+        {% if result.code == 0 %}
+            <div class="alert alert-success" style="text-align: center">执行成功:<strong>{{ result.message }}</strong></div>
+        {% else %}
+            <div class="alert alert-danger" style="text-align: center">执行失败:<strong>{{ result.message }}</strong></div>
+        {% endif %}
+    {% endif %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <ol class="breadcrumb">
+                            <h5><a href="/index_v3/">首页</a><B style="color:#ccc">/</B> 客户端升级 </h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a onclick="window.location.reload()">
+                                    <i class="fa fa-refresh"></i>
+                                </a>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </ol>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="panel-body">
+                            <form class="input-box" role="form" novalidate>
+                                {% csrf_token %}
+                                <div class="form-group col-sm-12">
+                                    <div class="col-sm-3 control-label">
+                                        <h4 style="float:right;">客户端版本：</h4>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <select name="version" class="form-control" id="">
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-sm-12">
+                                    <div class="col-sm-3 control-label">
+                                        <h4 style="float:right;">主机项：</h4>
+                                    </div>
+                                    <div class="col-sm-3">
+            {#                                <h4 style="color:red">源菜单:</h4>#}
+                                        <select class="form-control" id="server_from" multiple size="20">
+                                            {% for s in host_query %}
+                                                <option value="{{ s.manage_ip }}">{{ s.hostname }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="btn-group" style="margin-top: 50px;">
+                                            <button type="button" class="btn btn-white" onclick="move('server_from', 'server_to')">
+                                                <i class="fa fa-chevron-right"></i>
+                                            </button>
+                                            <br/>
+                                            <button type="button" class="btn btn-white" onclick="move('server_to', 'server_from')">
+                                                <i class="fa fa-chevron-left"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+            {#                                <h4 style="color:red">目标菜单:</h4>#}
+                                        <select id="server_to" class="form-control"  name="hosts" size="20" multiple>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6"> </div>
+                                    <div id="update_btn" type="button" class="btn btn-primary js_confirm">升级客户端</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="log-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width: 800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close close_log_modal" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">更新结果</h4>
+                </div>
+                <div class="panel-body">
+                    <pre id="getdowns-log" style="overflow: auto; height: 380px; line-height: 20px;">
+
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop fade in" style="display: none"></div>
+    <!-- 全局js -->
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
+
+    <script src="/static/js/plugins/jeditable/jquery.jeditable.js"></script>
+    <script src="/static/js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="/static/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+{#    <script src="/static/js/plugins/sweetalert/sweetalert.min.js"></script>#}
+    <script src="/static/js/plugins/layer/layer.min.js"></script>
+    <!-- jQuery Validation plugin javascript-->
+    <script src="/static/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/static/js/plugins/validate/messages_zh.min.js"></script>
+{#    <script src="/static/js/plugins/footable/footable.all.min.js"></script>#}
+    <!-- 自定义js -->
+    <script src="/static/js/content.min.js?v=1.0.0"></script>
+    <script src="/static/js/plugins/loading/loading.js"></script>
+    <script>
+        function move(from, to, from_o, to_o) {
+            $("#" + from + " option").each(function () {
+                if ($(this).prop("selected") == true) {
+                    $("#" + to).append(this);
+                    if( typeof from_o !== 'undefined'){
+                        $("#"+to_o).append($("#"+from_o +" option[value='"+this.value+"']"));
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script>
+        $("#update_btn").click(function () {
+            $("#getdowns-log").empty();
+            $.bootstrapLoading.start({ loadingTips: "正在更新客户端，请稍候..." });
+            $.ajax({
+                url:"/cmdb/client_update",
+                type:"POST",
+                headers:{"X-CSRFToken": $.cookie('csrftoken')},
+                data:$(".input-box").serialize(),
+                dataType:'JSON',
+                success:function (arg) {
+                    if(arg){
+                        $("#getdowns-log").append(arg);
+                        $('#log-modal').addClass('in');
+                        $('#log-modal').css({display:'block',overflow:'auto'});
+                        $('.modal-backdrop').css('display','block');
+                    }
+                },
+                complete:function () {
+                    $.bootstrapLoading.end();
+                }
+
+            })
+        });
+
+        $('.close_log_modal').click(function () {
+		    $("#log-modal").css('display','none');
+		    $("#log-modal").removeClass('in');
+		    $('.modal-backdrop').css('display','none');
+
+        });
+
+    </script>
+
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_data_tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+</html>

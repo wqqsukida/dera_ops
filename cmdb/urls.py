@@ -56,5 +56,9 @@ urlpatterns = [
     url(r'^server_taskmethod_del', views.server_taskmethod_del),  # 删除主机任务项
     url(r'^server_taskmethod_upload', views.server_taskmethod_upload),  # 上传任务脚本
 
+    url(r'^version_info',views.version_info), # 版本信息
+    url(r'^firmware_update',views.firmware_update), # 固件升级
+    url(r'^client_update',views.client_update), # 客户端升级
+
     url(r'^t1', views.t1),
 ]

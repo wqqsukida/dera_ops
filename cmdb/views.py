@@ -17,6 +17,7 @@ from utils.pagination import Pagination
 from django.http.request import QueryDict
 from django.conf import settings
 from utils.remote_client import Remote
+from utils.ansible_api import Runner
 
 #========================================================================#
 def init_paginaion(request,queryset):
@@ -207,41 +208,41 @@ def asset_run_tasks(request):
                         s.save()
                     code = 0
                     msg="成功修改主机组！"
-                elif taskmethods:
-                    # 创建任务子会话
-                    # if request.POST.get("save_session"):
-                    title = 'auto_create_secsession'
-                    content = ''
-                    new_ts = Task_SecSession.objects.create(title=title,content=content)
-                    t_objs = TaskMethod.objects.filter(id__in=taskmethods)
-                    new_ts.server_obj.add(*server_objs)
-                    new_ts.task_obj.add(*t_objs)
-                    # 执行刚创建的子会话
-                    # for t in new_ts.task_obj.all():
-                    #     for s in new_ts.server_obj.all():
-                    #         ServerTask.objects.create(server_obj=s, task=t)
-
-                    code = 0
-                    msg="成功执行主机任务！"
-                elif task_script_id:
-                    ts_obj = TaskScript.objects.get(id=task_script_id)
-                    local_file = ts_obj.script_path
-                    remote_file = '/usr/local/src/auto_client/task_handler/script/%s'%ts_obj.name
-                    error_server_list = []
-                    for server in server_objs.values('manage_ip','hostname'):
-                        try:
-                            print(" send {1} to {0}:{2} ".format(server.get("manage_ip"), local_file, remote_file))
-                            rc = Remote(server.get('manage_ip'),username="root",password="test")
-                            rc.scp(local_file,remote_file)
-                        except Exception as e:
-                            error_server_list.append(server.get("hostname"))
-
-                    if error_server_list:
-                        code = 1
-                        msg = "%s下发脚本失败！"%str(error_server_list)
-                    else:
-                        code = 0
-                        msg = "成功下发任务脚本！"
+                # elif taskmethods:
+                #     # 创建任务子会话
+                #     # if request.POST.get("save_session"):
+                #     title = 'auto_create_secsession'
+                #     content = ''
+                #     new_ts = Task_SecSession.objects.create(title=title,content=content)
+                #     t_objs = TaskMethod.objects.filter(id__in=taskmethods)
+                #     new_ts.server_obj.add(*server_objs)
+                #     new_ts.task_obj.add(*t_objs)
+                #     # 执行刚创建的子会话
+                #     # for t in new_ts.task_obj.all():
+                #     #     for s in new_ts.server_obj.all():
+                #     #         ServerTask.objects.create(server_obj=s, task=t)
+                #
+                #     code = 0
+                #     msg="成功执行主机任务！"
+                # elif task_script_id:
+                #     ts_obj = TaskScript.objects.get(id=task_script_id)
+                #     local_file = ts_obj.script_path
+                #     remote_file = '/usr/local/src/auto_client/task_handler/script/%s'%ts_obj.name
+                #     error_server_list = []
+                #     for server in server_objs.values('manage_ip','hostname'):
+                #         try:
+                #             print(" send {1} to {0}:{2} ".format(server.get("manage_ip"), local_file, remote_file))
+                #             rc = Remote(server.get('manage_ip'),username="root",password="test")
+                #             rc.scp(local_file,remote_file)
+                #         except Exception as e:
+                #             error_server_list.append(server.get("hostname"))
+                #
+                #     if error_server_list:
+                #         code = 1
+                #         msg = "%s下发脚本失败！"%str(error_server_list)
+                #     else:
+                #         code = 0
+                #         msg = "成功下发任务脚本！"
                 else:
                     code = 1
                     msg = "没有可执行的任务！"
@@ -1214,3 +1215,47 @@ def server_del_session(request):
                                     format(result.get("code", ""),
                                            result.get("message", ""),
                                            page))
+
+def version_info(request):
+    '''
+    版本信息
+    :param request:
+    :return:
+    '''
+    return render(request,'version_info.html')
+
+def firmware_update(request):
+    '''
+    固件升级
+    :param request:
+    :return:
+    '''
+    return render(request,'firmware_update.html')
+
+def client_update(request):
+    '''
+    客户端升级
+    :param request:
+    :return:
+    '''
+    if request.method == "POST" :
+        result = {"code":0,"message":"test"}
+        hosts = request.POST.getlist("hosts")
+        if hosts:
+            hosts = ','.join(hosts)+','
+        ansible_client = Runner(hosts)
+        ansible_client.run_playbook()
+        msg = ansible_client.get_playbook_result()
+
+        return HttpResponse(json.dumps(msg))
+
+
+    elif request.method == "GET" :
+        status = request.GET.get("status", "")
+        message = request.GET.get("message", "")
+        if status.isdigit():
+            result = {"code":int(status),"message":message}
+
+        host_query = Server.objects.filter(server_status_id=2)
+
+        return render(request,'client_update.html',locals())
