@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="col-sm-7">
                                         <select name="version" class="form-control" id="">
-
+                                            <option value="">全新版本</option>
                                         </select>
                                     </div>
                                 </div>
@@ -174,15 +174,14 @@
                 dataType:'JSON',
                 success:function (arg) {
                     if(arg){
+                        //console.log(arg);
                         $("#getdowns-log").append(arg);
                         $('#log-modal').addClass('in');
                         $('#log-modal').css({display:'block',overflow:'auto'});
                         $('.modal-backdrop').css('display','block');
                     }
                 },
-                complete:function () {
-                    $.bootstrapLoading.end();
-                }
+                complete:function () {$.bootstrapLoading.end();}
 
             })
         });

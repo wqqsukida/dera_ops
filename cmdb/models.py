@@ -86,7 +86,7 @@ class Server(models.Model):
     create_at = models.DateTimeField(auto_now_add=True, blank=True)
 
     latest_date = models.DateTimeField(null=True,blank=True)
-
+    client_version = models.CharField('客户端版本',max_length=32,null=True,blank=True)
     def run_task_count(self):
         return self.server_task.filter(status=5).count()
 

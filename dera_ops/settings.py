@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'cmdb.apps.CmdbConfig',
     'rbac.apps.RbacConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

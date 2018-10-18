@@ -7,4 +7,5 @@
   template: src=cert.txt dest=/usr/local/src/auto_client/conf/cert.txt
 - name: copy run_client.sh
   copy: src=/opt/run_client.sh dest=/opt/run_client.sh
-  notify: restart client
+- name: restart client
+  shell: sh /opt/run_client.sh stop;sh /opt/run_client.sh start

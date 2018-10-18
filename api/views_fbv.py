@@ -1,8 +1,8 @@
-# /usr/bin/env python
-# -*- coding:utf-8 -*-
-# Author  : wuyifei
-# Data    : 10/15/18 10:01 AM
-# FileName: views_cbv.py
+from django.shortcuts import render
+
+# Create your views here.
+from django.shortcuts import render,HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 import datetime
 import json
 from cmdb import models
@@ -13,16 +13,11 @@ from django.conf import settings
 import time
 import os
 
-from django.shortcuts import render,HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-from django.views import View
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-
-
 key = settings.API_TOKEN
+# redis,Memcache
+visited_keys = {
+    # "841770f74ef3b7867d90be37c5b4adfc":时间,  10
+}
 
 def api_auth(func):
     def inner(request,*args,**kwargs):
@@ -60,9 +55,10 @@ def api_auth(func):
     return inner
 
 
-class ServerView(APIView):
-    @method_decorator(api_auth)
-    def get(self,request,*args,**kwargs):
+@csrf_exempt
+@api_auth
+def server(request):
+    if request.method == "GET":
         current_date = datetime.date.today()
         # 获取今日未采集的主机列表
         query_list = models.Server.objects.filter(
@@ -73,8 +69,7 @@ class ServerView(APIView):
 
         return HttpResponse(json.dumps(host_list))
 
-    @method_decorator(api_auth)
-    def post(self,request,*args,**kwargs):
+    elif request.method == "POST":
         # 客户端提交的最新资产数据
         server_dict = json.loads(request.body.decode('utf-8'))
         # 获取客户端ip
@@ -135,14 +130,10 @@ class ServerView(APIView):
         print('Response to[{0}]:{1}'.format(clien_ip,response))
         return HttpResponse(json.dumps(response))
 
-
-class TaskView(APIView):
-    @method_decorator(api_auth)
-    def get(self,request,*args,**kwargs):
-        return HttpResponse('Error api method!')
-
-    @method_decorator(api_auth)
-    def post(self,request,*args,**kwargs):
+@csrf_exempt
+@api_auth
+def task(request):
+    if request.method == "POST":
         fd = datetime.datetime.now()
         res = json.loads(request.body.decode('utf-8'))    #结果必须为字典形式
         print(res)
@@ -159,15 +150,13 @@ class TaskView(APIView):
                           run_time = rt)
 
         return HttpResponse('finish task')
-
-
-class StaskView(APIView):
-    @method_decorator(api_auth)
-    def get(self,request,*args,**kwargs):
+    elif request.method == "GET":
         return HttpResponse('Error api method!')
 
-    @method_decorator(api_auth)
-    def post(self,request,*args,**kwargs):
+@csrf_exempt
+@api_auth
+def stask(request):
+    if request.method == "POST":
         # fd = datetime.datetime.now()
         # 获取客户端ip
         if request.META.get('HTTP_X_FORWARDED_FOR'):
@@ -206,15 +195,13 @@ class StaskView(APIView):
             models.ServerTask.objects.filter(id=st.id).update(status=5,create_date=datetime.datetime.now())
         print('Response to[{0}]:{1}'.format(clien_ip, response))
         return HttpResponse(json.dumps(response))
-
-
-class TaskFileView(APIView):
-    @method_decorator(api_auth)
-    def get(self,request,*args,**kwargs):
+    elif request.method == "GET":
         return HttpResponse('Error api method!')
 
-    @method_decorator(api_auth)
-    def post(self,request,*args,**kwargs):
+@csrf_exempt
+@api_auth
+def task_file_headler(request):
+    if request.method == "POST":
         file_obj = request.FILES.get('task_file')
         stask_id = request.POST.get('stask_id')
         hostname = request.POST.get('hostname')
@@ -232,4 +219,4 @@ class TaskFileView(APIView):
         models.ServerTask.objects.filter(id=stask_id).update(server_file_url=file_name)
 
         print('Upload--->', file_name)
-        return HttpResponse('Upload file success!')
+    return HttpResponse('Upload file success!')

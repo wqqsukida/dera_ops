@@ -181,6 +181,7 @@
                                         <th data-hide="all">创建日期</th>
                                         <th data-hide="all">修改日期</th>
                                         <th data-hide="all">机柜号</th>
+                                        <th data-hide="all">客户端版本</th>
                                         <th>操作(更新/删除/任务)</th>
                                     </tr>
                                  </thead>
@@ -231,6 +232,7 @@
                                             <td>{{ asset.create_at }}</td>
                                             <td>{{ asset.latest_date }}</td>
                                             <td>{{ asset.cabinet_num }}</td>
+                                            <td>{{ asset.client_version }}</td>
                                             <td class="tooltip-demo" style="font-size: 20px">
                                                 <a class="mod-asset-btn" title="更新主机" sid="{{ asset.id }}" data-toggle="modal" data-target="#UpdateModal">
                                                     <i class="fa fa-cog"></i>

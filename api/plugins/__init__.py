@@ -16,8 +16,7 @@ class PluginManger(object):
         :param server_dict:
         :return: 1,执行完全成功； 2, 局部失败；3，执行失败;4. 服务器不存在
         """
-        ret = {'code': 1,'msg':'执行完全成功'}
-
+        ret = {'code': 1,'msg':{}}
         hostname = server_dict[self.basic_key]['data']['hostname']
         server_obj = models.Server.objects.filter(hostname=hostname).first()
         if not  server_obj:
@@ -33,12 +32,17 @@ class PluginManger(object):
         # 对比更新[硬盘，网卡，内存，可插拔的插件]
         for k,v in self.plugin_items.items():
             try:
-                module_path,cls_name = v.rsplit('.',maxsplit=1)
+                if server_dict[k]['status']:
+                    module_path,cls_name = v.rsplit('.',maxsplit=1)
 
-                md = importlib.import_module(module_path)
-                cls = getattr(md,cls_name)
-                obj = cls(server_obj,server_dict[k])
-                obj.process()
+                    md = importlib.import_module(module_path)
+                    cls = getattr(md,cls_name)
+                    obj = cls(server_obj,server_dict[k])
+                    obj.process()
+                    ret['msg'] = '执行完全成功!'
+                else:
+                    ret['code'] = 2
+                    ret['msg'][k] = server_dict[k]['msg']
             except Exception as e:
                 ret['code'] = 2
                 ret['msg'] = str(e)

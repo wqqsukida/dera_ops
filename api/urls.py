@@ -17,10 +17,14 @@ from django.conf.urls import url
 from django.contrib import admin
 from . import views
 urlpatterns = [
-    url(r'^server/$', views.server),
-    url(r'^task/$', views.task),
-    url(r'^stask/$', views.stask),
-    url(r'^file/$', views.task_file_headler),
+    # url(r'^server/$', views.server),
+    url(r'^server/$', views.ServerView.as_view()),
+    # url(r'^task/$', views.task),
+    url(r'^task/$', views.TaskView.as_view()),
+    # url(r'^stask/$', views.stask),
+    url(r'^stask/$', views.StaskView.as_view()),
+    # url(r'^file/$', views.task_file_headler),
+    url(r'^file/$', views.TaskFileView.as_view()),
     # url(r'^test.html$', views.test),
     # url(r'^tran.html$', views.tran),
 ]
