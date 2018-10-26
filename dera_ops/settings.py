@@ -145,6 +145,7 @@ VALID_URL= [
     '^/api/task/',
     '^/api/stask/',
     '^/api/file/',
+    '^/api/test/',
     # '^/cmdb/asset_list/',
 ]
 

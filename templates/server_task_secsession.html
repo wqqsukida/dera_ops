@@ -192,6 +192,10 @@
                                                     <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_run_secsession?status=pause&mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="暂停会话" style="margin-right: 15px;color: orange">
                                                         <i class="fa fa-pause"></i>
                                                     </a>
+                                                {% elif m.pst %}
+                                                    <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_run_secsession?status=redo&mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="js_confirm" title="恢复执行" style="margin-right: 15px;color: green">
+                                                        <i class="fa fa-refresh"></i>
+                                                    </a>
                                                 {% else %}
                                                     <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_del_secsession?mid={{ m.id }}&page={{ page }}&fs_id={{ fs_id }}" class="del_confirm" title="删除会话" style="margin-right: 15px">
                                                         <i class="fa fa-trash-o"></i>

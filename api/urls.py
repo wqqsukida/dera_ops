@@ -25,6 +25,6 @@ urlpatterns = [
     url(r'^stask/$', views.StaskView.as_view()),
     # url(r'^file/$', views.task_file_headler),
     url(r'^file/$', views.TaskFileView.as_view()),
-    # url(r'^test.html$', views.test),
+    url(r'^test/$', views.Test.as_view()),
     # url(r'^tran.html$', views.tran),
 ]

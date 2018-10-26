@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47e6c2be-8a09-4c2a-9ff7-3aa60dbb48bd" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/api/views_fbv.py" afterDir="false" />
+    <list default="true" id="47e6c2be-8a09-4c2a-9ff7-3aa60dbb48bd" name="Default" comment="20181026更新&#10;1.服务端根据客户端上发的信息分为create,update,host_update三种处理方式&#10;2.更新加密验证接口&#10;3.不允许用户更改唯一标识:主机名&#10;4.添加任务会话,任务计划恢复执行功能">
+      <change afterPath="$PROJECT_DIR$/static/css/plugins/jsTree/32px.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/plugins/jsTree/throbber.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/plugins/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/plugins/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/plugins/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/plugins/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmdb/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cmdb/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmdb/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cmdb/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dera_ops/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dera_ops/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/asset.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/client_update.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/client_update.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/playbooks/roles/client_update/tasks/main.yml" beforeDir="false" afterPath="$PROJECT_DIR$/utils/playbooks/roles/client_update/tasks/main.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/plugins/jsTree/style.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/plugins/jsTree/style.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/server_task_secsession.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/server_task_secsession.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/server_task_session.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/server_task_session.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/version_info.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/version_info.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/playbooks/roles/client_update/templates/cert.txt" beforeDir="false" afterPath="$PROJECT_DIR$/utils/playbooks/roles/client_update/templates/cert.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,16 +26,18 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/dera_ops$ansible_api_test.coverage" NAME="ansible_api_test Coverage Results" MODIFIED="1539163767497" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/dera_ops$ansible_api_test2.coverage" NAME="ansible_api_test2 Coverage Results" MODIFIED="1539237817014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/dera_ops$kaisa_jiemi.coverage" NAME="kaisa_jiemi Coverage Results" MODIFIED="1534988608407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/dera_ops$bs64.coverage" NAME="bs64 Coverage Results" MODIFIED="1533534571169" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/dera_ops$walk_playbooks.coverage" NAME="walk_playbooks Coverage Results" MODIFIED="1539943777801" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/dera_ops$fangshe.coverage" NAME="fangshe Coverage Results" MODIFIED="1534990022140" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/dera_ops$ansible_api.coverage" NAME="ansible_api Coverage Results" MODIFIED="1539331264064" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/dera_ops$ansible_api_test2.coverage" NAME="ansible_api_test2 Coverage Results" MODIFIED="1539237817014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/dera_ops$fangshe1.coverage" NAME="fangshe1 Coverage Results" MODIFIED="1534991076908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/dera_ops$dasd.coverage" NAME="dasd Coverage Results" MODIFIED="1531363640985" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/dera_ops$kaisa_jiemi.coverage" NAME="kaisa_jiemi Coverage Results" MODIFIED="1534988608407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/dera_ops$123.coverage" NAME="123 Coverage Results" MODIFIED="1535531401349" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/dera_ops$scp_file.coverage" NAME="scp_file Coverage Results" MODIFIED="1537438133325" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/dera_ops$interface.coverage" NAME="interface Coverage Results" MODIFIED="1539764636550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/dera_ops$bs64.coverage" NAME="bs64 Coverage Results" MODIFIED="1533534571169" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/dera_ops$interface.coverage" NAME="interface Coverage Results" MODIFIED="1539858610629" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/dera_ops$thread_timer.coverage" NAME="thread_timer Coverage Results" MODIFIED="1540261013313" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -71,11 +77,61 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ansible_api.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/utils/ansible_api.py">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmdb/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-407">
-              <caret line="157" column="75" lean-forward="true" selection-start-line="157" selection-start-column="75" selection-end-line="157" selection-end-column="75" />
+            <state relative-caret-position="232">
+              <caret line="1067" column="16" lean-forward="true" selection-start-line="1067" selection-start-column="16" selection-end-line="1067" selection-end-column="16" />
+              <folding>
+                <element signature="e#0#65#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmdb/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="385">
+              <caret line="95" column="22" lean-forward="true" selection-start-line="95" selection-start-column="22" selection-end-line="95" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/api/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="299">
+              <caret line="294" column="48" lean-forward="true" selection-start-line="294" selection-start-column="48" selection-end-line="294" selection-end-column="48" />
+              <folding>
+                <element signature="e#120#135#0" expanded="true" />
+                <element signature="e#647#1973#0" />
+                <element signature="e#3948#4032#0" />
+                <element signature="e#7398#8237#0" />
+                <element signature="e#10435#11336#0" />
+                <element signature="e#11426#11606#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/plugins/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="server.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/plugins/server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="321">
+              <caret line="33" column="75" selection-start-line="33" selection-start-column="65" selection-end-line="33" selection-end-column="75" />
             </state>
           </provider>
         </entry>
@@ -92,8 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>mod_id_random</find>
-      <find>server_random_run</find>
       <find>get-res</find>
       <find>myModalLabel</find>
       <find>create_date</find>
@@ -122,6 +176,8 @@
       <find>plugin_items</find>
       <find>keys</find>
       <find>/cmdb/client_update</find>
+      <find>{'code': 6, 'msg': 'token已被使用!'}</find>
+      <find>'code': 2,</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -130,9 +186,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/templates/users.html" />
-        <option value="$PROJECT_DIR$/templates/t1.html" />
         <option value="$PROJECT_DIR$/templates/server_task_model.html" />
         <option value="$PROJECT_DIR$/templates/roles.html" />
         <option value="$PROJECT_DIR$/cmdb/task_module/task_view.py" />
@@ -148,16 +201,13 @@
         <option value="$PROJECT_DIR$/cmdb/templatetags/mytags.py" />
         <option value="$PROJECT_DIR$/templates/ssd_task.html" />
         <option value="$PROJECT_DIR$/templates/ssd.html" />
-        <option value="$PROJECT_DIR$/templates/server_task_secsession.html" />
         <option value="$PROJECT_DIR$/task_script/hostname.sh" />
         <option value="$PROJECT_DIR$/templates/login.html" />
         <option value="$PROJECT_DIR$/templates/login_v2.html" />
-        <option value="$PROJECT_DIR$/templates/server_task_session.html" />
         <option value="$PROJECT_DIR$/templates/server_task.html" />
         <option value="$PROJECT_DIR$/utils/scp_file.py" />
         <option value="$PROJECT_DIR$/templates/server_taskmethod.html" />
         <option value="$PROJECT_DIR$/utils/remote_client.py" />
-        <option value="$PROJECT_DIR$/templates/version_info.html" />
         <option value="$PROJECT_DIR$/templates/firmware_update.html" />
         <option value="$PROJECT_DIR$/utils/ansible_api_test.py" />
         <option value="$PROJECT_DIR$/utils/ansible_api_test2.py" />
@@ -168,19 +218,25 @@
         <option value="$PROJECT_DIR$/cmdb/urls.py" />
         <option value="$PROJECT_DIR$/utils/ansible_api.py" />
         <option value="$PROJECT_DIR$/api/views_cbv.py" />
-        <option value="$PROJECT_DIR$/api/urls.py" />
-        <option value="$PROJECT_DIR$/api/views.py" />
         <option value="$PROJECT_DIR$/api/plugins/base.py" />
         <option value="$PROJECT_DIR$/utils/interface.py" />
-        <option value="$PROJECT_DIR$/api/plugins/server.py" />
-        <option value="$PROJECT_DIR$/dera_ops/settings.py" />
-        <option value="$PROJECT_DIR$/api/plugins/__init__.py" />
         <option value="$PROJECT_DIR$/cmdb/models.py" />
         <option value="$PROJECT_DIR$/templates/asset.html" />
         <option value="$PROJECT_DIR$/utils/playbooks/roles/client_update/tasks/main.yml" />
         <option value="$PROJECT_DIR$/utils/playbooks/roles/client_update/handlers/main.yml" />
         <option value="$PROJECT_DIR$/templates/client_update.html" />
+        <option value="$PROJECT_DIR$/templates/version_info.html" />
+        <option value="$PROJECT_DIR$/utils/walk_playbooks.py" />
+        <option value="$PROJECT_DIR$/api/plugins/server.py" />
+        <option value="$PROJECT_DIR$/utils/playbooks/roles/client_update/templates/cert.txt" />
+        <option value="$PROJECT_DIR$/api/urls.py" />
+        <option value="$PROJECT_DIR$/dera_ops/settings.py" />
+        <option value="$PROJECT_DIR$/utils/thread_timer.py" />
+        <option value="$PROJECT_DIR$/api/views.py" />
+        <option value="$PROJECT_DIR$/templates/server_task_secsession.html" />
+        <option value="$PROJECT_DIR$/templates/server_task_session.html" />
         <option value="$PROJECT_DIR$/cmdb/views.py" />
+        <option value="$PROJECT_DIR$/api/plugins/__init__.py" />
       </list>
     </option>
   </component>
@@ -194,9 +250,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="width" value="1292" />
-    <option name="height" value="770" />
+    <option name="x" value="71" />
+    <option name="y" value="84" />
+    <option name="width" value="1358" />
+    <option name="height" value="774" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -214,23 +271,17 @@
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
               <item name="cmdb" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
@@ -272,24 +323,6 @@
               <item name="client_update" type="462c0819:PsiDirectoryNode" />
               <item name="files" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-              <item name="playbooks" type="462c0819:PsiDirectoryNode" />
-              <item name="roles" type="462c0819:PsiDirectoryNode" />
-              <item name="client_update" type="462c0819:PsiDirectoryNode" />
-              <item name="handlers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-              <item name="playbooks" type="462c0819:PsiDirectoryNode" />
-              <item name="roles" type="462c0819:PsiDirectoryNode" />
-              <item name="client_update" type="462c0819:PsiDirectoryNode" />
-              <item name="tasks" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -323,11 +356,11 @@
       <recent name="$PROJECT_DIR$/static" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static/css/plugins/jsTree" />
       <recent name="$PROJECT_DIR$/templates" />
       <recent name="$PROJECT_DIR$/utils/playbooks/files" />
       <recent name="$PROJECT_DIR$/utils" />
       <recent name="$PROJECT_DIR$/static/img" />
-      <recent name="$PROJECT_DIR$/static/js/plugins/codemirror/mode" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -342,7 +375,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.interface">
+  <component name="RunManager" selected="Python.thread_timer">
     <configuration name="ansible_api" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="dera_ops" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -357,25 +390,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/ansible_api.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="ansible_api_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="dera_ops" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/ansible_api_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -438,7 +452,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="scp_file" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="thread_timer" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="dera_ops" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -451,7 +465,26 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/remote_client.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/thread_timer.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="walk_playbooks" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="dera_ops" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/walk_playbooks.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -483,19 +516,19 @@
     <list>
       <item itemvalue="Django server.dera_ops" />
       <item itemvalue="Python.bs64" />
-      <item itemvalue="Python.scp_file" />
-      <item itemvalue="Python.ansible_api_test" />
       <item itemvalue="Python.ansible_api_test2" />
       <item itemvalue="Python.ansible_api" />
       <item itemvalue="Python.interface" />
+      <item itemvalue="Python.walk_playbooks" />
+      <item itemvalue="Python.thread_timer" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.thread_timer" />
+        <item itemvalue="Python.walk_playbooks" />
         <item itemvalue="Python.interface" />
         <item itemvalue="Python.ansible_api" />
         <item itemvalue="Python.ansible_api_test2" />
-        <item itemvalue="Python.ansible_api_test" />
-        <item itemvalue="Python.scp_file" />
       </list>
     </recent_temporary>
   </component>
@@ -720,7 +753,14 @@
       <option name="project" value="LOCAL" />
       <updated>1539334772419</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="20181019更新&#10;1.将server端所有api接口改为rest_framework方式&#10;2.添加客户端版本,对应主机更新客户端后在主机列表可查看">
+      <created>1539842227286</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1539842227286</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TodoView">
@@ -739,11 +779,11 @@
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49893048" weight="0.32936978" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5032086" side_tool="true" weight="0.4197384" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49679145" visible="true" weight="0.35671818" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49679145" visible="true" weight="0.41854936" />
       <window_info anchor="bottom" x="1" y="404" width="1918" height="284" id="Version Control" order="10" sideWeight="0.4983957" weight="0.34958383" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.49946523" weight="0.28894174" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49679145" weight="0.4197384" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49916804" visible="true" weight="0.14705883" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49916804" visible="true" weight="0.14705883" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" visible="true" weight="0.14278075" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936978" />
@@ -759,6 +799,30 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Database Console" order="7" weight="0.32936978" />
     </layout>
+    <layout-to-restore>
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" x="1" y="404" width="1918" height="284" id="Version Control" order="10" sideWeight="0.4983957" weight="0.34958383" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="Favorites" order="2" sideWeight="0.50083196" side_tool="true" weight="0.142246" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49916804" visible="true" weight="0.14705883" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49893048" weight="0.32936978" />
+      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49679145" visible="true" weight="0.35671818" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936978" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.14278075" />
+      <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49679145" weight="0.4197384" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5032086" side_tool="true" weight="0.4197384" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.32994652" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Database Console" order="7" weight="0.32936978" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.49946523" weight="0.28894174" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -817,7 +881,8 @@
     <MESSAGE value="20180921更新&#10;1.添加通过主机列表下发任务脚本功能(paramiko实现)&#10;2.任务列表可以跳转到指定的主机、计划或者会话下查看任务" />
     <MESSAGE value="20180926更新&#10;1.将主机信息接口和任务下发接口区分：客户端返回主机信息走server视图，任务请求走stask视图" />
     <MESSAGE value="20181012更新&#10;1.添加ansible_api,分为playbook和ad_hoc两种执行方式&#10;2.测试利用ansible_api实现客户端批量更新&#10;3.添加客户端更新页面功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="20181012更新&#10;1.添加ansible_api,分为playbook和ad_hoc两种执行方式&#10;2.测试利用ansible_api实现客户端批量更新&#10;3.添加客户端更新页面功能" />
+    <MESSAGE value="20181019更新&#10;1.将server端所有api接口改为rest_framework方式&#10;2.添加客户端版本,对应主机更新客户端后在主机列表可查看" />
+    <option name="LAST_COMMIT_MESSAGE" value="20181019更新&#10;1.将server端所有api接口改为rest_framework方式&#10;2.添加客户端版本,对应主机更新客户端后在主机列表可查看" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -825,44 +890,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/ansible/vars/manager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="978">
-          <caret line="182" column="22" lean-forward="true" selection-start-line="182" selection-start-column="22" selection-end-line="182" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/ansible/inventory/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/ansible/inventory/manager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3344">
-          <caret line="120" column="38" selection-start-line="120" selection-start-column="31" selection-end-line="120" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/ansible/constants.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="110" column="33" selection-start-line="110" selection-start-column="33" selection-end-line="110" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/ansible/playbook/play_context.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="812">
-          <caret line="195" column="20" selection-start-line="195" selection-start-column="11" selection-end-line="195" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/ansible/executor/task_queue_manager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="245" column="30" lean-forward="true" selection-start-line="245" selection-start-column="30" selection-end-line="245" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/hostname.retry">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -880,29 +907,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="71">
-          <caret line="45" column="15" selection-start-line="45" selection-start-column="15" selection-end-line="45" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cmdb/tests.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/server_task_session.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1562">
-          <caret line="232" column="30" lean-forward="true" selection-start-line="232" selection-start-column="30" selection-end-line="232" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/server_task_secsession.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-132">
-          <caret line="550" column="30" selection-start-line="546" selection-end-line="557" selection-end-column="13" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/server_task.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -946,16 +952,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/memory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_errorlog">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -980,20 +976,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dera_ops/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
-          <caret line="89" column="20" lean-forward="true" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/layout.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-330" />
@@ -1011,9 +993,6 @@
           <caret column="3" lean-forward="true" selection-end-line="5" selection-end-column="19" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/playbooks/roles/client_update/templates/cert.txt">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/utils/playbooks/client_update.retry">
       <provider selected="true" editor-type-id="text-editor" />
@@ -1076,61 +1055,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="88" column="80" selection-start-line="88" selection-start-column="80" selection-end-line="88" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/disk.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-242">
-          <caret line="28" column="50" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="41" column="81" selection-start-line="41" selection-start-column="71" selection-end-line="41" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="20" column="32" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
-          <folding>
-            <element signature="e#645#677#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/playbooks/roles/client_update/handlers/main.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="1" column="38" lean-forward="true" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/playbooks/roles/client_update/tasks/main.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-374">
-          <caret line="10" column="32" lean-forward="true" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1154,6 +1082,133 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/ansible_api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1415">
+          <caret line="187" lean-forward="true" selection-start-line="187" selection-end-line="187" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/plugins/jsTree/style.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#2622#2725#2" expanded="true" />
+            <element signature="e#4311#4410#2" expanded="true" />
+            <element signature="e#6142#6407#2" expanded="true" />
+            <element signature="e#7068#7247#1" expanded="true" />
+            <element signature="e#10184#10347#2" expanded="true" />
+            <element signature="e#12025#12188#2" expanded="true" />
+            <element signature="e#14562#14725#2" expanded="true" />
+            <element signature="e#16523#16686#2" expanded="true" />
+            <element signature="e#19032#19195#2" expanded="true" />
+            <element signature="e#20982#21145#2" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/version_info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-726">
+          <caret line="104" column="32" lean-forward="true" selection-start-line="104" selection-start-column="32" selection-end-line="104" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/walk_playbooks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/plugins/memory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="975">
+          <caret line="70" column="15" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/playbooks/roles/client_update/handlers/main.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="1" column="38" lean-forward="true" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/client_update.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2279">
+          <caret line="176" column="43" lean-forward="true" selection-start-line="176" selection-start-column="43" selection-end-line="176" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/playbooks/roles/client_update/templates/cert.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="21" selection-start-column="21" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dera_ops/urls.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/thread_timer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="19" column="10" lean-forward="true" selection-start-line="17" selection-end-line="22" selection-end-column="17" />
+          <folding>
+            <element signature="e#123#139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="62" column="22" lean-forward="true" selection-start-line="62" selection-start-column="22" selection-end-line="62" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dera_ops/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="147" column="18" selection-start-line="147" selection-start-column="18" selection-end-line="147" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="27" column="13" lean-forward="true" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="15" />
+          <folding>
+            <element signature="e#645#677#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/plugins/disk.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2024">
+          <caret line="92" column="35" lean-forward="true" selection-start-line="92" selection-start-column="35" selection-end-line="92" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/plugins/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="33" column="75" selection-start-line="33" selection-start-column="65" selection-end-line="33" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
     <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_server">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1161,27 +1216,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/client_update.html">
+    <entry file="file://$PROJECT_DIR$/templates/server_task_secsession.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="175" column="28" lean-forward="true" selection-start-line="175" selection-start-column="28" selection-end-line="175" selection-end-column="28" />
+        <state relative-caret-position="233">
+          <caret line="195" column="146" selection-start-line="195" selection-start-column="146" selection-end-line="195" selection-end-column="146" />
+          <folding>
+            <element signature="n#style#0;n#a#2;n#td#9;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/server_task_session.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="176" column="56" lean-forward="true" selection-start-line="176" selection-start-column="56" selection-end-line="176" selection-end-column="56" />
+          <folding>
+            <element signature="n#style#0;n#a#2;n#td#10;n#tr#0;n#tbody#0;n#table#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="95" column="22" lean-forward="true" selection-start-line="95" selection-start-column="22" selection-end-line="95" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmdb/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="1251" lean-forward="true" selection-start-line="1251" selection-end-line="1251" />
+        <state relative-caret-position="232">
+          <caret line="1067" column="16" lean-forward="true" selection-start-line="1067" selection-start-column="16" selection-end-line="1067" selection-end-column="16" />
           <folding>
             <element signature="e#0#65#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/ansible_api.py">
+    <entry file="file://$PROJECT_DIR$/api/plugins/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-407">
-          <caret line="157" column="75" lean-forward="true" selection-start-line="157" selection-start-column="75" selection-end-line="157" selection-end-column="75" />
+        <state relative-caret-position="264">
+          <caret line="12" column="8" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="294" column="48" lean-forward="true" selection-start-line="294" selection-start-column="48" selection-end-line="294" selection-end-column="48" />
+          <folding>
+            <element signature="e#120#135#0" expanded="true" />
+            <element signature="e#647#1973#0" />
+            <element signature="e#3948#4032#0" />
+            <element signature="e#7398#8237#0" />
+            <element signature="e#10435#11336#0" />
+            <element signature="e#11426#11606#0" />
+          </folding>
         </state>
       </provider>
     </entry>

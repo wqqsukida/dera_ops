@@ -16,7 +16,7 @@ class Server(object):
         tmp.update(self.board_dict['data'])
 
         # 服务器数据更新
-        tmp.pop('hostname')
+        # tmp.pop('hostname')
         record_list = []
         # 导入模块
         from django.db import transaction

@@ -171,6 +171,10 @@
                                                     <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_run_session?status=pause&sid={{ s.id }}&page={{ page }}" class="js_confirm" title="暂停执行" style="margin-right: 15px;color: orange;">
                                                         <i class="fa fa-pause"></i>
                                                     </a>
+                                                {% elif s.pst %}
+                                                    <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_run_session?status=redo&sid={{ s.id }}&page={{ page }}" class="js_confirm" title="恢复执行" style="margin-right: 15px;color: green;">
+                                                        <i class="fa fa-refresh"></i>
+                                                    </a>
                                                 {% else %}
                                                     <a data-toggle="tooltip" data-placement="bottom" href="/cmdb/server_del_session?sid={{ s.id }}&page={{ page }}" class="del_confirm" title="删除计划" style="margin-right: 15px">
                                                         <i class="fa fa-trash-o"></i>

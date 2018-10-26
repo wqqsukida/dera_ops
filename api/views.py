@@ -5,13 +5,16 @@
 # FileName: views_cbv.py
 import datetime
 import json
+import time
+import os
+import threading
+import copy
 from cmdb import models
 from django.db.models import Q
 from .plugins import PluginManger
 from utils.md5 import encrypt
 from django.conf import settings
-import time
-import os
+
 
 from django.shortcuts import render,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -40,7 +43,7 @@ def api_auth(func):
 
             # 第一关
             if (client_float_ctime + 20) < server_float_ctime:
-                res = { 'code': 5, 'msg': '时间不同步!'}
+                res = { 'code': 5, 'msg': 'token已经过期!'}
                 print('[{0}]:{1}'.format(clien_ip, res))
                 return HttpResponse(json.dumps(res))
 
@@ -59,9 +62,53 @@ def api_auth(func):
 
     return inner
 
+SIGN_RECORD = {}
+class APIAuthView(APIView):
+    def dispatch(self, request, *args, **kwargs):
+        server_float_ctime = time.time()
+        auth_header_val = request.META.get('HTTP_AUTH_TOKEN')
+        # 841770f74ef3b7867d90be37c5b4adfc|1506571253.9937866
+        if request.META.get('HTTP_X_FORWARDED_FOR'):
+            clien_ip = request.META['HTTP_X_FORWARDED_FOR']
+        else:
+            clien_ip = request.META['REMOTE_ADDR']
 
-class ServerView(APIView):
-    @method_decorator(api_auth)
+        if auth_header_val:
+            client_md5_str, client_ctime = auth_header_val.split('|', maxsplit=1)
+            client_float_ctime = float(client_ctime)
+            # print(server_float_ctime - client_float_ctime)
+            if (client_float_ctime + 20) < server_float_ctime :
+                res = {'code': 5, 'msg': 'token已经过期!'}
+                print('[{0}]:{1}'.format(clien_ip, res))
+                return HttpResponse(json.dumps(res))
+
+            if client_md5_str in SIGN_RECORD:
+                res = {'code': 6, 'msg': 'token已被使用!'}
+                print('[{0}]:{1}'.format(clien_ip, res))
+                return HttpResponse(json.dumps(res))
+
+            server_md5_str = encrypt("%s|%s" % (key, client_ctime,))
+            if server_md5_str != client_md5_str:
+                res = {'code': 7, 'msg': 'token验证失败!'}
+                print('[{0}]:{1}'.format(clien_ip, res))
+                return HttpResponse(json.dumps(res))
+
+            SIGN_RECORD[server_md5_str] = client_ctime
+            SIGN_RECORD_copy = copy.deepcopy(SIGN_RECORD)
+            for k,v in SIGN_RECORD_copy.items():
+                if float(v) + 20 < float(client_ctime):
+                    SIGN_RECORD.pop(k)
+
+            # print(SIGN_RECORD)
+        else:
+            res = {'code': 8, 'msg': '找不到token,请求失败!'}
+            print('[{0}]:{1}'.format(clien_ip, res))
+            return HttpResponse(json.dumps(res))
+
+        return super().dispatch(request, *args, **kwargs)
+
+class ServerView(APIAuthView):
+    # @method_decorator(api_auth)
     def get(self,request,*args,**kwargs):
         current_date = datetime.date.today()
         # 获取今日未采集的主机列表
@@ -73,7 +120,7 @@ class ServerView(APIView):
 
         return HttpResponse(json.dumps(host_list))
 
-    @method_decorator(api_auth)
+    # @method_decorator(api_auth)
     def post(self,request,*args,**kwargs):
         # 客户端提交的最新资产数据
         server_dict = json.loads(request.body.decode('utf-8'))
@@ -91,21 +138,9 @@ class ServerView(APIView):
             server_dict['basic']['data']['manage_ip'] = clien_ip
         manager = PluginManger()
         response = manager.exec(server_dict)
-        ####################################添加推送ssd任务请求######################################
-        hostname = server_dict['basic']['data']['hostname']
-        server_obj = models.Server.objects.filter(hostname=hostname).first()
-        task_query_list = models.SSDTask.objects.filter(ssd_obj__server_obj=server_obj,status=1)
-        task_list = []
-        if task_query_list:
-            for task in task_query_list:
-                task_list.append({'ssd_node':task.ssd_obj.node,
-                                  'task_content':task.content,
-                                  'task_id':task.id})
-
+        task_list = self.ssd_task(server_dict)
         response.update({'task':task_list})
-        # 改变任务的状态：新建任务->推送执行中
-        #              创建时间->推送时间
-        task_query_list.update(status=5,create_date=datetime.datetime.now())
+
         ####################################添加推送主机任务请求######################################
         # server_task_query_list = models.ServerTask.objects.filter(server_obj=server_obj,status=1).\
         #     order_by('create_date')
@@ -135,13 +170,30 @@ class ServerView(APIView):
         print('Response to[{0}]:{1}'.format(clien_ip,response))
         return HttpResponse(json.dumps(response))
 
+    def ssd_task(self,server_dict):
+        ####################################添加推送ssd任务请求######################################
+        hostname = server_dict['basic']['data']['hostname']
+        server_obj = models.Server.objects.filter(hostname=hostname).first()
+        task_query_list = models.SSDTask.objects.filter(ssd_obj__server_obj=server_obj,status=1)
+        task_list = []
+        if task_query_list:
+            for task in task_query_list:
+                task_list.append({'ssd_node':task.ssd_obj.node,
+                                  'task_content':task.content,
+                                  'task_id':task.id})
+        # 改变任务的状态：新建任务->推送执行中
+        #              创建时间->推送时间
+        task_query_list.update(status=5, create_date=datetime.datetime.now())
 
-class TaskView(APIView):
-    @method_decorator(api_auth)
+        return task_list
+
+
+class TaskView(APIAuthView):
+    # @method_decorator(api_auth)
     def get(self,request,*args,**kwargs):
         return HttpResponse('Error api method!')
 
-    @method_decorator(api_auth)
+    # @method_decorator(api_auth)
     def post(self,request,*args,**kwargs):
         fd = datetime.datetime.now()
         res = json.loads(request.body.decode('utf-8'))    #结果必须为字典形式
@@ -161,12 +213,12 @@ class TaskView(APIView):
         return HttpResponse('finish task')
 
 
-class StaskView(APIView):
-    @method_decorator(api_auth)
+class StaskView(APIAuthView):
+    # @method_decorator(api_auth)
     def get(self,request,*args,**kwargs):
         return HttpResponse('Error api method!')
 
-    @method_decorator(api_auth)
+    # @method_decorator(api_auth)
     def post(self,request,*args,**kwargs):
         # fd = datetime.datetime.now()
         # 获取客户端ip
@@ -208,12 +260,12 @@ class StaskView(APIView):
         return HttpResponse(json.dumps(response))
 
 
-class TaskFileView(APIView):
-    @method_decorator(api_auth)
+class TaskFileView(APIAuthView):
+    # @method_decorator(api_auth)
     def get(self,request,*args,**kwargs):
         return HttpResponse('Error api method!')
 
-    @method_decorator(api_auth)
+    # @method_decorator(api_auth)
     def post(self,request,*args,**kwargs):
         file_obj = request.FILES.get('task_file')
         stask_id = request.POST.get('stask_id')
@@ -233,3 +285,11 @@ class TaskFileView(APIView):
 
         print('Upload--->', file_name)
         return HttpResponse('Upload file success!')
+
+
+class Test(APIAuthView):
+    def get(selfrequest,*args,**kwargs):
+        return HttpResponse("API Test Success!")
+
+    def post(selfrequest,*args,**kwargs):
+        return HttpResponse("API Test Success!")

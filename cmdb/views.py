@@ -339,7 +339,8 @@ def asset_update(request):
         result = {}
         page = request.POST.get('page')
         id = request.POST.get("id",None)
-        hostname = request.POST.get("hostname",None)
+        # 不允许用户更改唯一标识:主机名
+        # hostname = request.POST.get("hostname",None)
         sn = request.POST.get("sn",None)
         manufacturer = request.POST.get("manufacturer",None)
         model = request.POST.get("model",None)
@@ -352,7 +353,7 @@ def asset_update(request):
         business_unit = request.POST.getlist("business_unit",None)
         idc = request.POST.get("idc",None)
 
-        val_dic = {'data':{'hostname':hostname,'sn':sn,'manufacturer':manufacturer,
+        val_dic = {'data':{'sn':sn,'manufacturer':manufacturer,
                    'model':model,'manage_ip':manage_ip,'os_platform':os_platform,
                    'os_version':os_version,'server_status_id':server_status_id,
                    'tags':tags,'business_unit':business_unit,'idc_id':idc}}
@@ -662,6 +663,11 @@ def server_run_secsession(request):
             ServerTask.objects.filter(secsession_obj=s_obj,status=1).update(
                 status=4,finished_date=datetime.datetime.now())
             result = {"code": 2, "message": "子任务会话已被暂停执行 !"}
+        elif status == "redo" :
+            ServerTask.objects.filter(secsession_obj=s_obj,status=4).update(
+                status=1,finished_date=None
+            )
+            result = {"code": 0, "message": "子任务会话已恢复执行 !"}
         else:
             # 权限处理
             user_dict = request.session.get('is_login', None)
@@ -1053,6 +1059,11 @@ def server_run_session(request):
             for ss in ss_list:
                 ServerTask.objects.filter(secsession_obj=ss,status=1).update(
                     status=4,finished_date=datetime.datetime.now())
+        elif status == "redo":
+            result = {"code": 0, "message": "任务计划已恢复执行!"}
+            for ss in ss_list:
+                ServerTask.objects.filter(secsession_obj=ss,status=4).update(
+                    status=1,finished_date=None)
         else:
             try:
                 for ss in ss_list:
