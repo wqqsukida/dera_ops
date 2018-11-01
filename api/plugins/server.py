@@ -1,5 +1,6 @@
 from cmdb import models
 import datetime
+import traceback
 
 class Server(object):
 
@@ -14,7 +15,18 @@ class Server(object):
         tmp = {}
         tmp.update(self.basic_dict['data'])
         tmp.update(self.board_dict['data'])
-
+        '''
+        tmp = {
+            'hostname': 'SUZWYS5133', 
+            'cpu_physical_count': None, 
+            'cpu_model': '', 
+            'os_platform': 'Windows-7-6.1.7601-SP1', 
+            'os_version': '6.1.7601', 
+            'cpu_count': None, 
+            'manage_ip': '10.0.6.85', 
+            'client_version': 'v1.1.6'
+        }
+        '''
         # 服务器数据更新
         # tmp.pop('hostname')
         record_list = []
@@ -42,7 +54,7 @@ class Server(object):
                     models.ServerRecord.objects.create(server_obj=self.server_obj,creator=self.user_obj,
                                                        content=';\n'.join(record_list))
         except Exception as e:
-            print(e)
+            print(traceback.format_exc())
 
 
 

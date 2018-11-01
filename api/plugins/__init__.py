@@ -2,6 +2,7 @@ from django.conf import settings
 from cmdb import models
 import importlib
 from .server import Server
+import traceback
 
 class PluginManger(object):
 
@@ -53,7 +54,8 @@ class PluginManger(object):
                     ret['code'] = 2
                     ret['msg'][k] = server_dict[k]['msg']
             except Exception as e:
+                msg = traceback.format_exc()
                 ret['code'] = 2
-                ret['msg'] = str(e)
+                ret['msg'] = msg
         return ret
 
