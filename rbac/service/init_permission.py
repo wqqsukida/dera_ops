@@ -21,5 +21,5 @@ def init_permission(user_obj,request):
         #     'url':item['permissions__url'],
         # }
         menu_permission_list.append(item['permissions__url'])
-    print(menu_permission_list)
+    print('User menu permission list:%s'%menu_permission_list)
     request.session[settings.PERMISSION_MENU_KEY] = menu_permission_list

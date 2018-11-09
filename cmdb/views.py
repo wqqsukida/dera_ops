@@ -260,7 +260,6 @@ def asset_detail(request):
     result = {}
     if request.method == "GET":
         server_id = request.GET.get("id",None)
-        print(server_id)
         server_obj = Server.objects.filter(id=server_id).first()
         if server_obj:
             memory_query_list = Memory.objects.filter(server_obj=server_obj)

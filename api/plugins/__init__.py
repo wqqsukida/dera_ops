@@ -26,7 +26,6 @@ class PluginManger(object):
             tmp = {}
             tmp.update(server_dict[self.basic_key]['data'])
             tmp.update(server_dict[self.board_key]['data'])
-            print(tmp)
             server_obj = models.Server.objects.create(**tmp)
         elif asset_type == 'update':
             hostname = server_dict['basic']['data']['hostname']
