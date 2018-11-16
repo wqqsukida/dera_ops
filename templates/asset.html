@@ -94,6 +94,7 @@
 
                             </form>
                         </div>
+
                         <form method="post" action="/cmdb/asset_run_tasks">
                             {% csrf_token %}
                             <input class="hide" type="text" name="page" value="{{ page }}">
@@ -156,6 +157,34 @@
                                     <button type="submit" value="修改" class="btn btn-primary js_confirm" />
                                         <i class="fa fa-random"></i>&nbsp;&nbsp;批量执行
                                     </button>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 m-b-xs">
+                                <div id="show-nav" class="panel panel-default" style="display: none;">
+                                    <div class="panel-heading"><i class="fa fa-filter" aria-hidden="true"></i> 快速筛选</div>
+                                    <div class="panel-body">
+                                        <div class="comb-search">
+                                            按主机组:
+                                           {% if row %}
+                                                {% for r in row %}
+                                                    {{ r | safe }}
+                                                {% endfor %}
+                                           {% endif %}
+                                            按主机状态:
+                                           {% if ss_row %}
+                                                {% for r in ss_row %}
+                                                    {{ r | safe }}
+                                                {% endfor %}
+                                           {% endif %}
+                                            按标签:
+                                           {% if tag_row %}
+                                                {% for r in tag_row %}
+                                                    {{ r | safe }}
+                                                {% endfor %}
+                                           {% endif %}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -733,6 +762,19 @@
             }
         }
         )
+    </script>
+
+    <script>
+        $("#shownv").click(function(){
+            if(this.text=="显示更多"){
+                $("#show-nav").show();
+                $(this).text("隐藏更多");
+            }else{
+                $("#show-nav").hide();
+                $(this).text("显示更多")
+            }
+        });
+
     </script>
 </body>
 

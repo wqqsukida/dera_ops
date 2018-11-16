@@ -1,16 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="47e6c2be-8a09-4c2a-9ff7-3aa60dbb48bd" name="Default" comment="20181101更新&#10;1.接受上报的硬盘，内存大小不再按照str比较,而是float&#10;2.异常处理打印traceback.format_exc()&#10;3.加入.gitignore">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="47e6c2be-8a09-4c2a-9ff7-3aa60dbb48bd" name="Default" comment="20181116更新&#10;1.加入stark模块&#10;2.测试利用stark方式实现自动生成页面增删改查&#10;3.将组合筛选器加入主机列表和任务列表页面">
+      <change afterPath="$PROJECT_DIR$/cmdb/stark.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/forms/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/forms/widgets.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/readme" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/service/stark.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/css/commons.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/css/nav.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/imgs/bk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/imgs/default.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/imgs/login.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/imgs/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/imgs/logo_small.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/imgs/luffy-study-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/imgs/luffy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/js/date_picker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/js/jquery-3.3.1.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/js/validate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/css/bootstrap-theme.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/css/bootstrap-theme.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/css/bootstrap-theme.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/css/bootstrap-theme.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/css/bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/css/bootstrap.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/css/bootstrap.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/fonts/glyphicons-halflings-regular.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/fonts/glyphicons-halflings-regular.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/fonts/glyphicons-halflings-regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/fonts/glyphicons-halflings-regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/fonts/glyphicons-halflings-regular.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/js/bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/js/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/js/npm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/datetimepicker/bootstrap-datetimepicker.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/datetimepicker/bootstrap-datetimepicker.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/datetimepicker/bootstrap-datetimepicker.zh-CN.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/datetimepicker/less/datetimepicker.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/HELP-US-OUT.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/css/font-awesome.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/css/font-awesome.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/fonts/FontAwesome.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/fonts/fontawesome-webfont.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/fonts/fontawesome-webfont.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/fonts/fontawesome-webfont.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/fonts/fontawesome-webfont.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/fonts/fontawesome-webfont.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/animated.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/bordered-pulled.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/core.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/fixed-width.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/font-awesome.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/icons.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/larger.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/list.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/mixins.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/path.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/rotated-flipped.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/screen-reader.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/stacked.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/less/variables.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_animated.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_bordered-pulled.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_core.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_fixed-width.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_icons.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_larger.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_list.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_mixins.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_path.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_rotated-flipped.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_screen-reader.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_stacked.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/scss/font-awesome.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/CHANGES.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/README.ru.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/highlight.pack.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/agate.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/androidstudio.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/arduino-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/arta.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/ascetic.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-cave-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-cave-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-dune-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-dune-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-estuary-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-estuary-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-forest-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-forest-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-heath-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-heath-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-lakeside-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-lakeside-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-plateau-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-plateau-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-savanna-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-savanna-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-seaside-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-seaside-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-sulphurpool-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atelier-sulphurpool-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atom-one-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/atom-one-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/brown-paper.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/brown-papersq.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/codepen-embed.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/color-brewer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/darcula.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/darkula.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/default.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/docco.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/dracula.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/far.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/foundation.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/github-gist.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/github.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/googlecode.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/grayscale.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/gruvbox-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/gruvbox-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/hopscotch.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/hybrid.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/idea.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/ir-black.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/kimbie.dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/kimbie.light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/magula.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/mono-blue.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/monokai-sublime.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/monokai.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/obsidian.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/ocean.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/paraiso-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/paraiso-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/pojoaque.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/pojoaque.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/purebasic.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/qtcreator_dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/qtcreator_light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/railscasts.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/rainbow.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/routeros.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/school-book.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/school-book.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/solarized-dark.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/solarized-light.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/sunburst.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/tomorrow-night-blue.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/tomorrow-night-bright.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/tomorrow-night-eighties.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/tomorrow-night.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/tomorrow.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/vs.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/vs2015.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/xcode.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/xt256.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/static/stark/plugins/highlight/styles/zenburn.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/templates/layout.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/templates/layout_no_left.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/templates/stark/change.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/templates/stark/changelist.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/templates/stark/delete.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/templates/stark/form/date_picker_input.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/templates/stark/table.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/templatetags/stark.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/utils/convert.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/utils/pagination.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stark/读我" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/filter_row.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/plugins/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/plugins/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmdb/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cmdb/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rbac/service/init_permission.py" beforeDir="false" afterPath="$PROJECT_DIR$/rbac/service/init_permission.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index_v1.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index_v1.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login_v2.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login_v2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dera_ops/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dera_ops/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dera_ops/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dera_ops/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/asset.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/asset.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/server_task.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/server_task.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -50,17 +227,6 @@
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="dera_ops@localhost" type="feb32156:DbDataSourceImpl" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="dera_ops@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="dera_ops@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="dera_ops: schema" type="c314c289:MysqlImplModel$Schema" />
-      </path>
     </expand>
     <select />
   </component>
@@ -72,73 +238,69 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="nvme_ssd.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/plugins/nvme_ssd.py">
+      <file leaf-file-name="stark.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/stark/service/stark.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2024">
-              <caret line="95" column="20" selection-start-line="95" selection-start-column="20" selection-end-line="95" selection-end-column="20" />
+            <state relative-caret-position="190">
+              <caret line="130" column="32" selection-start-line="130" selection-start-column="24" selection-end-line="130" selection-end-column="32" />
               <folding>
-                <element signature="e#0#23#0" expanded="true" />
+                <element signature="e#0#16#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stark.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmdb/stark.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="77" column="42" lean-forward="true" selection-start-line="77" selection-start-column="42" selection-end-line="77" selection-end-column="42" />
+              <folding>
+                <element signature="e#115#164#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/api/views.py">
+        <entry file="file://$PROJECT_DIR$/cmdb/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="716">
-              <caret line="254" column="53" lean-forward="true" selection-start-line="254" selection-start-column="53" selection-end-line="254" selection-end-column="53" />
+            <state relative-caret-position="221">
+              <caret line="162" column="9" lean-forward="true" selection-start-line="162" selection-start-column="9" selection-end-line="162" selection-end-column="9" />
               <folding>
-                <element signature="e#120#135#0" expanded="true" />
-                <element signature="e#5205#5289#0" />
+                <element signature="e#0#65#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dera_ops/urls.py">
+      <file leaf-file-name="server_task.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/server_task.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+            <state relative-caret-position="1405">
+              <caret line="111" column="54" lean-forward="true" selection-start-line="111" selection-start-column="54" selection-end-line="111" selection-end-column="54" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dera_ops/settings.py">
+      <file leaf-file-name="asset.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/asset.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="72" column="1" selection-start-line="72" selection-start-column="1" selection-end-line="72" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index_v1.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/index_v1.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="309" lean-forward="true" selection-start-line="309" selection-end-line="309" />
+            <state relative-caret-position="94">
+              <caret line="767" column="12" selection-start-line="765" selection-end-line="777" selection-end-column="13" />
               <folding>
-                <element signature="e#14653#18480#0#HTML" />
-                <element signature="e#14700#15276#0#HTML" />
-                <element signature="e#15696#15996#0#HTML" />
-                <element signature="e#16289#16782#0#HTML" />
-                <element signature="e#17178#17239#0#HTML" />
-                <element signature="e#17307#17421#0#HTML" />
-                <element signature="e#17523#17634#0#HTML" />
-                <element signature="e#17736#17847#0#HTML" />
+                <element signature="e#6182#8252#0#HTML" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cmdb/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="284" column="19" selection-start-line="284" selection-start-column="4" selection-end-line="284" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -155,20 +317,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>add_content</find>
-      <find>get_script_content</find>
-      <find>get_task_content</find>
-      <find>任务项</find>
-      <find>/usr/local/src/auto_client/task_handler/script/</find>
-      <find>download error</find>
-      <find>时间不同步</find>
-      <find>upload</find>
-      <find>Inventory</find>
-      <find>result_callback</find>
-      <find>HOST_</find>
-      <find>passwords</find>
-      <find>hostsFile</find>
-      <find>get_task_res</find>
       <find>HttpResponse</find>
       <find>Response</find>
       <find>key</find>
@@ -185,6 +333,20 @@
       <find>login</find>
       <find>index</find>
       <find>fixednavbar</find>
+      <find>model_form_class = ServerModelForm</find>
+      <find>active</find>
+      <find>display_status</find>
+      <find>Row</find>
+      <find>list_filter</find>
+      <find>stark</find>
+      <find>StarkConfig</find>
+      <find>get_queryset</find>
+      <find>ChangeList</find>
+      <find>gen_list_filter_rows</find>
+      <find>show-nav</find>
+      <find>shownv</find>
+      <find>status</find>
+      <find>is_multi</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -193,11 +355,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/utils/fangshe.py" />
-        <option value="$PROJECT_DIR$/utils/fangshe1.py" />
-        <option value="$PROJECT_DIR$/utils/123.py" />
-        <option value="$PROJECT_DIR$/utils/dylan.py" />
-        <option value="$PROJECT_DIR$/utils/pagination.py" />
         <option value="$PROJECT_DIR$/cmdb/templatetags/123.py" />
         <option value="$PROJECT_DIR$/cmdb/templatetags/123456.py" />
         <option value="$PROJECT_DIR$/cmdb/templatetags/mytags.py" />
@@ -205,7 +362,6 @@
         <option value="$PROJECT_DIR$/templates/ssd.html" />
         <option value="$PROJECT_DIR$/task_script/hostname.sh" />
         <option value="$PROJECT_DIR$/templates/login.html" />
-        <option value="$PROJECT_DIR$/templates/server_task.html" />
         <option value="$PROJECT_DIR$/utils/scp_file.py" />
         <option value="$PROJECT_DIR$/templates/server_taskmethod.html" />
         <option value="$PROJECT_DIR$/utils/remote_client.py" />
@@ -220,7 +376,6 @@
         <option value="$PROJECT_DIR$/api/views_cbv.py" />
         <option value="$PROJECT_DIR$/api/plugins/base.py" />
         <option value="$PROJECT_DIR$/utils/interface.py" />
-        <option value="$PROJECT_DIR$/templates/asset.html" />
         <option value="$PROJECT_DIR$/utils/playbooks/roles/client_update/tasks/main.yml" />
         <option value="$PROJECT_DIR$/utils/playbooks/roles/client_update/handlers/main.yml" />
         <option value="$PROJECT_DIR$/templates/client_update.html" />
@@ -231,7 +386,6 @@
         <option value="$PROJECT_DIR$/templates/server_task_secsession.html" />
         <option value="$PROJECT_DIR$/templates/server_task_session.html" />
         <option value="$PROJECT_DIR$/api/views.py" />
-        <option value="$PROJECT_DIR$/cmdb/models.py" />
         <option value="$PROJECT_DIR$/api/plugins/server.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/api/plugins/memory.py" />
@@ -240,10 +394,18 @@
         <option value="$PROJECT_DIR$/templates/version_info.html" />
         <option value="$PROJECT_DIR$/rbac/service/init_permission.py" />
         <option value="$PROJECT_DIR$/api/plugins/__init__.py" />
-        <option value="$PROJECT_DIR$/cmdb/views.py" />
-        <option value="$PROJECT_DIR$/dera_ops/settings.py" />
         <option value="$PROJECT_DIR$/templates/index_v1.html" />
         <option value="$PROJECT_DIR$/templates/index.html" />
+        <option value="$PROJECT_DIR$/dera_ops/urls.py" />
+        <option value="$PROJECT_DIR$/cmdb/models.py" />
+        <option value="$PROJECT_DIR$/dera_ops/settings.py" />
+        <option value="$PROJECT_DIR$/cmdb/stark.py" />
+        <option value="$PROJECT_DIR$/stark/service/stark.py" />
+        <option value="$PROJECT_DIR$/templates/roles.html" />
+        <option value="$PROJECT_DIR$/templates/asset.html" />
+        <option value="$PROJECT_DIR$/utils/filter_row.py" />
+        <option value="$PROJECT_DIR$/templates/server_task.html" />
+        <option value="$PROJECT_DIR$/cmdb/views.py" />
       </list>
     </option>
   </component>
@@ -259,8 +421,8 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="71" />
     <option name="y" value="84" />
-    <option name="width" value="1350" />
-    <option name="height" value="784" />
+    <option name="width" value="1366" />
+    <option name="height" value="764" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -279,17 +441,6 @@
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
               <item name="cmdb" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -300,18 +451,54 @@
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="stark" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="vue" type="462c0819:PsiDirectoryNode" />
+              <item name="stark" type="462c0819:PsiDirectoryNode" />
+              <item name="forms" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="stark" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="stark" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="stark" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="stark" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="stark" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="stark" type="462c0819:PsiDirectoryNode" />
+              <item name="templatetags" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
               <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dera_ops" type="b2602c69:ProjectViewProjectNode" />
+              <item name="dera_ops" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -324,7 +511,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL&#10;MariaDB" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/code/models_test/vue" />
+    <property name="last_opened_file_path" value="$USER_HOME$/code/gome/gome_ops" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -338,18 +525,18 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/static/vue" />
-      <recent name="$PROJECT_DIR$/static/css/plugins/jsTree" />
-      <recent name="$PROJECT_DIR$/templates" />
-      <recent name="$PROJECT_DIR$/utils/playbooks/files" />
-      <recent name="$PROJECT_DIR$/utils" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/utils/playbooks/roles/client_update" />
       <recent name="$PROJECT_DIR$/utils/playbooks" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/static" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/static/vue" />
+      <recent name="$PROJECT_DIR$/static/css/plugins/jsTree" />
+      <recent name="$PROJECT_DIR$/templates" />
+      <recent name="$PROJECT_DIR$/utils/playbooks/files" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -763,7 +950,21 @@
       <option name="project" value="LOCAL" />
       <updated>1541053192582</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="20181109更新&#10;1.去除一些debug print&#10;2.首页添加轮播图&#10;3.去除一些无用的前端插件">
+      <created>1541733091986</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1541733091986</updated>
+    </task>
+    <task id="LOCAL-00035" summary="20181109更新&#10;1.添加vue文件">
+      <created>1541733920304</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1541733920304</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TodoView">
@@ -777,18 +978,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="28" width="1922" height="1019" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49893048" weight="0.32936978" />
+      <window_info active="true" anchor="bottom" id="TODO" order="6" sideWeight="0.49893048" visible="true" weight="0.32936978" />
       <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5032086" side_tool="true" weight="0.4197384" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49679145" weight="0.30321047" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49679145" weight="0.34007135" />
       <window_info anchor="bottom" x="1" y="404" width="1918" height="284" id="Version Control" order="10" sideWeight="0.4983957" weight="0.34839478" />
-      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.49946523" visible="true" weight="0.28894174" />
+      <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.49946523" weight="0.2877527" />
       <window_info anchor="bottom" id="Terminal" order="13" sideWeight="0.49679145" weight="0.30915576" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49916804" visible="true" weight="0.10855615" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49916804" visible="true" weight="0.13743316" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.1748663" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.12780748" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936978" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32994652" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
@@ -800,7 +1001,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Database Console" order="7" weight="0.32936978" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32936978" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -836,9 +1036,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.改写plugins下其它模块更新数据库方式，增加事务处理&#10;2.添加主机管理相应方法：增删该查&#10;3.添加查看主机详情页面：查看主机下具体设备信息，以及设备变更记录&#10;4.改写验证逻辑：is_superuser, init_permission中默认加入/index/,/index_v3/页面" />
-    <MESSAGE value="1.解决一些方法从数据库中取值比对问题，统一转换为str&#10;2.添加Smart_log表以及获取更新smart_log方法和页面&#10;3.添加ssd_list方法和页面，获取所有主机监控的ssd信息&#10;4.使用nginx处理静态文件请求，和django之间采用gunicorn,更改settings中一些设置适用此模式&#10;5.添加rbac中用户的增删改查方法和页面" />
-    <MESSAGE value="1.添加推送任务请求方法(client每次上报，server端回返回给client端任务列表)&#10;2.添加task_list任务页面，可查询任务详细信息&#10;3.任务创建存入task数据表，每次从task表中查找相应任务" />
     <MESSAGE value="1.API增加token验证功能&#10;2.添加用户管理,用户组管理,权限管理,主机组管理相关方法和页面" />
     <MESSAGE value="1.添加主机、任务概况统计(首页图表展示)&#10;2.添加批量推送任务" />
     <MESSAGE value="添加主机批量操作方法" />
@@ -861,7 +1058,10 @@
     <MESSAGE value="20181019更新&#10;1.将server端所有api接口改为rest_framework方式&#10;2.添加客户端版本,对应主机更新客户端后在主机列表可查看" />
     <MESSAGE value="20181026更新&#10;1.服务端根据客户端上发的信息分为create,update,host_update三种处理方式&#10;2.更新加密验证接口&#10;3.不允许用户更改唯一标识:主机名&#10;4.添加任务会话,任务计划恢复执行功能" />
     <MESSAGE value="20181101更新&#10;1.接受上报的硬盘，内存大小不再按照str比较,而是float&#10;2.异常处理打印traceback.format_exc()&#10;3.加入.gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="20181101更新&#10;1.接受上报的硬盘，内存大小不再按照str比较,而是float&#10;2.异常处理打印traceback.format_exc()&#10;3.加入.gitignore" />
+    <MESSAGE value="20181109更新&#10;1.去除一些debug print&#10;2.首页添加轮播图&#10;3.去除一些无用的前端插件" />
+    <MESSAGE value="20181109更新&#10;1.添加vue文件" />
+    <MESSAGE value="20181116更新&#10;1.加入stark模块&#10;2.测试利用stark方式实现自动生成页面增删改查&#10;3.将组合筛选器加入主机列表和任务列表页面" />
+    <option name="LAST_COMMIT_MESSAGE" value="20181116更新&#10;1.加入stark模块&#10;2.测试利用stark方式实现自动生成页面增删改查&#10;3.将组合筛选器加入主机列表和任务列表页面" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -869,69 +1069,10 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/asset.html">
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="234" column="71" selection-start-line="234" selection-start-column="71" selection-end-line="234" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/playbooks/roles/client_update/tasks/main.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/ansible_api_test2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-187">
-          <caret line="16" column="77" selection-start-line="16" selection-start-column="76" selection-end-line="16" selection-end-column="134" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/ansible_api_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="66" column="26" lean-forward="true" selection-start-line="66" selection-start-column="26" selection-end-line="66" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/plugins/jsTree/style.min.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/walk_playbooks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/playbooks/roles/client_update/handlers/main.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="1" column="38" lean-forward="true" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/client_update.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2279">
-          <caret line="176" column="43" lean-forward="true" selection-start-line="176" selection-start-column="43" selection-end-line="176" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/playbooks/roles/client_update/templates/cert.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="21" selection-start-column="21" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/thread_timer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="19" column="10" lean-forward="true" selection-start-line="17" selection-end-line="22" selection-end-column="17" />
+        <state relative-caret-position="6798">
+          <caret line="309" selection-start-line="309" selection-end-line="309" />
         </state>
       </provider>
     </entry>
@@ -942,289 +1083,305 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/urls.py">
+    <entry file="file://$PROJECT_DIR$/api/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="27" column="13" lean-forward="true" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_server">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/server_task_secsession.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="195" column="146" selection-start-line="195" selection-start-column="146" selection-end-line="195" selection-end-column="146" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/server_task_session.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="176" column="56" lean-forward="true" selection-start-line="176" selection-start-column="56" selection-end-line="176" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_disk">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/nic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="4" column="37" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_serverrecord">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/auth_user_user_permissions">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="109" column="11" lean-forward="true" selection-start-line="109" selection-start-column="11" selection-end-line="109" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/auth_user_groups">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_servertask">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/ansible_api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3013">
-          <caret line="181" column="43" selection-start-line="181" selection-start-column="43" selection-end-line="181" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/views_fbv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1669">
-          <caret line="217" selection-start-line="217" selection-end-line="217" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1034">
-          <caret line="11" column="39" lean-forward="true" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/login_v2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="70" column="45" lean-forward="true" selection-start-line="70" selection-start-column="45" selection-end-line="70" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/firmware_update.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1254" />
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/auth_user">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/version_info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="121" column="52" selection-start-line="121" selection-start-column="52" selection-end-line="121" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/memory.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="82" column="36" selection-start-line="82" selection-start-column="36" selection-end-line="82" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/disk.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="116" column="20" selection-start-line="116" selection-start-column="20" selection-end-line="116" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rbac/service/init_permission.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_smart_log">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/nvme_ssd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2024">
-          <caret line="95" column="20" selection-start-line="95" selection-start-column="20" selection-end-line="95" selection-end-column="20" />
+        <state relative-caret-position="5566">
+          <caret line="278" column="32" selection-start-line="278" selection-start-column="32" selection-end-line="278" selection-end-column="32" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1518">
-          <caret line="118" column="7" lean-forward="true" selection-start-line="118" selection-start-column="7" selection-end-line="118" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dera_ops/wsgi.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-533">
-          <caret line="15" column="43" lean-forward="true" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/rbac_admininfo">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/django_migrations">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/django_session">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/plugins/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="2" column="16" lean-forward="true" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://2e211d7a-8ef4-435d-ab5a-e1bb6757142e/schema/dera_ops/table/cmdb_taskscript">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1540">
-          <caret line="172" column="36" lean-forward="true" selection-start-line="172" selection-start-column="36" selection-end-line="172" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/vue/vue-router.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index_v3.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2046" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dera_ops/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="72" column="1" selection-start-line="72" selection-start-column="1" selection-end-line="72" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index_v1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="309" lean-forward="true" selection-start-line="309" selection-end-line="309" />
-          <folding>
-            <element signature="e#14653#18480#0#HTML" />
-            <element signature="e#14700#15276#0#HTML" />
-            <element signature="e#15696#15996#0#HTML" />
-            <element signature="e#16289#16782#0#HTML" />
-            <element signature="e#17178#17239#0#HTML" />
-            <element signature="e#17307#17421#0#HTML" />
-            <element signature="e#17523#17634#0#HTML" />
-            <element signature="e#17736#17847#0#HTML" />
+            <element signature="e#120#135#0" expanded="true" />
+            <element signature="e#5205#5289#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dera_ops/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
+        <state relative-caret-position="374">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+          <folding>
+            <element signature="e#642#682#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/views.py">
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/imgs/bk.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/imgs/default.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/imgs/login.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/imgs/logo.svg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/imgs/logo_small.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/imgs/luffy.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/imgs/luffy-study-logo.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/utils/pagination.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="716">
-          <caret line="254" column="53" lean-forward="true" selection-start-line="254" selection-start-column="53" selection-end-line="254" selection-end-column="53" />
+        <state relative-caret-position="-1532">
+          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/views.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/tests.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/readme">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1064">
+          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/forms/forms.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/forms/widgets.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/templates/stark/change.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="20" column="11" lean-forward="true" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/migrations/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/css/commons.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1769" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/css/nav.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-30" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/plugins/font-awesome/css/font-awesome.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="2328" column="25" selection-start-line="2328" selection-start-column="19" selection-end-line="2328" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/css/bootstrap.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-30" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/plugins/datetimepicker/bootstrap-datetimepicker.min.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/templates/layout.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="76" lean-forward="true" selection-start-line="8" selection-start-column="76" selection-end-line="8" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/templatetags/stark.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
           <folding>
-            <element signature="e#120#135#0" expanded="true" />
-            <element signature="e#5205#5289#0" />
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/templates/layout_no_left.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="56" lean-forward="true" selection-start-line="9" selection-start-column="56" selection-end-line="9" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dera_ops/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="181" column="68" selection-start-line="181" selection-start-column="68" selection-end-line="181" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/读我">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1760">
+          <caret line="85" selection-start-line="85" selection-end-line="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/django/template/library.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="244" selection-start-line="244" selection-end-line="244" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/django/template/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="956" selection-start-line="956" selection-end-line="956" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/django/template/defaulttags.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="171" selection-start-line="171" selection-end-line="171" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/django/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/django/apps/registry.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="115" selection-start-line="115" selection-end-line="115" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/django/utils/module_loading.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/importlib/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="125" selection-start-line="125" selection-end-line="125" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/django/utils/six.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="684" selection-start-line="684" selection-end-line="684" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/django/core/management/commands/runserver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="116" selection-start-line="116" selection-end-line="116" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/apps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="29" lean-forward="true" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/pro01/env/lib/python3.5/site-packages/django/utils/autoreload.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="226" selection-start-line="226" selection-end-line="226" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/service/stark.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="130" column="32" selection-start-line="130" selection-start-column="24" selection-end-line="130" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/users.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/roles.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="102" column="88" selection-start-line="102" selection-start-column="81" selection-end-line="102" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/filter_row.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="58" selection-start-line="58" selection-end-line="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/stark.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="77" column="42" lean-forward="true" selection-start-line="77" selection-start-column="42" selection-end-line="77" selection-end-column="42" />
+          <folding>
+            <element signature="e#115#164#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/templates/stark/changelist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="48" column="15" selection-start-line="48" selection-start-column="12" selection-end-line="48" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="284" column="19" selection-start-line="284" selection-start-column="4" selection-end-line="284" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/asset.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="767" column="12" selection-start-line="765" selection-end-line="777" selection-end-column="13" />
+          <folding>
+            <element signature="e#6182#8252#0#HTML" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/server_task.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1405">
+          <caret line="111" column="54" lean-forward="true" selection-start-line="111" selection-start-column="54" selection-end-line="111" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/stark/static/stark/plugins/bootstrap/js/bootstrap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="1575" column="30" selection-start-line="1575" selection-start-column="30" selection-end-line="1575" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="162" column="9" lean-forward="true" selection-start-line="162" selection-start-column="9" selection-end-line="162" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#65#0" expanded="true" />
           </folding>
         </state>
       </provider>

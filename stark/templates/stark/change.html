@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <form method="post" class="form-horizontal" novalidate>
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ field.label }}：</label>
+                <div class="col-sm-9">
+                    {{ field }}
+                    {{ field.errors.0 }}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="col-sm-offset-2 col-sm-9">
+            <input class="btn btn-primary" type="submit" value="提 交">
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}

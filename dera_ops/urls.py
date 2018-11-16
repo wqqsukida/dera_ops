@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from cmdb import views
+from stark.service.stark import site
 
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
@@ -28,5 +29,6 @@ urlpatterns = [
     url(r'^index_v3/', views.index_v3),
     url(r'^403/', views.forbidden),
     url(r'^$', views.index),
+    url(r'^stark/', site.urls),
 
 ]

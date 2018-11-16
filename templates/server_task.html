@@ -103,9 +103,12 @@
 {#                                </div>#}
 
                                 <div class="col-sm-1">
-                                    <a id="shownv"  type="button" class="btn btn-warning">创建任务</a>
+                                    <a type="button" class="btn btn-primary">创建任务</a>
                                 </div>
-                                <div class="col-sm-8"></div>
+                                <div class="col-sm-1">
+                                    <a id="shownv"  type="button" class="btn btn-warning">显示更多</a>
+                                </div>
+                                <div class="col-sm-7"></div>
                                 <div class="col-sm-2">
                                     <input type="text" name="q"  class="form-control"  value="{{ search_q }}" placeholder="请输入关键字进行搜索" />
                                 </div>
@@ -115,6 +118,21 @@
                                     </button>
                                 </div>
                             </form>
+                        </div>
+                        <div class="col-sm-12 m-b-xs">
+                            <div id="show-nav" class="panel panel-default" style="display: none;">
+                                <div class="panel-heading"><i class="fa fa-filter" aria-hidden="true"></i> 快速筛选</div>
+                                <div class="panel-body">
+                                    <div class="comb-search">
+                                        按任务状态:
+                                       {% if row %}
+                                            {% for r in row %}
+                                                {{ r | safe }}
+                                            {% endfor %}
+                                       {% endif %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
 
@@ -354,6 +372,20 @@
                 }
             })
         })
+    </script>
+
+
+    <script>
+        $("#shownv").click(function(){
+            if(this.text=="显示更多"){
+                $("#show-nav").show();
+                $(this).text("隐藏更多");
+            }else{
+                $("#show-nav").hide();
+                $(this).text("显示更多")
+            }
+        });
+
     </script>
 
 </body>

@@ -18,7 +18,7 @@ from django.http.request import QueryDict
 from django.conf import settings
 from utils.remote_client import Remote
 from utils.ansible_api import Runner
-
+from utils.filter_row import Row
 #========================================================================#
 def init_paginaion(request,queryset):
     # 初始化分页器
@@ -151,6 +151,28 @@ def asset_list(request):
         search_q = request.GET.get('q','')
         user_dict = request.session.get('is_login', None)
         # print(user_dict)
+        #配置快速组合筛选
+        server_status_id = request.GET.get('server_status_id')
+        business_unit = request.GET.getlist('business_unit')
+        tags = request.GET.getlist('tags')
+        querydict = request.GET
+        row = Row(
+            BusinessUnit.objects.all().values(),
+            querydict,
+            'business_unit'
+        )
+        row.is_multi = True
+        ss_row = Row(
+            [{'id':i[0],'name':i[1]} for i in Server.server_status_choices],
+            querydict,
+            'server_status_id'
+        )
+        tag_row = Row(
+            Tag.objects.all().values(),
+            querydict,
+            'tags'
+        )
+        #搜索
         if UserProfile.objects.get(name=user_dict['user']).is_admin :
             queryset = Server.objects.filter(Q(Q(hostname__contains=search_q) |
                                                Q(sn__contains=search_q) |
@@ -168,7 +190,13 @@ def asset_list(request):
                                                Q(business_unit__name__contains=search_q) |
                                                Q(tags__name__contains=search_q)),
                        business_unit__roles__userprofile__name=user_dict['user']).distinct()
-
+        # 加载快速组合筛选
+        if business_unit:
+            queryset = queryset.filter(business_unit__in=business_unit).distinct()
+        if server_status_id:
+            queryset = queryset.filter(server_status_id=server_status_id).distinct()
+        if tags:
+            queryset = queryset.filter(tags__in=tags).distinct()
         idc_list = IDC.objects.all()
         tag_list = Tag.objects.all()
         business_list = BusinessUnit.objects.all()
@@ -497,9 +525,9 @@ def server_task_status(request,sid="",ssid="",sts_id="",fsid=""):
     if request.method == "GET":
         # 通知栏
         status = request.GET.get("status", "")
-        message = request.GET.get("message", "")
-        if status.isdigit():
-            result = {"code":int(status),"message":message}
+        # message = request.GET.get("message", "")
+        # if status.isdigit():
+        #     result = {"code":int(status),"message":message}
 
         # server_id = request.GET.get("sid")
         # secsession_id = request.GET.get("ssid")
@@ -508,6 +536,14 @@ def server_task_status(request,sid="",ssid="",sts_id="",fsid=""):
         server_id=sid
         secsession_id=ssid
         st_status_id=sts_id
+        # 配置快速组合筛选
+        querydict = request.GET
+        row = Row(
+            [{'id':i[0],'name':i[1]}for i in ServerTask.task_status_choices],
+            querydict,
+            'status'
+        )
+
 
         search_q = request.GET.get("q","").strip()
         page = request.GET.get('page')
@@ -557,6 +593,9 @@ def server_task_status(request,sid="",ssid="",sts_id="",fsid=""):
         user_dict = request.session.get('is_login', None)
         if not UserProfile.objects.get(name=user_dict['user']).is_admin:
             queryset = queryset.filter(server_obj__business_unit__roles__userprofile__name=user_dict['user'])
+        # 加载组合筛选
+        if status:
+            queryset = queryset.filter(status=status)
         # 加载分页器
         task_list, page_html = init_paginaion(request, queryset)
 

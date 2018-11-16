@@ -1,0 +1,5 @@
+<div class='input-group'>
+    <input style="border-bottom-right-radius: 0;border-top-right-radius: 0;" type="{{ widget.type }}" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %} />
+    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+</div>
+

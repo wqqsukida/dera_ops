@@ -1,0 +1,206 @@
+Stark组件....
+
+使用手册：
+    1. 拷贝stark组件到你项目的根目录
+
+    2. 在配置文件中注册stark app，如：
+
+            INSTALLED_APPS = [
+                ...
+                'stark.apps.StarkConfig',
+                ...
+            ]
+    3. 配置路由，在跟路由中配置。
+        from django.conf.urls import url,include
+            from django.contrib import admin
+            from stark.service.stark import site
+                url(r'^stark/',site.urls),
+            ]
+
+    4. 使用Stark组件进行业务处理
+
+        4.1 对某张表进行基础增删改查
+
+            第一步：在已注册app的根目录创建stark.py
+
+            第二步：在stark.py 中对要操作的表进行基本配置，即可。
+                示例：stark.py
+                    from stark.service.stark import site, StarkConfig, get_choice_text, Option, StarkModelForm
+                    from api import models
+
+                    # IDC管理
+                    class IDCConfig(StarkConfig):
+                        list_display = ['name', 'floor', ]
+                    site.register(models.IDC, IDCConfig)
+
+            第三步：访问
+                http://127.0.0.1:8000/stark/api/idc/list/
+                http://127.0.0.1:8000/stark/api/idc/add/
+                http://127.0.0.1:8000/stark/api/idc/2/change/
+                http://127.0.0.1:8000/stark/api/idc/1/del/
+
+        4.1. 对某张表进行基础增删改查 + 定制列
+            示例：stark.py
+                    from stark.service.stark import site, StarkConfig, get_choice_text, Option, StarkModelForm
+                    from api import models
+
+                    # IDC管理
+                    class ServerConfig(StarkConfig):
+
+                        def display_detail(self, row=None, header=False):
+                            """
+                            查看详细
+                            :param row:
+                            :param header:
+                            :return:
+                            """
+                            if header:
+                                return '查看详细'
+                            return mark_safe("<a href='/stark/api/server/%s/detail/'>查看详细</a>" % row.id)
+
+
+                        list_display = [
+                            StarkConfig.display_checkbox, # 内置的checkbox功能
+                            'hostname', # 定制数据库字段
+                            display_detail, # 自定义函数
+                            get_choice_text('device_status_id', '状态'), # 显示choice文本内容
+                        ]
+
+                    site.register(models.Server, ServerConfig)
+
+        4.3  对某张表进行基础增删改查 + 模糊搜索
+
+            示例：stark.py
+                    from stark.service.stark import site, StarkConfig, get_choice_text, Option, StarkModelForm
+                    from api import models
+
+                    # IDC管理
+                    class ServerConfig(StarkConfig):
+                        list_display = [
+                            'hostname', # 定制数据库字段
+                        ]
+
+                        search_list = ['hostname','business_unit__name']
+
+                    site.register(models.Server, ServerConfig)
+
+        4.4  对某张表进行基础增删改查 + 批量操作
+
+                示例：stark.py
+                    from stark.service.stark import site, StarkConfig, get_choice_text, Option, StarkModelForm
+                    from api import models
+
+                    # IDC管理
+                    class ServerConfig(StarkConfig):
+                        list_display = [
+                            'hostname', # 定制数据库字段
+                        ]
+
+                        def multi_delete(self,request):
+                            pks = request.POST.getlist('pk')
+                            models.Server.objects.filter(id__in=pks).delete()
+
+                            # 无返回值，则查看当前页面
+                            # 有返回值，则显示至指定页面
+                            return render...
+                            return HttpResponse...
+                            return redirect...
+
+
+                        multi_delete.text = "批量操作"
+
+                        action_list = [
+                            multi_delete,
+                        ]
+
+                    site.register(models.Server, ServerConfig)
+
+        4.5 对某张表进行基础增删改查 + 组合搜索
+            使用场景：
+                - FK
+                - M2M
+                - choice
+
+            示例：stark.py
+                    from stark.service.stark import site, StarkConfig, get_choice_text, Option, StarkModelForm
+                    from api import models
+
+                    # IDC管理
+                    class ServerConfig(StarkConfig):
+                        list_display = [
+                            'hostname', # 定制数据库字段
+                        ]
+
+                        list_filter = [
+                            # FK 或 M2M
+                            Option(
+                                'business_unit',# 数据库字段
+                                condition={'id__gt': 0}, # 对数据库字段对应的表进行二次筛选
+                                is_choice=False, # 是否是choice选项
+                                text_func=lambda x: x.name, # 函数，函数参数是对象；返回值显示在页面上。
+                                value_func=lambda x: x.id, # 函数,函数参数是对象；返回值提现在URL中，以便于筛选。
+                                is_multi = False # 是否是多选
+                                ),
+                            # Choice
+                            Option('device_status_id', is_choice=True, text_func=lambda x: x[1], value_func=lambda x: x[0]),
+                        ]
+
+                    site.register(models.Server, ServerConfig)
+
+        4.6 对某张表进行基础增删改查 + 添加或编辑页面指定列 + 时间选择字段
+
+            示例：stark.py
+                    from stark.service.stark import site, StarkConfig, get_choice_text, Option, StarkModelForm
+                    from api import models
+
+                    class ServerModelForm(StarkModelForm):
+                        class Meta:
+                            model = models.Server
+                            # fields = "__all__"
+                            exclude = ['sn','manufacturer','model'] # 定制添加、编辑页面显示的字段
+
+                             widgets = {
+                                 'latest_date': DatePickerInput(attrs={'class': 'date-picker'}) # 定制时间字段
+                             }
+
+                    # IDC管理
+                    class ServerConfig(StarkConfig):
+                        list_display = [
+                            'hostname', # 定制数据库字段
+                        ]
+
+                        model_form_class = ServerModelForm
+
+
+                    site.register(models.Server, ServerConfig)
+
+
+        4.7  对某张表进行基础增删改查 + 扩展URL（自定义视图内容）
+
+               示例：stark.py
+                    from stark.service.stark import site, StarkConfig, get_choice_text, Option, StarkModelForm
+                    from api import models
+
+                    class ServerConfig(StarkConfig):
+                        list_display = [
+                            'hostname', # 定制数据库字段
+                        ]
+
+
+                        def extra_url(self):
+                            """
+                            扩展URL
+                            :return:
+                            """
+                            from django.conf.urls import url
+                            patterns = [
+                                url(r'^(?P<nid>\d+)/detail/$',self.wrapper(self.detail_view)),
+                            ]
+                            return patterns
+
+                        def detail_view(self, request, nid):
+                            return render(request, 'server_detail.html')
+
+                    site.register(models.Server, ServerConfig)
+
+        4.8 对某张表进行基础增改查
